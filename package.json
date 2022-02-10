@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RafidMuhymin/astro-imagetools.git"
+    "url": "git+https://github.com/RafidMuhymin/astro-image.git"
   },
   "keywords": [
     "astro",
@@ -28,9 +28,9 @@
   "author": "Rafid Muhymin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RafidMuhymin/astro-imagetools/issues"
+    "url": "https://github.com/RafidMuhymin/astro-image/issues"
   },
-  "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
+  "homepage": "https://github.com/RafidMuhymin/astro-image#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
     "imagetools-core": "3.0.2",
