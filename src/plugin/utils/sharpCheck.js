@@ -10,7 +10,7 @@ export const sharp = await (async () => {
 
 // @ts-ignore
 export const { getLoadedImage, getTransformedImage } = await import(
-  `./${sharp ? "imagetools" : "codecs"}.mjs`
+  `./${sharp ? "imagetools" : "codecs"}.js`
 );
 
 export const supportedFileTypes = [

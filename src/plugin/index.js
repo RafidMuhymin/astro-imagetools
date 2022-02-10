@@ -1,13 +1,13 @@
 // @ts-check
 import { Readable } from "stream";
 import { basename, extname } from "path";
-import { getConfigOptions, getImagePath } from "./utils/shared.mjs";
+import { getConfigOptions, getImagePath } from "./utils/shared.js";
 import {
   sharp,
   getLoadedImage,
   getTransformedImage,
   supportedFileTypes,
-} from "./utils/sharpCheck.mjs";
+} from "./utils/sharpCheck.js";
 
 const store = new Map();
 
