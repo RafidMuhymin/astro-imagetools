@@ -5,21 +5,21 @@
 To install the package, run the following command:
 
 ```bash
-npm install astro-image
+npm install astro-imagetools
 
 # yarn
-yarn add astro-image
+yarn add astro-imagetools
 
 # pnpm
-pnpm add astro-image
+pnpm add astro-imagetools
 ```
 
-The `astro-image` package comes with an `<Image />` component and a _Vite_ plugin. The component depends on the plugin to be able to optimize and generate responsive images.
+The `astro-imagetools` package comes with an `<Image />` component and a _Vite_ plugin. The component depends on the plugin to be able to optimize and generate responsive images.
 
 To use the component, first register the plugin in your `astro.config.js` file:
 
 ```js
-import astroImagePlugin from "astro-image/plugin";
+import astroImagePlugin from "astro-imagetools/plugin";
 
 export default {
   vite: {
@@ -32,7 +32,7 @@ Then, you'll be able to use the component inside your Astro components like belo
 
 ```astro
 ---
-import Image from "astro-image";
+import Image from "astro-imagetools";
 ---
 
 <html>
@@ -201,4 +201,4 @@ The plugin is still in beta and doesn't yet support any configuration options.
 
 ## Contributing
 
-If you have any suggestions, please open an issue on [GitHub](https://github.com/RafidMuhymin/astro-image).
+If you have any suggestions, please open an issue on [GitHub](https://github.com/RafidMuhymin/astro-imagetools).

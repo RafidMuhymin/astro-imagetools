@@ -12,7 +12,7 @@ import {
 const store = new Map();
 
 export default {
-  name: "vite-plugin-astro-image",
+  name: "vite-plugin-astro-imagetools",
   enforce: "pre",
   async load(id) {
     try {
