@@ -1,7 +1,7 @@
 // @ts-check
 import { Readable } from "stream";
 import { basename, extname } from "path";
-import { getConfigOptions, getImagePath } from "./utils/shared.js";
+import { getConfigOptions, getImagePath } from "./utils/shared";
 import {
   sharp,
   getLoadedImage,
