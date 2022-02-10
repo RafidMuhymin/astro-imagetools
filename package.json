@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RafidMuhymin/astro-image.git"
+    "url": "git+https://github.com/RafidMuhymin/astro-imagetools.git"
   },
   "keywords": [
     "astro",
@@ -23,14 +23,18 @@
     "optimization",
     "responsive-image",
     "vite",
-    "vite-plugin"
+    "vite-plugin",
+    "sharp",
+    "imagetools",
+    "codecs",
+    "astropub"
   ],
   "author": "Rafid Muhymin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RafidMuhymin/astro-image/issues"
+    "url": "https://github.com/RafidMuhymin/astro-imagetools/issues"
   },
-  "homepage": "https://github.com/RafidMuhymin/astro-image#readme",
+  "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
     "potrace": "2.1.8"
