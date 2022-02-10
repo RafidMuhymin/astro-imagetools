@@ -33,8 +33,10 @@
   "homepage": "https://github.com/RafidMuhymin/astro-image#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
-    "imagetools-core": "3.0.2",
     "potrace": "2.1.8"
+  },
+  "optionalDependencies": {
+    "imagetools-core": "3.0.2"
   },
   "peerDependencies": {
     "astro": "^0.23.0-next.0"
