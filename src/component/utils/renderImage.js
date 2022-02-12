@@ -1,5 +1,21 @@
 import getImage from "./getImage";
 
+/**
+ * @typedef ImageHTMLData
+ * @property {string} imageTag The rendered HTML for the image
+ * @property {string} linkTag The preload link tag to be injected into the page head.
+ * @property {string} css The css to be injected for this image.
+ */
+
+/**
+ * Renders an image given properties.
+ *
+ * Exposes the same API as the <Image /> component,
+ * but is able to be used in contexts where the astro component cannot,
+ * such as rendering CMS content.
+ *
+ * @returns {Promise<ImageHTMLData>}
+ */
 export default async function renderImage(
   src,
   alt,
