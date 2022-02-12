@@ -36,11 +36,11 @@ import astroImagePlugin from "astro-imagetools/plugin";
 export default {
   vite: {
     plugins: [astroImagePlugin],
-    prebuild: {
-      exclude: ["astro-imagetools"],
+    optimizeDeps: {
+      exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
     },
     ssr: {
-      exclude: ["astro-imagetools"],
+      external: ["sharp", "potrace"],
     },
   },
 };
