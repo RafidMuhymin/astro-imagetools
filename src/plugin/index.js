@@ -9,12 +9,15 @@ import {
   supportedFileTypes,
 } from "./utils/sharpCheck.js";
 
+let viteConfig;
 const store = new Map();
 
 export default {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
-  config() {
+
+  config(config) {
+    viteConfig = config;
     return {
       optimizeDeps: {
         exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
@@ -141,7 +144,7 @@ export default {
           if (output.source.match(src)) {
             const { name, buffer, image } = imageObject;
 
-            const fileName = this.getFileName(
+            const filename = this.getFileName(
               this.emitFile({
                 name,
                 type: "asset",
@@ -149,7 +152,9 @@ export default {
               })
             );
 
-            output.source = output.source.replace(src, fileName);
+            const path = filename;
+
+            output.source = output.source.replace(src, path);
           }
         }
       })
