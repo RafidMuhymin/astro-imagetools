@@ -1,23 +1,9 @@
+// @ts-check
+
 import getImage from "./getImage";
 import astroConfig from "/astro.config.mjs";
 import getBackgroundStyles from "./getBackgroundStyles";
 
-/**
- * @typedef ImageHTMLData
- * @property {string} image The rendered HTML for the image
- * @property {string} link The preload link tag to be injected into the page head.
- * @property {string} style The css to be injected for this image.
- */
-
-/**
- * Renders an image given properties.
- *
- * Exposes the same API as the <Image /> component,
- * but is able to be used in contexts where the astro component cannot,
- * such as rendering CMS content.
- *
- * @returns {Promise<ImageHTMLData>}
- */
 export default async function renderImage({
   src,
   alt,
