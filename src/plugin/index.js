@@ -152,7 +152,7 @@ export default {
               })
             );
 
-            const path = filename;
+            const path = viteConfig.base + filename;
 
             output.source = output.source.replace(src, path);
           }
