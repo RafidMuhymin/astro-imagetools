@@ -1,6 +1,6 @@
 {
   "name": "astro-imagetools",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "Image Optimization tools for the Astro JS framework",
   "type": "module",
   "main": "./src/index.js",
