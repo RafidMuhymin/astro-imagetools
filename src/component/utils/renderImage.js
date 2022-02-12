@@ -42,9 +42,7 @@ export default async function renderImage(
   },
   astroConfig
 ) {
-  const label = `Image at ${src} optimized in`;
-  console.time(label);
-
+  const start = performance.now();
   const { uuid, images } = await getImage(
     src,
     format,
@@ -57,7 +55,9 @@ export default async function renderImage(
     configOptions,
     astroConfig.image
   );
-  console.timeEnd(label);
+  const end = performance.now();
+
+  console.log(`Image at ${src} optimized in ${end - start}ms`);
 
   const { width } = images.at(-1).sizes;
 
