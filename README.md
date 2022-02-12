@@ -28,24 +28,6 @@ export default {
 };
 ```
 
-Now, there's another thing you'll have to do to be able to use the component. You'll have exclude a few dependencies from _being prebuilt_ and _SSR_ by adding them to `vite.optimizeDeps.exclude` and `ssr.external` in the `astro.config.js` file as shown below:
-
-```js
-import astroImagePlugin from "astro-imagetools/plugin";
-
-export default {
-  vite: {
-    plugins: [astroImagePlugin],
-    optimizeDeps: {
-      exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
-    },
-    ssr: {
-      external: ["sharp", "potrace"],
-    },
-  },
-};
-```
-
 Then, you'll be able to use the component inside your Astro components like below:
 
 ```astro
