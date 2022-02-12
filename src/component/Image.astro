@@ -1,8 +1,7 @@
 ---
-import astroConfig from "/astro.config";
 import renderImage from "./utils/renderImage.js";
 
-const { image, link, style } = await renderImage(Astro.props, astroConfig);
+const { image, link, style } = await renderImage(Astro.props);
 ---
 
 <Fragment set:html={link + style + image} />

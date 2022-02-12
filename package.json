@@ -6,7 +6,8 @@
   "main": "./src/index.js",
   "exports": {
     ".": "./src/component/Image.astro",
-    "./plugin": "./src/plugin/index.js"
+    "./plugin": "./src/plugin/index.js",
+    "./renderImage": "./src/component/utils/renderImage.js"
   },
   "scripts": {
     "test": "echo \"No test specified\""

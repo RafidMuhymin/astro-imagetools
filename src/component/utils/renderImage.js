@@ -1,4 +1,5 @@
 import getImage from "./getImage";
+import astroConfig from "/astro.config.mjs";
 import getBackgroundStyles from "./getBackgroundStyles";
 
 /**
@@ -17,31 +18,28 @@ import getBackgroundStyles from "./getBackgroundStyles";
  *
  * @returns {Promise<ImageHTMLData>}
  */
-export default async function renderImage(
-  {
-    src,
-    alt,
-    preload,
-    loading = preload ? "eager" : "lazy",
-    decoding = "async",
-    breakpoints,
-    objectFit = "cover",
-    objectPosition = "50% 50%",
-    layout = "constrained",
-    placeholder = "blurred",
-    artDirectives,
-    format = ["avif", "webp"],
-    formatOptions = {
-      tracedSVG: {
-        function: "trace",
-      },
+export default async function renderImage({
+  src,
+  alt,
+  preload,
+  loading = preload ? "eager" : "lazy",
+  decoding = "async",
+  breakpoints,
+  objectFit = "cover",
+  objectPosition = "50% 50%",
+  layout = "constrained",
+  placeholder = "blurred",
+  artDirectives,
+  format = ["avif", "webp"],
+  formatOptions = {
+    tracedSVG: {
+      function: "trace",
     },
-    fallbackFormat,
-    includeSourceFormat = true,
-    ...configOptions
   },
-  astroConfig
-) {
+  fallbackFormat,
+  includeSourceFormat = true,
+  ...configOptions
+}) {
   const start = performance.now();
   const { uuid, images } = await getImage(
     src,
