@@ -14,6 +14,17 @@ const store = new Map();
 export default {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
+  config() {
+    return {
+      optimizeDeps: {
+        exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
+      },
+      ssr: {
+        external: ["sharp", "potrace"],
+      },
+    };
+  },
+
   async load(id) {
     try {
       var fileURL = new URL(`file://${id}`);
