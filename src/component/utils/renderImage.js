@@ -56,27 +56,16 @@ export default async function renderImage(
     objectPosition,
   );
 
-  // TODO: Figure out how to add these:
-  /*
-  <link
-  rel="preload"
-  as="image"
-  imagesrcset={imagesrcset}
-  imagesizes={imagesizes}
-  />
-
-  <style set:html={bgStyles.join("\n\n")}></style>
-  */
-
-  return (() => {
-    const sources = images.map(({ media, sources, sizes }) =>
-      sources.map(({ format, src, srcset }) => {
-        console.log(sizes);
-        const renderedSizes = Object.entries(sizes)
-          .map((size) => size)
-          .join("\n");
-        return src
-          ? `<img
+  return {
+    image: (() => {
+      const sources = images.map(({ media, sources, sizes }) =>
+        sources.map(({ format, src, srcset }) => {
+          console.log(sizes);
+          const renderedSizes = Object.entries(sizes)
+            .map((size) => size)
+            .join("\n");
+          return src
+            ? `<img
   class="${className}"
   src="${src}"
   alt="${alt}"
@@ -96,20 +85,28 @@ export default async function renderImage(
       : null
   }"
 />`
-          : `<source
+            : `<source
   ${renderedSizes}
   media="${media}"
   type="${`image/${format}`}"
   srcset="${srcset}"
   sizes="${imagesizes}"
 />`;
-      }),
-    );
+        }),
+      );
 
-    const renderedSources = sources.join("\n");
+      const renderedSources = sources.join("\n");
 
-    return images.length > 1
-      ? `<picture>${renderedSources}</picture>`
-      : renderedSources;
-  })();
+      return images.length > 1
+        ? `<picture>${renderedSources}</picture>`
+        : renderedSources;
+    })(),
+    link: `<link
+  rel="preload"
+  as="image"
+  imagesrcset="${imagesrcset}"
+  imagesizes="${imagesizes}"
+/>`,
+    css: bgStyles.join("\n\n"),
+  };
 }
