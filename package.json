@@ -4,6 +4,7 @@
   "description": "Image Optimization tools for the Astro JS framework",
   "type": "module",
   "main": "./src/index.js",
+  "types": "./src/types.ts",
   "exports": {
     ".": "./src/component/Image.astro",
     "./plugin": "./src/plugin/index.js",
