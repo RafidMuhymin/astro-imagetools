@@ -15,17 +15,17 @@ const store = new Map();
 export default {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
+  config: () => ({
+    optimizeDeps: {
+      exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
+    },
+    ssr: {
+      external: ["sharp", "potrace"],
+    },
+  }),
 
-  config(config) {
+  configResolved(config) {
     viteConfig = config;
-    return {
-      optimizeDeps: {
-        exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
-      },
-      ssr: {
-        external: ["sharp", "potrace"],
-      },
-    };
   },
 
   async load(id) {
@@ -42,6 +42,7 @@ export default {
 
     if (supportedFileTypes.includes(ext)) {
       const base = basename(src, extname(src));
+      const { base: projectBase } = viteConfig;
 
       const config = Object.fromEntries(searchParams);
 
@@ -61,7 +62,9 @@ export default {
 
         const [width] = widths;
 
-        const { assetName } = getImagePath(base, extension, width, hash);
+        const params = [base, projectBase, extension, width, hash];
+
+        const { assetName } = getImagePath(...params);
 
         if (store.has(assetName)) {
           return `export default "${store.get(assetName)}"`;
@@ -79,7 +82,9 @@ export default {
       } else {
         const sources = await Promise.all(
           widths.map(async (width) => {
-            const { name, path } = getImagePath(base, extension, width, hash);
+            const params = [base, projectBase, extension, width, hash];
+
+            const { name, path } = getImagePath(...params);
 
             if (!store.has(path)) {
               const config = { width, ...options };
