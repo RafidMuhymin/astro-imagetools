@@ -56,57 +56,63 @@ export default async function renderImage(
     objectPosition,
   );
 
-  return {
-    image: (() => {
-      const sources = images.map(({ media, sources, sizes }) =>
-        sources.map(({ format, src, srcset }) => {
-          console.log(sizes);
-          const renderedSizes = Object.entries(sizes)
-            .map((size) => size)
-            .join("\n");
-          return src
-            ? `<img
-  class="${className}"
-  src="${src}"
-  alt="${alt}"
-  ${renderedSizes}
-  srcset="${srcset}"
-  loading="${loading}"
-  sizes="${imagesizes}"
-  decoding="${decoding}"
-  onload="style.backgroundImage = 'none'"
-  style="${
-    layout === "fill"
-      ? `width: 100%; height: 100%;`
-      : layout === "fullWidth"
-      ? `width: 100%; height: auto;`
-      : layout === "constrained"
-      ? "max-width: 100%; height: auto;"
-      : null
-  }"
+  const imageTag = (() => {
+    const sources = images.map(({ media, sources, sizes }) =>
+      sources.map(({ format, src, srcset }) => {
+        console.log(sizes);
+        const renderedSizes = Object.entries(sizes)
+          .map((size) => size)
+          .join("\n");
+        return src
+          ? `<img
+class="${className}"
+src="${src}"
+alt="${alt}"
+${renderedSizes}
+srcset="${srcset}"
+loading="${loading}"
+sizes="${imagesizes}"
+decoding="${decoding}"
+onload="style.backgroundImage = 'none'"
+style="${
+              layout === "fill"
+                ? `width: 100%; height: 100%;`
+                : layout === "fullWidth"
+                ? `width: 100%; height: auto;`
+                : layout === "constrained"
+                ? "max-width: 100%; height: auto;"
+                : null
+            }"
 />`
-            : `<source
-  ${renderedSizes}
-  media="${media}"
-  type="${`image/${format}`}"
-  srcset="${srcset}"
-  sizes="${imagesizes}"
+          : `<source
+${renderedSizes}
+media="${media}"
+type="${`image/${format}`}"
+srcset="${srcset}"
+sizes="${imagesizes}"
 />`;
-        }),
-      );
+      }),
+    );
 
-      const renderedSources = sources.join("\n");
+    const renderedSources = sources.join("\n");
 
-      return images.length > 1
-        ? `<picture>${renderedSources}</picture>`
-        : renderedSources;
-    })(),
-    link: `<link
+    return images.length > 1
+      ? `<picture>${renderedSources}</picture>`
+      : renderedSources;
+  })();
+
+  const linkTag = `<link
   rel="preload"
   as="image"
   imagesrcset="${imagesrcset}"
   imagesizes="${imagesizes}"
-/>`,
-    css: bgStyles.join("\n\n"),
+/>`;
+
+  const css = bgStyles.join("\n\n");
+
+  return {
+    imageTag,
+    linkTag,
+    css,
   };
 }
