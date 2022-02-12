@@ -1,9 +1,14 @@
 {
   "name": "astro-imagetools",
-  "version": "0.1.0",
+  "version": "0.0.13",
   "description": "Image Optimization tools for the Astro JS framework",
   "type": "module",
   "main": "./src/index.js",
+  "exports": {
+    ".": "./src/component/Image.astro",
+    "./plugin": "./src/plugin/index.js",
+    "./renderImage": "./src/component/utils/renderImage.js"
+  },
   "scripts": {
     "test": "echo \"No test specified\""
   },
