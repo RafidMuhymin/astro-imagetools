@@ -76,7 +76,7 @@ export default async function renderImage(
     const sources = images.map(({ media, sources, sizes }) =>
       sources.map(({ format, src, srcset }) => {
         const renderedSizes = Object.entries(sizes)
-          .map((size) => size)
+          .map(([key, value]) => `${key}="${value}"`)
           .join("\n");
         return src
           ? `<img
