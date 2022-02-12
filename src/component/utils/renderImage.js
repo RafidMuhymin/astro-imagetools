@@ -80,31 +80,31 @@ export default async function renderImage(
           .join("\n");
         return src
           ? `<img
-class="${className}"
-src="${src}"
-alt="${alt}"
-${renderedSizes}
-srcset="${srcset}"
-loading="${loading}"
-sizes="${imagesizes}"
-decoding="${decoding}"
-onload="style.backgroundImage = 'none'"
-style="${
-              layout === "fill"
-                ? `width: 100%; height: 100%;`
-                : layout === "fullWidth"
-                ? `width: 100%; height: auto;`
-                : layout === "constrained"
-                ? "max-width: 100%; height: auto;"
-                : null
-            }"
+  class="${className}"
+  src="${src}"
+  alt="${alt}"
+  ${renderedSizes}
+  srcset="${srcset}"
+  loading="${loading}"
+  sizes="${imagesizes}"
+  decoding="${decoding}"
+  onload="style.backgroundImage = 'none'"
+  style="${
+                layout === "fill"
+                  ? `width: 100%; height: 100%;`
+                  : layout === "fullWidth"
+                  ? `width: 100%; height: auto;`
+                  : layout === "constrained"
+                  ? "max-width: 100%; height: auto;"
+                  : null
+              }"
 />`
           : `<source
-${renderedSizes}
-media="${media}"
-type="${`image/${format}`}"
-srcset="${srcset}"
-sizes="${imagesizes}"
+  ${renderedSizes}
+  media="${media}"
+  type="${`image/${format}`}"
+  srcset="${srcset}"
+  sizes="${imagesizes}"
 />`;
       }),
     );
