@@ -125,6 +125,14 @@ declare interface ImageToolsConfigs {
     | "attention";
 }
 
-declare type ImageConfig = ComponentProps & FormatOptions & ImageToolsConfigs;
+export declare type ImageConfig = ComponentProps &
+  FormatOptions &
+  ImageToolsConfigs;
 
-export default ImageConfig;
+export interface ImageHTMLData {
+  image: string;
+  link: string;
+  style: string;
+}
+
+export function renderImage(props: ImageConfig): Promise<ImageHTMLData>;
