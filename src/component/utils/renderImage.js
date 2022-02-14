@@ -109,10 +109,10 @@ export default async function renderImage({
             />`
       )
     )
-    .flat()
-    .join("\n");
+    .flat();
 
-  const image = images.length > 1 ? `<picture>${sources}</picture>` : sources;
+  const image =
+    sources.length > 1 ? `<picture>${sources.join("\n")}</picture>` : sources;
 
   return {
     link,
