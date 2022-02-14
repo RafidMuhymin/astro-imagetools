@@ -130,9 +130,9 @@ export declare type ImageConfig = ComponentProps &
   ImageToolsConfigs;
 
 export interface ImageHTMLData {
-  image: string;
   link: string;
   style: string;
+  image: string;
 }
 
 export function renderImage(props: ImageConfig): Promise<ImageHTMLData>;

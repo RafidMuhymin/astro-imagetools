@@ -1,6 +1,5 @@
 ---
-import {ImageConfig as Props} from "../types"
-export {Props}
+import type { ImageConfig as Props } from "../types.d.ts";
 import renderImage from "./utils/renderImage.js";
 
 const { image, link, style } = await renderImage(Astro.props as Props);
