@@ -1,6 +1,7 @@
 // @ts-check
 
 import crypto from "crypto";
+import objectHash from "object-hash";
 import getArtDirectedImages from "./getArtDirectedImages";
 import getImageSources from "./getImageSources";
 import getProcessedImage from "./getProcessedImage";
@@ -20,10 +21,7 @@ export default async function (
   configOptions,
   globalConfigOptions
 ) {
-  const hash = crypto
-    .createHash("sha256")
-    .update(JSON.stringify(arguments))
-    .digest("hex");
+  const hash = objectHash(Array.from(arguments));
 
   if (imagesData.has(hash)) {
     return imagesData.get(hash);

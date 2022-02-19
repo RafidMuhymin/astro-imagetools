@@ -39,6 +39,7 @@
   "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
+    "object-hash": "3.0.0",
     "potrace": "2.1.8"
   },
   "optionalDependencies": {
