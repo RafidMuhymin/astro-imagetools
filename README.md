@@ -52,13 +52,37 @@ import Image from "astro-imagetools";
 </html>
 ```
 
+## Programmatic API
+
+The `astro-imagetools` package exposes a programmatic API to generate responsive images named `renderImage`. You can use it as shown below:
+
+```js
+import renderImage from "astro-imagetools/renderImage";
+
+export async function getRenderedImage({ src, alt, ...rest }) {
+  const { link, style, image } = await renderImage({ src, alt, ...rest });
+
+  return link + style + image;
+}
+```
+
+The `renderImage` function takes the same arguments as the props of the `<Image />` component. The function returns a promise that resolves to `ImageHTMLData` object. It contains the following properties:
+
+```ts
+export interface ImageHTMLData {
+  link: string;
+  style: string;
+  image: string;
+}
+```
+
 ## Documentation
 
 Docs coming soon!
 
 ### Component Props
 
-The below interface describes the props that the component accepts. The props are passed to the component as a JSX attribute.
+The `ImageConfig` interface below describes the props that the component and the `renderImage` function accepts. The props are passed to the component as a JSX attribute.
 
 **Note:** The `<Image />` component and the plugin fallback to `@astropub/codecs` for processing images if the environment is unable to install `sharp`. Most of the properties defined in the `ImagetoolsConfig` interface won't be available in this case.
 
@@ -122,10 +146,15 @@ declare interface ArtDirectives extends FormatOptions, ImageToolsConfigs {
   objectPosition?: string;
 }
 
+declare type sizesFunction = {
+  (breakpoints: number[]): string;
+};
+
 declare interface ComponentProps {
   src: string;
   alt: string;
   preload?: boolean | format;
+  sizes?: string | sizesFunction;
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   breakpoints?:
@@ -190,9 +219,9 @@ declare interface ImageToolsConfigs {
     | "attention";
 }
 
-declare type ImageConfig = ComponentProps & FormatOptions & ImageToolsConfigs;
-
-export default ImageConfig;
+export declare type ImageConfig = ComponentProps &
+  FormatOptions &
+  ImageToolsConfigs;
 ```
 
 ### Plugin Options
