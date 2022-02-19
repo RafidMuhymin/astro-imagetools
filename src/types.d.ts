@@ -57,6 +57,10 @@ declare interface ArtDirectives extends FormatOptions, ImageToolsConfigs {
   objectPosition?: string;
 }
 
+declare type sizesFunction = {
+  (breakpoints: number[]): string;
+};
+
 declare interface ComponentProps {
   src: string;
   alt: string;

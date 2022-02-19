@@ -4,28 +4,30 @@ import getImage from "./getImage";
 import astroConfig from "/astro.config";
 import getBackgroundStyles from "./getBackgroundStyles";
 
-export default async function renderImage({
-  src,
-  alt,
-  preload,
-  loading = preload ? "eager" : "lazy",
-  decoding = "async",
-  breakpoints,
-  objectFit = "cover",
-  objectPosition = "50% 50%",
-  layout = "constrained",
-  placeholder = "blurred",
-  artDirectives,
-  format = ["avif", "webp"],
-  formatOptions = {
-    tracedSVG: {
-      function: "trace",
+export default async function renderImage(props) {
+  const {
+    src,
+    alt,
+    preload,
+    loading = preload ? "eager" : "lazy",
+    decoding = "async",
+    breakpoints,
+    objectFit = "cover",
+    objectPosition = "50% 50%",
+    layout = "constrained",
+    placeholder = "blurred",
+    artDirectives,
+    format = ["avif", "webp"],
+    formatOptions = {
+      tracedSVG: {
+        function: "trace",
+      },
     },
-  },
-  fallbackFormat,
-  includeSourceFormat = true,
-  ...configOptions
-}) {
+    fallbackFormat,
+    includeSourceFormat = true,
+    ...configOptions
+  } = props;
+
   const start = performance.now();
   const { uuid, images } = await getImage(
     src,
@@ -42,6 +44,8 @@ export default async function renderImage({
   const end = performance.now();
 
   console.log(`Image at ${src} optimized in ${end - start}ms`);
+
+  console.log(images);
 
   const { width } = images.at(-1).sizes;
 
@@ -81,7 +85,6 @@ export default async function renderImage({
               alt="${alt}"
               srcset="${srcset}"
               class="${className}"
-              sizes="${imagesizes}"
               width="${sizes.width}"
               height="${sizes.height}"
               onload="style.backgroundImage = 'none'"
@@ -101,7 +104,6 @@ export default async function renderImage({
             />`
           : `<source
               srcset="${srcset}"
-              sizes="${imagesizes}"
               width="${sizes.width}"
               height="${sizes.height}"
               type="${`image/${format}`}"
