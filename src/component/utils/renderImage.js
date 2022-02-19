@@ -9,6 +9,7 @@ export default async function renderImage(props) {
     src,
     alt,
     preload,
+    sizes,
     loading = preload ? "eager" : "lazy",
     decoding = "async",
     breakpoints,
@@ -55,7 +56,11 @@ export default async function renderImage(props) {
     preload &&
     images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
-  const imagesizes = `(min-width: ${width}px) ${width}px, 100vw`;
+  const imagesizes = sizes
+    ? typeof sizes === "string"
+      ? sizes
+      : sizes(breakpoints)
+    : `(min-width: ${width}px) ${width}px, 100vw`;
 
   const bgStyles = getBackgroundStyles(
     images,
@@ -85,6 +90,7 @@ export default async function renderImage(props) {
               alt="${alt}"
               srcset="${srcset}"
               class="${className}"
+              sizes="${imagesizes}"
               width="${sizes.width}"
               height="${sizes.height}"
               onload="style.backgroundImage = 'none'"
@@ -104,6 +110,7 @@ export default async function renderImage(props) {
             />`
           : `<source
               srcset="${srcset}"
+              sizes="${imagesizes}"
               width="${sizes.width}"
               height="${sizes.height}"
               type="${`image/${format}`}"

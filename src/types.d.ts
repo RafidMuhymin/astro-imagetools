@@ -65,6 +65,7 @@ declare interface ComponentProps {
   src: string;
   alt: string;
   preload?: boolean | format;
+  sizes?: string | sizesFunction;
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   breakpoints?:
