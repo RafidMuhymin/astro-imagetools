@@ -9,6 +9,7 @@ const imagesData = new Map();
 
 export default async function (
   src,
+  imagesizes,
   format,
   breakpoints,
   placeholder,
@@ -43,11 +44,12 @@ export default async function (
       image,
       format,
       imageWidth,
+      imagesizes,
       breakpoints,
       placeholder,
       imageFormat,
-      fallbackFormat,
       formatOptions,
+      fallbackFormat,
       includeSourceFormat,
       rest
     ),
@@ -55,6 +57,7 @@ export default async function (
       artDirectives,
       placeholder,
       format,
+      imagesizes,
       breakpoints,
       fallbackFormat,
       includeSourceFormat,

@@ -4,6 +4,7 @@ import getBreakpoints from "./getBreakpoints";
 
 export default function getConfigOptions(
   imageWidth,
+  imagesizes,
   breakpoints,
   format,
   imageFormat,
@@ -21,8 +22,14 @@ export default function getConfigOptions(
 
   const requiredBreakpoints = getBreakpoints(breakpoints, imageWidth);
 
+  imagesizes =
+    typeof imagesizes === "string"
+      ? imagesizes
+      : imagesizes(requiredBreakpoints);
+
   return {
     formats,
+    imagesizes,
     requiredBreakpoints,
   };
 }

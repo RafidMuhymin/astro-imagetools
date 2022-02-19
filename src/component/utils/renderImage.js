@@ -8,8 +8,8 @@ export default async function renderImage(props) {
   const {
     src,
     alt,
-    preload,
     sizes,
+    preload,
     loading = preload ? "eager" : "lazy",
     decoding = "async",
     breakpoints,
@@ -32,6 +32,7 @@ export default async function renderImage(props) {
   const start = performance.now();
   const { uuid, images } = await getImage(
     src,
+    sizes,
     format,
     breakpoints,
     placeholder,
@@ -46,21 +47,13 @@ export default async function renderImage(props) {
 
   console.log(`Image at ${src} optimized in ${end - start}ms`);
 
-  console.log(images);
-
-  const { width } = images.at(-1).sizes;
-
   const className = `astro-imagetools-${uuid}`;
 
   const imagesrcset =
     preload &&
     images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
-  const imagesizes = sizes
-    ? typeof sizes === "string"
-      ? sizes
-      : sizes(breakpoints)
-    : `(min-width: ${width}px) ${width}px, 100vw`;
+  const { imagesizes } = images.at(-1);
 
   const bgStyles = getBackgroundStyles(
     images,
@@ -82,7 +75,7 @@ export default async function renderImage(props) {
     : "";
 
   const sources = images
-    .map(({ media, sources, sizes }) =>
+    .map(({ media, sources, sizes, imagesizes }) =>
       sources.map(({ format, src, srcset }) =>
         src
           ? `<img

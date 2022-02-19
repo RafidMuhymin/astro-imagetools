@@ -9,22 +9,28 @@ export default async function getImageSources(
   image,
   format,
   imageWidth,
+  imagesizes,
   breakpoints,
   placeholder,
   imageFormat,
-  fallbackFormat,
   formatOptions,
+  fallbackFormat,
   includeSourceFormat,
   rest
 ) {
-  const { formats, requiredBreakpoints } = getConfigOptions(
+  const calculatedConfigs = getConfigOptions(
     imageWidth,
+    imagesizes,
     breakpoints,
     format,
     imageFormat,
     fallbackFormat,
     includeSourceFormat
   );
+
+  const { formats, requiredBreakpoints } = calculatedConfigs;
+
+  imagesizes = calculatedConfigs.imagesizes;
 
   const maxWidth = requiredBreakpoints.at(-1);
   const sliceLength = -(maxWidth.toString().length + 2);
@@ -64,5 +70,5 @@ export default async function getImageSources(
     rest
   );
 
-  return { sources, sizes, fallback };
+  return { sources, sizes, fallback, imagesizes };
 }

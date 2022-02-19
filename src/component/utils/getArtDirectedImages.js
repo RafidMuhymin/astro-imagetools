@@ -9,6 +9,7 @@ export default async function getArtDirectedImages(
   artDirectives = [],
   placeholder,
   format,
+  imagesizes,
   breakpoints,
   fallbackFormat,
   includeSourceFormat,
@@ -42,14 +43,19 @@ export default async function getArtDirectedImages(
         // @ts-ignore
         rest2.aspect = `${imageWidth / imageHeight}`;
 
-        const { formats, requiredBreakpoints } = getConfigOptions(
+        const calculatedConfigs = getConfigOptions(
           imageWidth,
+          imagesizes,
           directiveBreakpoints || breakpoints,
           directiveFormat || format,
           imageFormat,
           directiveFallbackFormat || fallbackFormat,
           directiveIncludeSourceFormat || includeSourceFormat
         );
+
+        const { formats, requiredBreakpoints } = calculatedConfigs;
+
+        imagesizes = calculatedConfigs.imagesizes;
 
         const maxWidth = requiredBreakpoints.at(-1);
 
@@ -100,6 +106,7 @@ export default async function getArtDirectedImages(
           sizes,
           object,
           fallback,
+          imagesizes,
         };
       }
     )
