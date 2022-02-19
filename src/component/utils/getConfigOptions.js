@@ -25,7 +25,12 @@ export default function getConfigOptions(
   imagesizes =
     typeof imagesizes === "string"
       ? imagesizes
-      : imagesizes(requiredBreakpoints);
+      : typeof imagesizes === "function"
+      ? imagesizes(requiredBreakpoints)
+      : (() => {
+          const maxWidth = requiredBreakpoints.at(-1);
+          return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+        })();
 
   return {
     formats,
