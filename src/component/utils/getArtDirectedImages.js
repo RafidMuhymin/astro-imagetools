@@ -9,7 +9,6 @@ export default async function getArtDirectedImages(
   artDirectives = [],
   placeholder,
   format,
-  imagesizes,
   breakpoints,
   fallbackFormat,
   includeSourceFormat,
@@ -21,6 +20,7 @@ export default async function getArtDirectedImages(
       async ({
         src,
         media,
+        sizes: imagesizes,
         placeholder: directivePlaceholder,
         breakpoints: directiveBreakpoints,
         objectFit,
