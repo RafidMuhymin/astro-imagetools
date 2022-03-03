@@ -1,10 +1,9 @@
 // @ts-check
-
 import crypto from "crypto";
 import objectHash from "object-hash";
-import getArtDirectedImages from "./getArtDirectedImages";
-import getImageSources from "./getImageSources";
-import getProcessedImage from "./getProcessedImage";
+import getImageSources from "./getImageSources.js";
+import getProcessedImage from "./getProcessedImage.js";
+import getArtDirectedImages from "./getArtDirectedImages.js";
 
 const imagesData = new Map();
 
@@ -32,7 +31,6 @@ export default async function (
 
   src = path;
 
-  // @ts-ignore
   rest.aspect = `${imageWidth / imageHeight}`;
   fallbackFormat ||= imageFormat;
 

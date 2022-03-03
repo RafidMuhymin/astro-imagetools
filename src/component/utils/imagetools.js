@@ -10,7 +10,7 @@ import {
 export async function getImageDetails(path, width, height, aspect) {
   const { image, metadata } = await applyTransforms(
     generateTransforms({ width, height, aspect }, builtins).transforms,
-    loadImage(`.${path}`)
+    loadImage(path)
   );
 
   const {

@@ -2,8 +2,8 @@
 
 import util from "util";
 import potrace from "potrace";
-import stringifyParams from "./stringifyParams";
-import { sharp } from "./sharpCheck";
+import getSrcset from "./getSrcset.js";
+import { sharp } from "./sharpCheck.js";
 
 export default async function getFallbackImage(
   src,
@@ -15,11 +15,11 @@ export default async function getFallbackImage(
 ) {
   switch (placeholder) {
     case "blurred":
-      const params = stringifyParams({ ...rest, ...formatOptions[format] });
-
-      const { default: dataUri } = await import(
-        `${src}?inline&format=${format}&w=20${params}`
-      );
+      const dataUri = await getSrcset(src, [20], format, {
+        inline: true,
+        ...rest,
+        ...formatOptions[format],
+      });
 
       return dataUri;
     case "tracedSVG":

@@ -1,15 +1,16 @@
 // @ts-check
-import { Readable } from "stream";
-import { basename, extname } from "path";
+import fs from "fs";
+import path from "path";
+import stream from "stream";
 import { getConfigOptions, getImagePath } from "./utils/shared.js";
 import {
-  sharp,
   getLoadedImage,
   getTransformedImage,
   supportedFileTypes,
 } from "./utils/sharpCheck.js";
 
 let viteConfig;
+const bundled = [];
 const store = new Map();
 
 export default {
@@ -20,7 +21,7 @@ export default {
       exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
     },
     ssr: {
-      external: ["sharp", "potrace", "object-hash"],
+      external: ["sharp", "potrace", "object-hash", "@astropub/codecs"],
     },
   }),
 
@@ -29,6 +30,13 @@ export default {
   },
 
   async load(id) {
+    if (this.load) {
+      // @ts-ignore
+      import.meta.vitePluginContext = {
+        load: this.load,
+      };
+    }
+
     try {
       var fileURL = new URL(`file://${id}`);
     } catch (error) {
@@ -38,10 +46,12 @@ export default {
     const { search, searchParams } = fileURL;
 
     const src = id.replace(search, "");
-    const ext = extname(src).slice(1);
+
+    const ext = path.extname(src).slice(1);
 
     if (supportedFileTypes.includes(ext)) {
-      const base = basename(src, extname(src));
+      const base = path.basename(src, path.extname(src));
+
       const { base: projectBase } = viteConfig;
 
       const config = Object.fromEntries(searchParams);
@@ -91,9 +101,7 @@ export default {
 
               const params = [src, loadedImage, config, type];
 
-              const image = await getTransformedImage(...params);
-
-              const buffer = sharp ? null : image.buffer;
+              const { image, buffer } = await getTransformedImage(...params);
 
               const imageObject = { type, name, buffer, extension, image };
 
@@ -125,7 +133,7 @@ export default {
         response.setHeader("Cache-Control", "no-cache");
 
         if (buffer) {
-          return Readable.from(buffer).pipe(response);
+          return stream.Readable.from(buffer).pipe(response);
         }
 
         return image.clone().pipe(response);
@@ -135,34 +143,50 @@ export default {
     });
   },
 
-  async generateBundle(_options, bundle) {
-    const outputs = [];
-    for (const [, output] of Object.entries(bundle)) {
-      if (typeof output.source === "string") {
-        outputs.push(output);
-      }
+  async closeBundle() {
+    if (viteConfig.mode === "production") {
+      const assetNames = Object.keys(Object.fromEntries(store)).filter(
+        (item) => item.startsWith("/assets/") && !bundled.includes(item)
+      );
+
+      const { outDir, assetsDir } = viteConfig.build;
+
+      const assetsDirPath = `${outDir}${assetsDir}`;
+
+      fs.existsSync(assetsDirPath) ||
+        fs.mkdirSync(assetsDirPath, { recursive: true });
+
+      const { assetFileNames = `/${assetsDir}/[name].[hash][extname]` } =
+        viteConfig.build.rollupOptions.output;
+
+      await Promise.all(
+        assetNames.map(async (assetName) => {
+          const { buffer, image } = store.get(assetName);
+
+          const extname = path.extname(assetName);
+
+          const base = path.basename(assetName, extname);
+
+          const ext = extname.slice(1);
+
+          const name = base.slice(0, base.lastIndexOf("."));
+
+          const hash = base.slice(base.lastIndexOf(".") + 1);
+
+          const assetFileName = assetFileNames
+            .replace("[name]", name)
+            .replace("[hash]", hash)
+            .replace("[ext]", ext)
+            .replace("[extname]", extname);
+
+          await fs.promises.writeFile(
+            outDir + assetFileName,
+            buffer || (await image.clone().toBuffer())
+          );
+
+          bundled.push(assetName);
+        })
+      );
     }
-
-    await Promise.all(
-      [...store.entries()].map(async ([src, imageObject]) => {
-        for (const output of outputs) {
-          if (output.source.match(src)) {
-            const { name, buffer, image } = imageObject;
-
-            const filename = this.getFileName(
-              this.emitFile({
-                name,
-                type: "asset",
-                source: buffer || (await image.clone().toBuffer()),
-              })
-            );
-
-            const path = viteConfig.base + filename;
-
-            output.source = output.source.replace(src, path);
-          }
-        }
-      })
-    );
   },
 };

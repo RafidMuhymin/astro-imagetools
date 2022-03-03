@@ -1,3 +1,5 @@
+// @ts-check
+
 export const sharp = await (async () => {
   try {
     if (await import("sharp")) {
@@ -8,6 +10,6 @@ export const sharp = await (async () => {
   }
 })();
 
-export const { getImageDetails } = await import(
-  `./${sharp ? "imagetools" : "codecs"}.js`
-);
+export const { getImageDetails } = await (sharp
+  ? import("./imagetools.js")
+  : import("./codecs.js"));

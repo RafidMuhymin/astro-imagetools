@@ -6,10 +6,9 @@ import * as codecs from "@astropub/codecs";
 export async function getImageDetails(path, width, height, aspect) {
   const extension = extname(path).slice(1);
 
-  // @ts-ignore
   const imageFormat = extension === "jpeg" ? "jpg" : extension;
 
-  const buffer = fs.readFileSync(`.${path}`);
+  const buffer = fs.readFileSync(path);
   const decodedImage = await codecs.jpg.decode(buffer);
 
   let { width: imageWidth = width, height: imageHeight = height } =

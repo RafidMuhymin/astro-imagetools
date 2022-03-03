@@ -1,8 +1,7 @@
 // @ts-check
-
-import getConfigOptions from "./getConfigOptions";
-import getFallbackImage from "./getFallbackImage";
-import stringifyParams from "./stringifyParams";
+import getSrcset from "./getSrcset.js";
+import getConfigOptions from "./getConfigOptions.js";
+import getFallbackImage from "./getFallbackImage.js";
 
 export default async function getImageSources(
   src,
@@ -37,13 +36,10 @@ export default async function getImageSources(
 
   const sources = await Promise.all(
     formats.map(async (format) => {
-      const params = stringifyParams({ ...rest, ...formatOptions[format] });
-
-      const { default: srcset } = await import(
-        `${src}?srcset&w=${requiredBreakpoints.join(
-          ";"
-        )}&format=${format}${params}`
-      );
+      const srcset = await getSrcset(src, requiredBreakpoints, format, {
+        ...rest,
+        ...formatOptions[format],
+      });
 
       return {
         src:

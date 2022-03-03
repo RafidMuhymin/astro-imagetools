@@ -1,8 +1,11 @@
 // @ts-check
-
 import fs from "fs";
 import crypto from "crypto";
-import { getImageDetails } from "./sharpCheck";
+import { getImageDetails } from "./sharpCheck.js";
+
+const isStaticBuild =
+  // @ts-ignore
+  import.meta.env.PROD && process.argv.includes("--experimental-static-build");
 
 export default async (src, configOptions, globalConfigOptions) => {
   const { search, searchParams } = new URL(src, "file://");
@@ -24,8 +27,6 @@ export default async (src, configOptions, globalConfigOptions) => {
     src = `/${filepath}`;
   }
 
-  const path = src;
-
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
 
   configOptions.aspect &&= `${configOptions.aspect}`;
@@ -41,6 +42,8 @@ export default async (src, configOptions, globalConfigOptions) => {
     ...rest
   } = configOptions;
 
+  const path = `./${src}`;
+
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
     path,
     width,
@@ -49,7 +52,7 @@ export default async (src, configOptions, globalConfigOptions) => {
   );
 
   return {
-    path,
+    path: isStaticBuild ? `.${src}` : src,
     rest,
     image,
     imageWidth,

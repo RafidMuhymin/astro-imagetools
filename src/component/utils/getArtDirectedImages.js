@@ -1,9 +1,9 @@
 // @ts-check
 
-import getConfigOptions from "./getConfigOptions";
-import getFallbackImage from "./getFallbackImage";
-import stringifyParams from "./stringifyParams";
-import getProcessedImage from "./getProcessedImage";
+import getConfigOptions from "./getConfigOptions.js";
+import getFallbackImage from "./getFallbackImage.js";
+import getProcessedImage from "./getProcessedImage.js";
+import getSrcset from "./getSrcset.js";
 
 export default async function getArtDirectedImages(
   artDirectives = [],
@@ -32,7 +32,6 @@ export default async function getArtDirectedImages(
         ...configOptions
       }) => {
         const {
-          path,
           rest: rest2,
           image,
           imageWidth,
@@ -40,7 +39,6 @@ export default async function getArtDirectedImages(
           imageFormat,
         } = await getProcessedImage(src, configOptions);
 
-        // @ts-ignore
         rest2.aspect = `${imageWidth / imageHeight}`;
 
         const calculatedConfigs = getConfigOptions(
@@ -61,18 +59,12 @@ export default async function getArtDirectedImages(
 
         const sources = await Promise.all(
           formats.map(async (format) => {
-            const params = stringifyParams({
+            const srcset = await getSrcset(src, requiredBreakpoints, format, {
               ...rest,
               ...rest2,
               ...formatOptions[format],
               ...directiveFormatOptions[format],
             });
-
-            const { default: srcset } = await import(
-              `${path}?srcset&w=${requiredBreakpoints.join(
-                ";"
-              )}&format=${format}${params}`
-            );
 
             return {
               format,

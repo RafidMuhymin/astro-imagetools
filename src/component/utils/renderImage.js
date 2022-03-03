@@ -1,14 +1,17 @@
 // @ts-check
 
-import getImage from "./getImage";
-import astroConfig from "/astro.config";
-import getBackgroundStyles from "./getBackgroundStyles";
+import getImage from "./getImage.js";
+import astroConfig from "../../../../astro.config.mjs";
+import getBackgroundStyles from "./getBackgroundStyles.js";
 
 export default async function renderImage(props) {
   const {
     src,
     alt,
-    sizes,
+    sizes = (breakpoints) => {
+      const maxWidth = breakpoints.at(-1);
+      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+    },
     preload,
     loading = preload ? "eager" : "lazy",
     decoding = "async",
@@ -74,11 +77,10 @@ export default async function renderImage(props) {
       />`
     : "";
 
-  const sources = images
-    .map(({ media, sources, sizes, imagesizes }) =>
-      sources.map(({ format, src, srcset }) =>
-        src
-          ? `<img
+  const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
+    sources.map(({ format, src, srcset }) =>
+      src
+        ? `<img
               src="${src}"
               alt="${alt}"
               srcset="${srcset}"
@@ -101,7 +103,7 @@ export default async function renderImage(props) {
                   : ""
               }
             />`
-          : `<source
+        : `<source
               srcset="${srcset}"
               sizes="${imagesizes}"
               width="${sizes.width}"
@@ -109,9 +111,8 @@ export default async function renderImage(props) {
               type="${`image/${format}`}"
               ${media ? `media="${media}"` : ""}
             />`
-      )
     )
-    .flat();
+  );
 
   const image =
     sources.length > 1 ? `<picture>${sources.join("\n")}</picture>` : sources;

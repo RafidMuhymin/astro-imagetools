@@ -1,3 +1,5 @@
+// @ts-check
+
 export const sharp = await (async () => {
   try {
     if (await import("sharp")) {
@@ -8,11 +10,6 @@ export const sharp = await (async () => {
   }
 })();
 
-// @ts-ignore
-export const { getLoadedImage, getTransformedImage } = await import(
-  `./${sharp ? "imagetools" : "codecs"}.js`
-);
-
 export const supportedFileTypes = [
   "avif",
   "jpeg",
@@ -21,3 +18,7 @@ export const supportedFileTypes = [
   "webp",
   ...(sharp ? ["heic", "heif", "tiff", "gif"] : ["jxl", "wp2"]),
 ];
+
+export const { getLoadedImage, getTransformedImage } = await (sharp
+  ? import("./imagetools.js")
+  : import("./codecs.js"));

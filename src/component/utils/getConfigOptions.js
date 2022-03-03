@@ -1,6 +1,6 @@
 // @ts-check
 
-import getBreakpoints from "./getBreakpoints";
+import getBreakpoints from "./getBreakpoints.js";
 
 export default function getConfigOptions(
   imageWidth,
@@ -25,12 +25,7 @@ export default function getConfigOptions(
   imagesizes =
     typeof imagesizes === "string"
       ? imagesizes
-      : typeof imagesizes === "function"
-      ? imagesizes(requiredBreakpoints)
-      : (() => {
-          const maxWidth = requiredBreakpoints.at(-1);
-          return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-        })();
+      : imagesizes(requiredBreakpoints);
 
   return {
     formats,
