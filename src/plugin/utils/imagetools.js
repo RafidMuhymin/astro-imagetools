@@ -28,13 +28,13 @@ export const getTransformedImage = async (
     image.clone()
   );
 
-  if (dataUri) {
-    return {
-      dataUri: `data:${type};base64,${(
-        await encodedImage.clone().toBuffer()
-      ).toString("base64")}`,
-    };
-  }
+  dataUri &&= `data:${type};base64,${(
+    await encodedImage.clone().toBuffer()
+  ).toString("base64")}`;
 
-  return encodedImage;
+  return {
+    image: encodedImage,
+    buffer: null,
+    dataUri,
+  };
 };

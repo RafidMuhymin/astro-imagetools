@@ -43,9 +43,7 @@ export const getTransformedImage = async (
 
   const buffer = Buffer.from(encodedImage.data);
 
-  if (dataUri) {
-    return { dataUri: `data:${type};base64,${buffer.toString("base64")}` };
-  }
+  dataUri &&= `data:${type};base64,${buffer.toString("base64")}`;
 
-  return { buffer };
+  return { image, buffer, dataUri };
 };
