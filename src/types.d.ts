@@ -117,6 +117,10 @@ declare type sizesFunction = {
   (breakpoints: number[]): string;
 };
 
+declare type breakpointsFunction = {
+  (imageWidth: number): number[];
+};
+
 declare interface PrimaryProps {
   src: string;
   // The absolute path to the source image.
@@ -130,6 +134,7 @@ declare interface PrimaryProps {
   // The placeholder to be displayed while the image is loading. If `placeholder` is set to `"dominantColor"`, the dominant color of the image will be used as the placeholder. If it is set to `"blurred"`, a very low-resolution version of the provided image will be enlarged and used as the placeholder. If it is set to `"tracedSVG"`, a traced SVG of the image will be used as the placeholder. If it is set to `"none"`, no placeholder will be displayed.
   breakpoints?:
     | number[]
+    | breakpointsFunction
     | {
         count?: number;
         minWidth?: number;
@@ -162,7 +167,9 @@ export interface ImageConfig
   // In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
 
   // In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
-  artDirectives?: ArtDirectives[];
+  artDirectives?: Array<
+    { media: string } & FormatOptions & FormatOptions & ImageToolsConfigs
+  >;
   // Check the ArtDirectives interface for more details.
 }
 

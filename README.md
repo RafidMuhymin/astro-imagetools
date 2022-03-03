@@ -78,9 +78,32 @@ export interface ImageHTMLData {
 }
 ```
 
-## Component Props
+## Configuration Options
+
+Both the `<Image />` component and the `renderImage` function supports a total of 40 config options. You can pass them directly to the component as props and to the function as propertise of an object.
+
+### Example Usage
+
+#### `<Image />` Component
+
+```jsx
+<Image src="/src/images/landscape.jpg" alt="alt text" />
+```
+
+#### `renderImage` Function
+
+```js
+const { link, style, image } = await renderImage({
+  src: "/src/images/landscape.jpg",
+  alt: "alt text",
+});
+```
+
+### Interface
 
 The `ImageConfig` interface below describes the props that the component and the `renderImage` function accepts. The props are passed to the component as a JSX attribute.
+
+This section is only for quick reference and for astronomers familiar with _TypeScript_. If you are not comfortable with `TypeScript` or need more information, you can skip this section and move on to the next section for a more detailed explanation with examples.
 
 **Note:** The `<Image />` component and the plugin fallback to `@astropub/codecs` for processing images if the environment is unable to install `sharp`. Most of the properties defined in the `ImagetoolsConfig` interface won't be available in this case.
 
@@ -190,7 +213,7 @@ declare interface ImageToolsConfigs {
     | "attention";
 }
 
-declare interface ArtDirectives
+declare interface ArtDirective
   extends PrimaryProps,
     FormatOptions,
     ImageToolsConfigs {
@@ -249,15 +272,152 @@ export interface ImageConfig
   // In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
 
   // In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
-  artDirectives?: ArtDirectives[];
-  // Check the ArtDirectives interface for more details.
+  artDirectives?: ArtDirective[];
+  // Check the ArtDirective interface for more details.
 }
 ```
 
-## Plugin Options
+### `PrimaryProps`
 
-The plugin is still in beta and doesn't yet support any configuration options.
+The properties described in the `PrimaryProps` interface are some of the main props and they are shared with the `ArtDirectives` too. All the props of the `PrimaryProps` interface are optional except for the `src` and `alt` properties.
 
-## Contributing
+#### src
 
-If you have any suggestions, please open an issue on [GitHub](https://github.com/RafidMuhymin/astro-imagetools).
+**Type:** `string`
+
+**Default:** `undefined`
+
+The absolute path to the source image.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" />
+```
+
+#### alt
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+The value of the `alt` attribute of the `<img />` element.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" />
+```
+
+#### sizes
+
+**Type:** `string` or `(breakpoints: number[]) => string`
+
+**Default:** `` (breakpoints) => `(min-width: ${breakpoints.at(-1)}px) ${breakpoints.at(-1)}px, 100vw ``
+
+A string or function that returns a string suitable for the value of the `sizes` attribute of the `<img />` element. The final calculated breakpoints are passed to the function as a parameter.
+
+**Code example:**
+
+```astro
+<!-- string type -->
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  sizes="(min-width: 400px) 400px, 100vw"
+/>
+
+<!-- function type -->
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  sizes={(breakpoints) => {
+    const maxWidth = breakpoints.at(-1);
+    return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+  }}
+/>
+```
+
+#### objectPosition
+
+**Type:** `string`
+
+**Default:** `50% 50%`
+
+The value of the `object-position` CSS property of the `<img />` element.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  objectPosition="top left"
+/>
+```
+
+#### objectFit
+
+**Type:** `"fill" | "contain" | "cover" | "none" | "scale-down"`
+
+**Default:** `"cover"`
+
+The value of the `object-fit` CSS property of the `<img />` element.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  objectFit="contain"
+/>
+```
+
+#### placeholder
+
+**Type:** `"dominantColor" | "blurred" | "tracedSVG" | "none"`
+
+**Default:** `"blurred"`
+
+The placeholder to be displayed while the image is loading. If `placeholder` is set to `"dominantColor"`, the dominant color of the image will be used as the placeholder. If it is set to `"blurred"`, a very low-resolution version of the provided image will be enlarged and used as the placeholder. If it is set to `"tracedSVG"`, a traced SVG of the image will be used as the placeholder. If it is set to `"none"`, no placeholder will be displayed.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  placeholder="dominantColor"
+/>
+```
+
+#### breakpoints
+
+**Type:** `number[] | { count?: number; minWidth?: number; maxWidth?: number }`
+
+**Default:** `undefined`
+
+An array of widths in pixels to generate image sets for. If not provided, the breakpoints will be calculated automatically based on the width of the provided image.
+
+If an object is passed then the breakpoints will be calculated based on `count`, `minWidth`, and `maxWidth` properties. The `count` property is to specify the number of breakpoints to generate. The `minWidth` and `maxWidth` properties are to specify the widths to generate in the range between their values.
+
+When an object is passed or the `breakpoints` prop is not provided, the breakpoints are calculated using a simple formula or algorithm. Instead of explaining the complete algorithm here, I am linking to the [source code](https://github.com/RafidMuhymin/astro-imagetools/blob/main/src/component/utils/getBreakpoints.js) of it.
+
+**Code example:**
+
+```astro
+<!-- number[] type -->
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  breakpoints={[200, 400, 800, 1600]}
+/>
+
+<!-- { count?: number; minWidth?: number; maxWidth?: number } type -->
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  breakpoints={{ count: 5, minWidth: 200, maxWidth: 1600 }}
+/>
+```
