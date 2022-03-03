@@ -421,3 +421,12 @@ When an object is passed or the `breakpoints` prop is not provided, the breakpoi
   breakpoints={{ count: 5, minWidth: 200, maxWidth: 1600 }}
 />
 ```
+
+### `ImageToolsConfigs`
+
+The properties described in the `ImageToolsConfigs` interface are the directives
+supported by the `imagetools-core` package. All the properties behave the same way
+as described in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md)
+of the `imagetools-core` package.
+
+<!-- TODO: add the directives documentation -->
