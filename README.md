@@ -164,7 +164,6 @@ declare interface FormatOptions {
   };
 }
 
-// Check https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md for more info on the properties of the ImageToolsConfigs interface.
 declare interface ImageToolsConfigs {
   flip?: boolean;
   flop?: boolean;
@@ -177,10 +176,10 @@ declare interface ImageToolsConfigs {
   brightness?: number;
   w?: number;
   h?: number;
-  ar?: number | string;
+  ar?: number;
   width?: number;
   height?: number;
-  aspect?: number | string;
+  aspect?: number;
   background?: string;
   tint?: string;
   blur?: number | boolean;
@@ -229,15 +228,10 @@ declare type sizesFunction = {
 
 declare interface PrimaryProps {
   src: string;
-  // The absolute path to the source image.
   sizes?: string | sizesFunction;
-  // A string or function that returns a string suitable for the value of the `sizes` attribute of the `<img />` element. The final calculated breakpoints are passed to the function as a parameter.
   objectPosition?: string;
-  // The value of the `object-position` CSS property of the `<img />` element.
   objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down";
-  // The value of the `object-fit` CSS property of the `<img />` element.
   placeholder?: "dominantColor" | "blurred" | "tracedSVG" | "none";
-  // The placeholder to be displayed while the image is loading. If `placeholder` is set to `"dominantColor"`, the dominant color of the image will be used as the placeholder. If it is set to `"blurred"`, a very low-resolution version of the provided image will be enlarged and used as the placeholder. If it is set to `"tracedSVG"`, a traced SVG of the image will be used as the placeholder. If it is set to `"none"`, no placeholder will be displayed.
   breakpoints?:
     | number[]
     | {
@@ -245,9 +239,6 @@ declare interface PrimaryProps {
         minWidth?: number;
         maxWidth?: number;
       };
-  // An array of widths in pixels to generate image sets for. If not provided, the breakpoints will be calculated automatically based on the width of the provided image.
-
-  // If an object is passed then the breakpoints will be calculated based on them. The `count` property is to specify the number of breakpoints to generate. The `minWidth` and `maxWidth` properties are to specify the widths to generate in the range between the two values.
 }
 
 export interface ImageConfig
@@ -419,14 +410,377 @@ When an object is passed or the `breakpoints` prop is not provided, the breakpoi
   src="https://picsum.photos/200/300"
   alt="A random image"
   breakpoints={{ count: 5, minWidth: 200, maxWidth: 1600 }}
+  /* five breakpoints will be generated ranging from 200px to 1000px */
 />
 ```
 
 ### `ImageToolsConfigs`
 
 The properties described in the `ImageToolsConfigs` interface are the directives
-supported by the `imagetools-core` package. All the properties behave the same way
-as described in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md)
-of the `imagetools-core` package.
+supported by the `imagetools-core` package. All the directives are documented in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md) of the `imagetools-core` package. They are being documented here to reflect the changes made in the `astro-imagetools` package and for the component syntax.
 
-<!-- TODO: add the directives documentation -->
+> **Note:** The values passed in the `background` and `tint` property will be parsed by the [`color-string`](https://www.npmjs.com/package/color-string) library so all color values known from css like rgb, rgba or named colors can be used.
+>
+> The `format` property is not defined in the `ImageToolsConfigs` interface because it works differently in the context of the `<Image />` component.
+>
+> The values passed in the `width`, `height` and `aspect` properties are used to resize the image when loading. The final image widths will be calculated from the [`breakpoints`](#breakpoints) property.
+>
+> The `imagetools-core` package supports `number[]` values for a few directives. But the `<Image />` component doesn't support them because they don't make sense in the context of the component.
+
+#### flip
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+Flip the image about the vertical axis. This step is always performed **after** any rotation.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" flip />
+```
+
+#### flop
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+Flop the image about the horizontal axis. This step is always performed **after** any rotation.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" flop />
+```
+
+#### invert
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+Produces a **negative** of the image.
+
+#### flatten
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+This directive will remove the alpha channel of the image, reducing filesize. Transparent pixels will be merged with the color set by [`background`](#background).
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" flatten />
+```
+
+#### normalize
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+**Normalizes** the image by stretching its luminance to cover the full dynamic range. This Enhances the output image contrast.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" normalize />
+```
+
+#### grayscale
+
+**Type:** `boolean`
+
+**Default:** `undefined`
+
+Converts the image to an 8-bit grayscale image.
+
+> **Note:** This directive will convert the image to the `b-w` colorspace, meaning the resulting image will only have one channel.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" normalize />
+```
+
+#### hue
+
+**Type:** `number`
+
+**Default:** `undefined`
+
+Adjusts the images `hue` rotation by the given number of degrees. Commonly used together with [`saturation`](#saturation) and [`brightness`](#brightness).
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" hue={-30} />
+```
+
+#### saturation
+
+**Type:** `number`
+
+**Default:** `undefined`
+
+Adjusts the images `saturation` with the given saturation multiplier. Commonly used together with [`hue`](#hue) and [`brightness`](#brightness).
+
+**Code example:**
+
+<!-- prettier-ignore -->
+```astro
+<Image 
+  src="https://picsum.photos/200/300" 
+  alt="A random image" 
+  saturation={0.5}
+/>
+```
+
+#### brightness
+
+**Type:** `number`
+
+**Default:** `undefined`
+
+Adjusts the images `brightness` with the given brightness multiplier. Commonly used together with [`hue`](#hue) and [`saturation`](#saturation).
+
+**Code example:**
+
+<!-- prettier-ignore -->
+```astro
+<Image 
+  src="https://picsum.photos/200/300" 
+  alt="A random image" 
+  brightness={0.5}
+/>
+```
+
+#### `width` | `w`
+
+**Type:** `number`
+
+**Default:** The width of the image
+
+Resizes the image to be the specified amount of pixels wide. If not given the height will be scaled accordingly.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" width={400} />
+```
+
+#### `height` | `h`
+
+**Type:** `number`
+
+**Default:** The height of the image
+
+Resizes the image to be the specified amount of pixels tall. If not given the width will be scaled accordingly.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" height={400} />
+```
+
+#### `aspect` | `ar`
+
+**Type:** `number`
+
+**Default:** The aspect ratio of the image
+
+Resizes the image to be the specified aspect ratio. If height and width are both provided, this will be ignored. If height is provided, the width will be scaled accordingly. If width is provided, the height will be scaled accordingly. If neither height nor width are provided, the image will be cropped to the given aspect ratio.
+
+**Code example:**
+
+<!-- prettier-ignore -->
+```astro
+<Image 
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  aspect={3/2}
+/>
+```
+
+#### background
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+This instructs various directives (e.g. the [`rotate`](#rotate)) to use the specified color when filling empty spots in the image.
+
+> **Note:** This directive does nothing on it's own, it has to be used in conjunction with another directive.
+> You also cannot set multiple values.
+
+**Code example:**
+
+```astro
+---
+const src = "https://picsum.photos/200/300";
+const alt = "A random image";
+---
+
+<Image {src} {alt} flatten background="#FFFFFFAA" />
+
+<Image {src} {alt} rotate={90} background="hsl(360, 100%, 50%)" />
+```
+
+#### tint
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+Tints the image using the provided chroma while preserving the image luminance. If the image has an alpha channel it will be untouched.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  tint="rgba(10,33,127)"
+/>
+```
+
+#### blur
+
+**Type:** `number | boolean`
+
+**Default:** `undefined`
+
+Blurs the image. When no argument is provided it performs a fast blur. When an argument between _0.3 and 1000_ is provided it performs a more accurate gaussian blur.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" blur /* A fast blur will be performed */ />
+
+<Image src="https://picsum.photos/200/300" alt="A random image" blur={100} /* A gaussian blur will be performed */ />
+```
+
+#### median
+
+**Type:** `number | boolean`
+
+**Default:** `undefined`
+
+Applies a median filter. This is commonly used to remove noise from images.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" median />
+
+<Image src="https://picsum.photos/200/300" alt="A random image" median={50} />
+```
+
+#### rotate
+
+**Type:** `number`
+
+**Default:** `undefined`
+
+Rotate the image by the specified number of degrees.
+
+> **Note:** You can change the background color the empty parts are filled with by setting the [`background`](#background) directive.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" rotate={90} />
+```
+
+#### quality
+
+**Type:** `number`
+
+**Default:** `undefined`
+
+All formats (except `gif`) allow the quality to be adjusted by setting this directive.
+
+The argument must be a number between 0 and 100.
+
+> See sharps [Output options](https://sharp.pixelplumbing.com/api-output) for default quality values.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" quality={50} />
+```
+
+#### fit
+
+**Type:** `"cover" | "contain" | "fill" | "inside" | "outside"`
+
+**Default:** `undefined`
+
+When both `width` and `height` are provided, this directive can be used to specify the method by which the image should fit.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  width={100}
+  height={100}
+  fit="contain"
+/>
+```
+
+#### kernel
+
+**Type:** `"nearest" | "cubic" | "mitchell" | "lanczos2" | "lanczos3"`
+
+**Default:** `undefined`
+
+Use this directive to set a different interpolation kernel when resizing the image.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  kernel="lanczos3"
+/>
+```
+
+#### position
+
+**Type:** `"top" | "right top" | "right" | "right bottom" | "bottom" | "left bottom" | "left" | "left top" | "north" | "northeast" | "east" | "southeast" | "south" | "southwest" | "west" | "northwest" | "center" | "centre" | "cover" | "entropy" | "attention"`
+
+**Default:** `undefined`
+
+When both `width` and `height` are provided AND `fit` is is set to `cover` or `contain`, this directive can be used to set the position of the image.
+
+See sharps [resize options](https://sharp.pixelplumbing.com/api-resize#resize) for more information.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  width={100}
+  height={100}
+  fit="contain"
+  position="attention"
+/>
+```
+
+<!-- Color Values and non array values -->
+
+<!--### `PotraceOptions`
+
+The properties described in the `PotraceOptions` interface are the option -->
+
+<!-- Acknowledgements -->
+
+<!-- Investigate what the default values are in ImageToolsConfigs -->
