@@ -108,7 +108,6 @@ This section is only for quick reference and for astronomers familiar with _Type
 **Note:** The `<Image />` component and the plugin fallback to `@astropub/codecs` for processing images if the environment is unable to install `sharp`. Most of the properties defined in the `ImagetoolsConfig` interface won't be available in this case.
 
 ```ts
-// The formats supported by the `<Image />` component and the plugin.
 declare type format =
   | "heic"
   | "heif"
@@ -120,7 +119,6 @@ declare type format =
   | "webp"
   | "gif";
 
-// Check https://github.com/tooolbox/node-potrace for more info on the properties of the PotraceOptions interface.
 declare type PotraceOptions = TraceOptions | PosterizeOptions;
 
 declare interface SharedTracingOptions {
@@ -151,16 +149,10 @@ declare interface PosterizeOptions {
 
 declare interface FormatOptions {
   format?: format | format[] | [] | null;
-  // The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no image will be generated.
-
-  // **Note:** Passing `[]` or `null` does not necessarily mean that no image will be generated. If `includeSourceFormat` is set to `true`, then the source format and the format specified in the `fallbackFormat` prop will still be generated.
   fallbackFormat?: boolean;
-  // The format the browser will fallback to if the other formats are not supported by it. If not provided, the format of the source image will be used.
   includeSourceFormat?: boolean;
-  // Whether to generate image set for the source format or not.
   formatOptions?: Record<format, ImageToolsConfigs> & {
     tracedSVG?: PotraceOptions;
-    // Check the format type and ImageToolsConfigs & PotraceOptions interfaces for the supported properties
   };
 }
 
@@ -868,6 +860,7 @@ The configuration options for the different formats. The ten supported keys are 
 <Image
   src="https://picsum.photos/200/300"
   alt="A random image"
+  placeholder="tracedSVG"
   format={["webp", "jpg"]}
   fallbackFormat="png"
   includeSourceFormat={false}
@@ -882,14 +875,204 @@ The configuration options for the different formats. The ten supported keys are 
       quality: 50,
     },
     tracedSVG: {
-      background: "#fff",
-      color: "#000",
-      turnPolicy: "black",
-      turdSize: 1,
-      alphaMax: 1,
-      optCurve: true,
-      threshold: 100,
-      blackOnWhite: false,
+      options: {
+        background: "#fff",
+        color: "#000",
+        turnPolicy: "black",
+        turdSize: 1,
+        alphaMax: 1,
+        optCurve: true,
+        threshold: 100,
+        blackOnWhite: false,
+      },
+    },
+  }}
+/>
+```
+
+### PotraceOptions
+
+The `PotraceOptions` interface defines the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined in the `PotraceOptions` interface are optional.
+
+> **Note:** Most of the things below have gone above my head. I'm not even sure if some of the things I have said below are correct. And unless you are a SVG expert, and master at tracing bitmaps, and posterizing (What??) bitmaps, I think the below options will go above your head too.
+>
+> If you want to know more about the options, check the [`node-potrace`](https://npmjs.com/package/node-potrace) documentation. I have simplified the options to make it easier to understand.
+>
+> And if you want to go deeper into how `potrace` works, check the [Technical documentation](http://potrace.sourceforge.net/#technical) of the original [`potrace`](http://potrace.sourceforge.net/) C library.
+>
+> If by some miracle you can understand the options below, please let me know. It would help me a lot to update the documentation.
+
+#### function
+
+**Type:** `"trace" | "posterize"`
+
+**Default:** `"trace"`
+
+Which method of the `node-potrace` library to use. The `posterize` method is basically _tracing_ the image multiple times to produce a more accurate result. See this [example](https://www.npmjs.com/package/potrace#example-and-demo) for more information.
+
+#### options
+
+##### turnPolicy
+
+**Type:** `"black" | "white" | "left" | "right" | "minority" | "majority"`
+
+**Default:** `"minority"`
+
+How to resolve ambiguities in path decomposition. Refer to the [**potrace-algorithm**](http://potrace.sourceforge.net/potrace.pdf) documentaion (PDF, page 4) for more information.
+
+##### turdSize
+
+**Type:** `number`
+
+**Default:** `2`
+
+Suppress speckles of up to this size.
+
+##### alphaMax
+
+**Type:** `number`
+
+**Default:** `1`
+
+Corner threshold parameter.
+
+##### optCurve
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Curve optimization.
+
+##### optTolerance
+
+**Type:** `number`
+
+**Default:** `0.2`
+
+Curve optimization tolerance.
+
+##### threshold
+
+**Type:** `number`
+
+**Default:** `-1`
+
+_When `function` is "trace" :_
+
+Threshold below which color is considered black. Should be a number between 0 and 255 or `-1` in which case threshold will be selected automatically using [Algorithm For Multilevel Thresholding](http://www.iis.sinica.edu.tw/page/jise/2001/200109_01.pdf).
+
+_When `function` is "posterize" :_
+
+Breaks image into foreground and background (and only foreground being broken into desired number of layers). Basically when provided it becomes a threshold for last (least opaque) layer and then `steps - 1` intermediate thresholds calculated. If **steps** is an array of thresholds and every value from the array is lower (or larger if **blackOnWhite** parameter set to `false`) than threshold - threshold will be added to the array, otherwise just ignored.
+
+##### blackOnWhite
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Specifies colors by which side from threshold should be turned into vector shape.
+
+##### color
+
+**Type:** `"auto" | string`
+
+**Default:** `"auto"`
+
+Fill color for the traced image. If `"auto"` is provided, the color will be black or white depending on the `blackOnWhite` property.
+
+##### background
+
+**Type:** `"transparent" | string`
+
+**Default:** `"transparent"`
+
+Background color of the traced image. If `"transparent"` is provided, no background will be present.
+
+##### fill
+
+**Type:** `"spread" | "dominant" | "median" | "mean"`
+
+Determines how fill color for each layer should be selected.
+
+- `dominant` - Most frequent color in range (used by default),
+- `mean` - Arithmetic mean (average),
+- `median` - Median color,
+- `spread` - Ignores color information of the image and just spreads colors equally in range between 0 and `threshold` (or `threshold` and ..255 if `blackOnWhite` is set to `false`).
+
+> **Note:** This option is present only when `function` is `"posterize"`.
+
+##### ranges
+
+**Type:** `"auto" | "equal"`
+
+How color stops for each layer should be selected. Ignored if `steps` is an array. Possible values are:
+
+- `auto` - Performs automatic thresholding (using [Algorithm For Multilevel Thresholding](http://www.iis.sinica.edu.tw/page/jise/2001/200109_01.pdf)). Preferable method for already posterized sources, but takes long time to calculate 5 or more thresholds (exponential time complexity) _(used by default)_
+- `equal` - Ignores color information of the image and breaks available color space into equal chunks
+
+> **Note:** This option is present only when `function` is `"posterize"`.
+
+##### steps
+
+**Type:** `number | number[]`
+
+Specifies desired number of layers in resulting image. If a number provided - thresholds for each layer will be automatically calculated according to `ranges` property. If an array provided it expected to be an array with precomputed thresholds for each layer (in range between 0 and 255).
+
+> **Note:** This option is present only when `function` is `"posterize"`.
+
+**Code example:**
+
+```astro
+---
+const src = "https://picsum.photos/200/300";
+const alt = "A random image";
+const placeholder = "tracedSVG";
+
+const traceOptions = {
+  background: "#fff",
+  color: "#000",
+  turnPolicy: "black",
+  turdSize: 1,
+  alphaMax: 1,
+  optCurve: true,
+  threshold: 100,
+  blackOnWhite: false,
+};
+
+const posterizeOptions = {
+  fill: "spread",
+  steps: [0, 50, 100],
+  ranges: "equal",
+};
+---
+
+<Image
+  {src}
+  {alt}
+  {placeholder}
+  // tracing SVG
+  formatOptions={{
+    tracedSVG: {
+      function: "trace",
+      options: traceOptions,
+    },
+  }}
+/>
+
+<Image
+  {src}
+  {alt}
+  {placeholder}
+  // posterizing SVG
+  formatOptions={{
+    tracedSVG: {
+      function: "posterize",
+      options: {
+        ...traceOptions,
+        ...posterizeOptions,
+      },
     },
   }}
 />
