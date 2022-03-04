@@ -417,7 +417,7 @@ When an object is passed or the `breakpoints` prop is not provided, the breakpoi
 ### `ImageToolsConfigs`
 
 The properties described in the `ImageToolsConfigs` interface are the directives
-supported by the `imagetools-core` package. All the directives are documented in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md) of the `imagetools-core` package. They are being documented here to reflect the changes made in the `astro-imagetools` package and for the component syntax.
+supported by the [`imagetools-core`](https://npmjs.com/package/imagetools-core) library. All the directives are documented in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md) of the `imagetools-core` library. They are being documented here to reflect the changes made in the `astro-imagetools` package and for the component syntax.
 
 > **Note:** The values passed in the `background` and `tint` property will be parsed by the [`color-string`](https://www.npmjs.com/package/color-string) library so all color values known from css like rgb, rgba or named colors can be used.
 >
@@ -772,6 +772,144 @@ See sharps [resize options](https://sharp.pixelplumbing.com/api-resize#resize) f
   height={100}
   fit="contain"
   position="attention"
+/>
+```
+
+<!--
+```ts
+declare interface FormatOptions {
+  format?: format | format[] | [] | null;
+  // The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no image will be generated.
+
+  // **Note:** Passing `[]` or `null` does not necessarily mean that no image will be generated. If `includeSourceFormat` is set to `true`, then the source format and the format specified in the `fallbackFormat` prop will still be generated.
+  fallbackFormat?: boolean;
+  // The format the browser will fallback to if the other formats are not supported by it. If not provided, the format of the source image will be used.
+  includeSourceFormat?: boolean;
+  // Whether to generate image set for the source format or not.
+  formatOptions?: Record<format, ImageToolsConfigs> & {
+    tracedSVG?: PotraceOptions;
+    // Check the format type and ImageToolsConfigs & PotraceOptions interfaces for the supported properties
+  };
+}
+``` -->
+
+### `FormatOptions`
+
+The `FormatOptions` interface defines the configuration options supported by the `<Image />` component for generating image sets for different formats.
+
+The formats supported by the `<Image />` component are:
+
+```ts
+declare type format =
+  | "heic"
+  | "heif"
+  | "avif"
+  | "jpg"
+  | "jpeg"
+  | "png"
+  | "tiff"
+  | "webp"
+  | "gif";
+```
+
+The `<Image />` component supports the following format options:
+
+#### format
+
+**Type:** `format | format[] | [] | null`
+
+**Default:** `["avif", "webp"]`
+
+The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no _additional_ image set will be generated.
+
+> **Note:** Passing `[]` or `null` does not necessarily mean that no image will be generated. Image sets will still be generated for the source format if `includeSourceFormat` is set to `true` (which is the default value) and for the format specified in the `fallbackFormat` prop (the default value is the source format).
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  format={["webp", "jpg"]}
+/>
+```
+
+#### fallbackFormat
+
+**Type:** `format`
+
+**Default:** The source format of the image
+
+The format the browser will fallback to if the other formats are not supported.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  format={["webp", "jpg"]}
+  fallbackFormat="png"
+/>
+```
+
+#### includeSourceFormat
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Whether to generate image set for the source format or not.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/images/image.tiff"
+  alt="A random image"
+  fallbackFormat="png"
+  includeSourceFormat={false}
+/>
+```
+
+#### formatOptions
+
+**Type:** `Record<format, ImageToolsConfigs> & { tracedSVG?: PotraceOptions }`
+
+**Default:** The default values for the all the formats except `tracedSVG` are inherited from the props of the `<Image />` component defined in the [`ImageToolsConfigs`](#imagetoolsconfigs) interface. And for more information on `tracedSVG` see the [`PotraceOptions`](#potraceoptions) interface.
+
+The configuration options for the different formats. The ten supported keys are `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif` and `tracedSVG`. These configuration options will be respected when generating image sets for different formats. And the `tracedSVG` config options are used when the `placeholder` prop is set to `"tracedSVG"`.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  format={["webp", "jpg"]}
+  fallbackFormat="png"
+  includeSourceFormat={false}
+  formatOptions={{
+    jpg: {
+      quality: 80,
+    },
+    png: {
+      quality: 80,
+    },
+    webp: {
+      quality: 50,
+    },
+    tracedSVG: {
+      background: "#fff",
+      color: "#000",
+      turnPolicy: "black",
+      turdSize: 1,
+      alphaMax: 1,
+      optCurve: true,
+      threshold: 100,
+      blackOnWhite: false,
+    },
+  }}
 />
 ```
 
