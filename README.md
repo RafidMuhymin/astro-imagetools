@@ -794,7 +794,7 @@ declare type format =
   | "gif";
 ```
 
-The `<Image />` component supports the following format options:
+All the properties described in the `FormatOptions` interface are optional. The properties are defined as follows:
 
 #### format
 
