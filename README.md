@@ -775,24 +775,6 @@ See sharps [resize options](https://sharp.pixelplumbing.com/api-resize#resize) f
 />
 ```
 
-<!--
-```ts
-declare interface FormatOptions {
-  format?: format | format[] | [] | null;
-  // The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no image will be generated.
-
-  // **Note:** Passing `[]` or `null` does not necessarily mean that no image will be generated. If `includeSourceFormat` is set to `true`, then the source format and the format specified in the `fallbackFormat` prop will still be generated.
-  fallbackFormat?: boolean;
-  // The format the browser will fallback to if the other formats are not supported by it. If not provided, the format of the source image will be used.
-  includeSourceFormat?: boolean;
-  // Whether to generate image set for the source format or not.
-  formatOptions?: Record<format, ImageToolsConfigs> & {
-    tracedSVG?: PotraceOptions;
-    // Check the format type and ImageToolsConfigs & PotraceOptions interfaces for the supported properties
-  };
-}
-``` -->
-
 ### `FormatOptions`
 
 The `FormatOptions` interface defines the configuration options supported by the `<Image />` component for generating image sets for different formats.
