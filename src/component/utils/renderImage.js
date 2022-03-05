@@ -81,36 +81,36 @@ export default async function renderImage(props) {
     sources.map(({ format, src, srcset }) =>
       src
         ? `<img
-              src="${src}"
-              alt="${alt}"
-              srcset="${srcset}"
-              class="${className}"
-              sizes="${imagesizes}"
-              width="${sizes.width}"
-              height="${sizes.height}"
-              onload="style.backgroundImage = 'none'"
-              ${loading ? `loading="${loading}"` : ""}
-              ${decoding ? `decoding="${decoding}"` : ""}
-              ${
-                style
-                  ? `style="${
-                      layout === "fill"
-                        ? `width: 100%; height: 100%;`
-                        : layout === "fullWidth"
-                        ? `width: 100%; height: auto;`
-                        : "max-width: 100%; height: auto;"
-                    }"`
-                  : ""
-              }
-            />`
+            src="${src}"
+            alt="${alt}"
+            srcset="${srcset}"
+            class="${className}"
+            sizes="${imagesizes}"
+            width="${sizes.width}"
+            height="${sizes.height}"
+            onload="style.backgroundImage = 'none'"
+            ${loading ? `loading="${loading}"` : ""}
+            ${decoding ? `decoding="${decoding}"` : ""}
+            ${
+              style
+                ? `style="${
+                    layout === "fill"
+                      ? `width: 100%; height: 100%;`
+                      : layout === "fullWidth"
+                      ? `width: 100%; height: auto;`
+                      : "max-width: 100%; height: auto;"
+                  }"`
+                : ""
+            }
+          />`
         : `<source
-              srcset="${srcset}"
-              sizes="${imagesizes}"
-              width="${sizes.width}"
-              height="${sizes.height}"
-              type="${`image/${format}`}"
-              ${media ? `media="${media}"` : ""}
-            />`
+            srcset="${srcset}"
+            sizes="${imagesizes}"
+            width="${sizes.width}"
+            height="${sizes.height}"
+            type="${`image/${format}`}"
+            ${media ? `media="${media}"` : ""}
+          />`
     )
   );
 
