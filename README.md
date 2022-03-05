@@ -1082,8 +1082,7 @@ The CSS media query to use.
       media: "(max-aspect-ratio: 3/2)",
       // Properties defined in the PrimaryProps interface
       src: "/src/images/portrait.jpg",
-      preload: "avif",
-      loading: "eager",
+      breakpoints: [256, 384, 512],
       // Properties defined in the ImageToolsConfigs interface
       width: 768,
       height: 1024,
