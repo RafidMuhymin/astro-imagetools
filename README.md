@@ -253,12 +253,22 @@ The properties described in the `PrimaryProps` interface are some of the main pr
 
 **Default:** `undefined`
 
-The absolute path to the source image.
+The absolute path to the source image stored in the file system or the URL of the image. Data URIs are also supported. The `src` property is required.
 
 **Code example:**
 
 ```astro
-<Image src="https://picsum.photos/200/300" alt="A random image" />
+<!-- Local image -->
+<Image src="/src/images/image.jpg" alt="A local image" />
+
+<!-- Remote image -->
+<Image src="https://example.com/image.jpg" alt="A remote image" />
+
+<!-- Data URI -->
+<Image
+  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
+  alt="A base64 encoded image"
+/>
 ```
 
 #### sizes
@@ -1243,11 +1253,7 @@ The array of art directives to apply to the image. Check the `ArtDirective` inte
 
 <!-- Image example of the `layout` and `placeholder` props -->
 
-<!-- Remove duplicate alt -->
-
 <!-- Update `ArtDirective` interface -->
-
-<!-- Update src prop documentation -->
 
 <!-- Acknowledgements -->
 
