@@ -275,20 +275,6 @@ The absolute path to the source image.
 <Image src="https://picsum.photos/200/300" alt="A random image" />
 ```
 
-#### alt
-
-**Type:** `string`
-
-**Default:** `undefined`
-
-The value of the `alt` attribute of the `<img />` element.
-
-**Code example:**
-
-```astro
-<Image src="https://picsum.photos/200/300" alt="A random image" />
-```
-
 #### sizes
 
 **Type:** `string` or `(breakpoints: number[]) => string`
