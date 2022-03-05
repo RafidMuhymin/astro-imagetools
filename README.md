@@ -80,19 +80,48 @@ const { image, link, style } = await renderImage({
 </html>
 ```
 
-The `renderImage` function takes the same arguments as the props of the `<Image />` component. The function returns a promise that resolves to an `ImageHTMLData` object which contains the following properties:
+## APIs
 
-```ts
-export interface ImageHTMLData {
-  link: string;
-  style: string;
-  image: string;
-}
-```
+As said above, the `astro-imagetools` package comes with three things, the `<Image />` component, a _Vite_ plugin and a `renderImage` function for programmatically generating image sets. The short description of each of them and their key features are mentioned below:
+
+### The `<Image />` component
+
+The `<Image />` component is an Astro component for generating responsive and optimized images. The main features of the component are:
+
+- It outputs an actual `<picture>` element with the `<source>` and `<img>` elements required for generating responsive image sets and art directed images.
+- It supports both local and remote images, data URIs are supported too! (Check the [`src`](#src) prop)
+- It caches the generated output to improve performance in development.
+- It provides a simple way to define art directions. Pass array of objects that contain a media query and an src. Done! (Check the [`artDirectives`](#artdirectives) prop)
+- It calculates the required breakpoints in a really unique way (Check the [`breakpoints`](#breakpoints) prop)
+- It not only supports tracing SVGs but also posterizing them (Check the [`tracedSVG`](#tracedsvg) property of the [`formatOptions`](#formatoptions) object prop)`])
+- It can automatically add preload hints for you (Check the [`preload`](#preload) prop)
+- It supports passing config options as query params too (Check [Configuration Options](#configuration-options))
+- It supports four kind of layouts, `constrained` (default), `fixed`, `fullWidth` & `fill` (Check the [`layout`](#layout) prop)
+- It supports three kinds of placeholder images, `blurred` (default), `dominantColor` & tracedSVG (Check the [`placeholder`](#placeholder) prop)
+- Doesn't produce any global CSS, all styles generated are scoped to the `<Image />` component!
+- And many more! Check the long list of [configuration options](#configuration-options) below.
+
+> **Note:** The `<Image />` component returns a `<img>` element if generating only one image set is required.
+
+### The `renderImage` function
+
+The `renderImage` function is an alternative to the `<Image />` component that allows you to generate image sets programmatically. It takes the same arguments as the props of the `<Image />` component. The function returns a promise that resolves to an object which contains the following properties:
+
+- `link`: The `<link>` element HTML for preloading the image set when the `preload` (Check [preload](#preload)) prop is passed.
+- `style`: The `<style>` element HTML for styling the `<picture>` element.
+- `image`: The `<picture>` or `<img>` element HTML that contains the generated image set or sets.
+
+### The Vite plugin
+
+The `<Image />` component can't work on its own without the vite plugin. The vite plugin performs all the transformations required to generate the image sets behind the scenes.
+
+And it allows you to import images and add them to the assets graph in the situations when the `<Image />` component or the `renderImage` function can't be used.
+
+<!-- TODO: Plugin Configuration Documentation -->
 
 ## Configuration Options
 
-Both the `<Image />` component and the `renderImage` function supports a total of 40 config options. You can pass them directly to the component as props and to the function as properties of an object parameter.
+Both the `<Image />` component and the `renderImage` function supports a total of 40 config options! You can pass them directly to the component as props and to the function as properties of an object parameter.
 
 ### Example Usage
 
