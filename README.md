@@ -1113,6 +1113,170 @@ The CSS media query to use.
 />
 ```
 
+<!-- ```ts
+export interface ImageConfig
+  extends PrimaryProps,
+    FormatOptions,
+    ImageToolsConfigs {
+  alt: string;
+  // The value of the `alt` attribute of the `<img />` element.
+  preload?: boolean | format;
+  // Whether to preload the image or not or what format of image to preload.
+  loading?: "lazy" | "eager" | "auto" | null;
+  // The value of the `loading` attribute of the `<img />` element.
+  decoding?: "async" | "sync" | "auto" | null;
+  // The value of the `decoding` attribute of the `<img />` element.
+  layout?: "constrained" | "fixed" | "fullWidth" | "fill";
+  // The layout mode of the image.
+
+  // In `constrained` mode, the image will occupy full width of the container with `max-width` set to its width. The height of the image will be calculated based on the aspect ratio of the image. The image will be scaled down to fit the container but won't be enlarged.
+
+  // In `fixed` mode, the image will have a fixed width and height. The `width` and `height` props will be used to set the width and height of the image. The image won't be scaled down nor enlarged.
+
+  // In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
+
+  // In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
+  artDirectives?: ArtDirective[];
+  // Check the ArtDirective interface for more details.
+}
+``` -->
+
+### `ImageConfig`
+
+The `ImageConfig` interface is the main interface used to define the configuration of the image that extends the `PrimaryProps`, `FormatOptions` and `ImageToolsConfigs` interface. All the properties except `src` and `alt` are optional.
+
+#### alt
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+The value of the `alt` attribute of the `<img />` element.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/elva-800w.jpg"
+  alt="A father holiding his beloved daughter in his arms"
+/>
+```
+
+#### preload
+
+**Type:** `boolean | format`
+
+**Default:** `undefined`
+
+Whether to preload the image or not or what format of image to preload.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" preload="avif"
+/>
+```
+
+#### loading
+
+**Type:** `"lazy" | "eager" | "auto" | null`
+
+**Default:** `preload ? "eager" : "lazy"`
+
+The value of the `loading` attribute of the `<img />` element. If `null` is provided, the `loading` attribute will be omitted.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" loading="eager"
+/>
+```
+
+#### decoding
+
+**Type:** `"async" | "sync" | "auto" | null`
+
+**Default:** `"async"`
+
+The value of the `decoding` attribute of the `<img />` element. If `null` is provided, the `decoding` attribute will be omitted.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" decoding="sync"
+/>
+```
+
+#### layout
+
+**Type:** `"constrained" | "fixed" | "fullWidth" | "fill"`
+
+**Default:** `"constrained"`
+
+The layout mode to determine the resizing behavior of the image in the browser.
+
+In `constrained` mode, the image will occupy full width of the container with `max-width` set to its width. The height of the image will be calculated based on the aspect ratio of the image. The image will be scaled down to fit the container but won't be enlarged.
+
+In `fixed` mode, the image will have a fixed width and height. The `width` and `height` props will be used to set the width and height of the image. The image won't be scaled down nor enlarged.
+
+In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
+
+In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
+
+**Code example:**
+
+<!-- prettier-ignore -->
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  layout="fixed"
+/>
+```
+
+#### artDirectives
+
+**Type:** `ArtDirective[]`
+
+**Default:** `undefined`
+
+The array of art directives to apply to the image. Check the `ArtDirective` interface for more details.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/image/landscape.jpg"
+  alt="A landscape image"
+  artDirectives={[
+      {
+        src: "/src/image/dark-potrait.jpg",
+        media: "(prefers-color-scheme: dark) and (orientation: portrait)",
+      },
+      {
+        src: "/src/image/light-potrait.jpg",
+        media: "(prefers-color-scheme: light) and (orientation: portrait)",
+      },
+      {
+        src: "/src/image/dark-landscape.jpg",
+        media: "(prefers-color-scheme: dark) and (orientation: landscape)",
+      },
+      }
+  ]
+  }
+/>
+```
+
+<!-- TODO -->
+
+<!-- Image example of the `layout` and `placeholder` props -->
+
+<!-- Remove duplicate alt -->
+
+<!-- Update `ArtDirective` interface -->
+
+<!-- Update src prop documentation -->
+
 <!-- Acknowledgements -->
 
 <!-- Investigate what the default values are in ImageToolsConfigs -->
