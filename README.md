@@ -209,9 +209,6 @@ declare interface ArtDirective
     FormatOptions,
     ImageToolsConfigs {
   media: string;
-  // The media query for the intended media of the image.
-
-  // Check the PrimaryProps, FormatOptions and ImageToolsConfigs interface for the other supported options.
 }
 
 declare type sizesFunction = {
@@ -890,7 +887,7 @@ The configuration options for the different formats. The ten supported keys are 
 />
 ```
 
-### PotraceOptions
+### `PotraceOptions`
 
 The `PotraceOptions` interface defines the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined in the `PotraceOptions` interface are optional.
 
@@ -1078,11 +1075,43 @@ const posterizeOptions = {
 />
 ```
 
-<!-- Color Values and non array values -->
+### `ArtDirective`
 
-<!--### `PotraceOptions`
+The properties defined in the `ArtDirective` interface are used to define art directions for the provided image. All the properties except `src` and `media` are optional.
 
-The properties described in the `PotraceOptions` interface are the option -->
+The `ArtDirective` interface extends the `PrimaryProps`, `FormatOptions` and `ImageToolsConfigs` interface. So, all the properties defined in them are also supported in the `ArtDirective` interface. It only adds the `media` property.
+
+#### media
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+The CSS media query to use.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/images/landscape.jpg"
+  alt="alt text"
+  artDirectives={[
+    {
+      media: "(max-aspect-ratio: 3/2)",
+      // Properties defined in the PrimaryProps interface
+      src: "/src/images/portrait.jpg",
+      preload: "avif",
+      loading: "eager",
+      // Properties defined in the ImageToolsConfigs interface
+      width: 768,
+      height: 1024,
+      // Properties defined in the FormatOptions interface
+      format: ["png"],
+      includeSourceFormat: false,
+    },
+  ]}
+/>
+```
 
 <!-- Acknowledgements -->
 
