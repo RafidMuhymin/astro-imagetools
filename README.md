@@ -123,12 +123,17 @@ And it allows you to import images and add them to the assets graph in the situa
 
 Both the `<Image />` component and the `renderImage` function supports a total of 40 config options! You can pass them directly to the component as props and to the function as properties of an object parameter.
 
+The `<Image />` component and the `renderImage` function support passing the configuration options as query params too. But the props will take precedence over the query params. And you may be able to pass only the simple ones as query params because in complex cases it's not possible to properly parse them.
+
 ### Example Usage
 
 #### `<Image />` Component
 
-```jsx
+```astro
 <Image src="/src/images/landscape.jpg" alt="alt text" />
+
+<!-- Query params -->
+<Image src="/src/images/landscape.jpg?alt=alt text" />
 ```
 
 #### `renderImage` Function
@@ -137,6 +142,11 @@ Both the `<Image />` component and the `renderImage` function supports a total o
 const { link, style, image } = await renderImage({
   src: "/src/images/landscape.jpg",
   alt: "alt text",
+});
+
+// Query params
+const { link, style, image } = await renderImage({
+  src: "/src/images/landscape.jpg?alt=alt text",
 });
 ```
 
@@ -1278,6 +1288,8 @@ const posterizeOptions = {
 [Lovell Fuller](https://github.com/lovell) for the awesome [`sharp`](https://sharp.pixelplumbing.com/) library.
 
 [Matt Mc](https://github.com/tooolbox) for the [`potrace`](https://github.com/tooolbox/node-potrace) node library.
+
+[Zade Viggers](https://github.com/zadeviggers) for his code contributions.
 
 [Peter Singh](https://github.com/aFuzzyBear) for documentation support and suggestions.
 
