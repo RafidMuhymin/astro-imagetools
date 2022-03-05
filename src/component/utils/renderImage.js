@@ -1,7 +1,8 @@
 // @ts-check
 
 import getImage from "./getImage.js";
-import astroConfig from "../../../../astro.config.mjs";
+// @ts-ignore
+import astroConfig from "/astro.config.mjs";
 import getBackgroundStyles from "./getBackgroundStyles.js";
 
 export default async function renderImage(props) {
