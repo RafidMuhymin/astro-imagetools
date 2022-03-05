@@ -1093,13 +1093,11 @@ See sharps [resize options](https://sharp.pixelplumbing.com/api-resize#resize) f
 
 The `PotraceOptions` interface defines the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used to generate traced SVGs when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined in the `PotraceOptions` interface are optional.
 
-> **Note:** Most of the things below have gone above my head. I'm not even sure if some of the things I have said below are correct. And unless you are a SVG expert, and master at tracing bitmaps, and posterizing (What??) bitmaps, I think the below options will go above your head too.
+> **Note:** Most of the below jargons are taken from the [`potrace`](https://npmjs.com/package/potrace) documentation. I have tried to simplify the config options and make the documentation as simple and clear as possible.
 >
-> If you want to know more about the options, check the [`node-potrace`](https://npmjs.com/package/node-potrace) documentation. I have simplified the options to make it easier to understand.
+> If you want to go deeper into this, check the [Technical documentation](http://potrace.sourceforge.net/#technical) of the original [`potrace`](http://potrace.sourceforge.net/) C library.
 >
-> And if you want to go deeper into how `potrace` works, check the [Technical documentation](http://potrace.sourceforge.net/#technical) of the original [`potrace`](http://potrace.sourceforge.net/) C library.
->
-> If by some miracle you can understand the options below, please let me know. It would help me a lot to update the documentation.
+> If you have a good knowledge of the `potrace` library and about bitmap tracing and posterizing, please consider contributing to update the documentation of this section.
 
 #### function
 
