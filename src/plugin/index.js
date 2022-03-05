@@ -31,8 +31,7 @@ export default {
 
   async load(id) {
     if (this.load) {
-      // @ts-ignore
-      import.meta.vitePluginContext = {
+      global.vitePluginContext = {
         load: this.load,
       };
     }
