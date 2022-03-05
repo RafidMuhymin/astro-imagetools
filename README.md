@@ -1,6 +1,6 @@
 # Astro ImageTools
 
-`astro-imagetools` comes with the set of tools to perform image optimization and handle responsive images generation for the **Astro JS** framework.
+**Astro ImageTools** is a collection of tools for optimizing and generating responsive images for the **Astro JS** framework.
 
 ## Installation
 
@@ -16,11 +16,9 @@ yarn add astro-imagetools
 pnpm add astro-imagetools
 ```
 
-The `astro-imagetools` package comes with an `<Image />` component and a _Vite_ plugin. The component depends on the plugin to be able to optimize and generate responsive images.
+The `astro-imagetools` package comes with mainly three things, the `<Image />` component, a _Vite_ plugin and a `renderImage` function for programmatically generating image sets.
 
-It also exports the `renderImage` function used by the component interally to allow the user to programmatically generate image sets.
-
-To use the component, first register the plugin in your `astro.config.js` file:
+To use the component, first you have to register the plugin in your `astro.config.js` file:
 
 ```js
 import astroImagePlugin from "astro-imagetools/plugin";
@@ -47,8 +45,8 @@ import Image from "astro-imagetools";
       alt="alt text"
       artDirectives={[
         {
-          media: "(max-aspect-ratio: 3/2)",
           src: "/src/images/portrait.jpg",
+          media: "(orientation: potrait)",
         },
       ]}
     />
@@ -56,16 +54,30 @@ import Image from "astro-imagetools";
 </html>
 ```
 
-If you want to generate optimize image sets programmatically, you can use the `renderImage` function as shown below:
+If you want to generate optimized image sets programmatically, you can use the `renderImage` function as shown below:
 
-```js
+```astro
+---
 import renderImage from "astro-imagetools/renderImage";
 
-export async function getRenderedImage({ src, alt, ...rest }) {
-  const { link, style, image } = await renderImage({ src, alt, ...rest });
+const { image, link, style } = await renderImage({
+  src: "/src/images/landscape.jpg",
+  alt: "A landscape image",
+  artDirectives: [
+    {
+      media: "(orientation: potrait)",
+      src: "/src/images/portrait.jpg",
+    },
+  ],
+});
+---
 
-  return link + style + image;
-}
+<html>
+  <body>
+    <h1>Hello World!</h1>
+    <Fragment set:html={link + style + image} />
+  </body>
+</html>
 ```
 
 The `renderImage` function takes the same arguments as the props of the `<Image />` component. The function returns a promise that resolves to an `ImageHTMLData` object which contains the following properties:
@@ -80,7 +92,7 @@ export interface ImageHTMLData {
 
 ## Configuration Options
 
-Both the `<Image />` component and the `renderImage` function supports a total of 40 config options. You can pass them directly to the component as props and to the function as propertise of an object.
+Both the `<Image />` component and the `renderImage` function supports a total of 40 config options. You can pass them directly to the component as props and to the function as properties of an object parameter.
 
 ### Example Usage
 
@@ -99,13 +111,13 @@ const { link, style, image } = await renderImage({
 });
 ```
 
-### Interface
+### TypeScript Interface
 
-The `ImageConfig` interface below describes the props that the component and the `renderImage` function accepts. The props are passed to the component as a JSX attribute.
+The `ImageConfig` interface below describes the config options supported by both the `<Image />` component and the `renderImage` function.
 
-This section is only for quick reference and for astronomers familiar with _TypeScript_. If you are not comfortable with `TypeScript` or need more information, you can skip this section and move on to the next section for a more detailed explanation with examples.
+This section is only for quick reference and for users familiar with _TypeScript_. If you are not comfortable with `TypeScript` or need more information, you can skip this section and move on to the next section for a more detailed explanation with code examples.
 
-**Note:** The `<Image />` component and the plugin fallback to `@astropub/codecs` for processing images if the environment is unable to install `sharp`. Most of the properties defined in the `ImagetoolsConfig` interface won't be available in this case.
+**Note:** The `<Image />` component and the vite plugin fallback to `@astropub/codecs` for processing images if the environment is unable to install `sharp`. Most of the properties defined in the `ImagetoolsConfig` interface won't be available in this case.
 
 ```ts
 declare type format =
@@ -149,7 +161,7 @@ declare interface PosterizeOptions {
 
 declare interface FormatOptions {
   format?: format | format[] | [] | null;
-  fallbackFormat?: boolean;
+  fallbackFormat?: format;
   includeSourceFormat?: boolean;
   formatOptions?: Record<format, ImageToolsConfigs> & {
     tracedSVG?: PotraceOptions;
@@ -215,6 +227,10 @@ declare type sizesFunction = {
   (breakpoints: number[]): string;
 };
 
+declare type breakpointsFunction = {
+  (imageWidth: number): number[];
+};
+
 declare interface PrimaryProps {
   src: string;
   sizes?: string | sizesFunction;
@@ -223,6 +239,7 @@ declare interface PrimaryProps {
   placeholder?: "dominantColor" | "blurred" | "tracedSVG" | "none";
   breakpoints?:
     | number[]
+    | breakpointsFunction
     | {
         count?: number;
         minWidth?: number;
@@ -235,7 +252,7 @@ export interface ImageConfig
     FormatOptions,
     ImageToolsConfigs {
   alt: string;
-  preload?: boolean | format;
+  preload?: format;
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
@@ -243,9 +260,137 @@ export interface ImageConfig
 }
 ```
 
+<!-- TODO: Create GIF/Video demonstrations of the `layout` and `placeholder` props -->
+
+### `ImageConfig`
+
+The `ImageConfig` interface is the main interface used to define the configuration options that extends the [`PrimaryProps`](#primaryprops), [`FormatOptions`](#formatoptions), and [`ImageToolsConfigs`](#imagetoolsconfigs) interfaces. All the properties except `src` and `alt` are optional.
+
+#### alt
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+The value of the `alt` attribute of the `<img />` element.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/elva-800w.jpg"
+  alt="A father holiding his beloved daughter in his arms"
+/>
+```
+
+#### preload
+
+**Type:** `format`
+
+**Default:** `undefined`
+
+Whether to preload the image or not or what format of image to preload.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" preload="avif"
+/>
+```
+
+#### loading
+
+**Type:** `"lazy" | "eager" | "auto" | null`
+
+**Default:** `preload ? "eager" : "lazy"`
+
+The value of the `loading` attribute of the `<img />` element. If `null` is provided, the `loading` attribute will be omitted.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" loading="eager"
+/>
+```
+
+#### decoding
+
+**Type:** `"async" | "sync" | "auto" | null`
+
+**Default:** `"async"`
+
+The value of the `decoding` attribute of the `<img />` element. If `null` is provided, the `decoding` attribute will be omitted.
+
+**Code example:**
+
+```astro
+<Image src="https://picsum.photos/200/300" alt="A random image" decoding="sync"
+/>
+```
+
+#### layout
+
+**Type:** `"constrained" | "fixed" | "fullWidth" | "fill"`
+
+**Default:** `"constrained"`
+
+The layout mode to determine the resizing behavior of the image in the browser.
+
+In `constrained` mode, the image will occupy full width of the container with `max-width` set to its width. The height of the image will be calculated based on the aspect ratio of the image. The image will be scaled down to fit the container but won't be enlarged.
+
+In `fixed` mode, the image will have a fixed width and height. The `width` and `height` props will be used to set the width and height of the image. The image won't be scaled down nor enlarged.
+
+In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
+
+In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
+
+**Code example:**
+
+<!-- prettier-ignore -->
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  layout="fixed"
+/>
+```
+
+#### artDirectives
+
+**Type:** `ArtDirective[]`
+
+**Default:** `undefined`
+
+The array of art directives to apply to the image. Check the `ArtDirective` interface for more details.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/image/landscape.jpg"
+  alt="A landscape image"
+  artDirectives={[
+      {
+        src: "/src/image/dark-potrait.jpg",
+        media: "(prefers-color-scheme: dark) and (orientation: portrait)",
+      },
+      {
+        src: "/src/image/light-potrait.jpg",
+        media: "(prefers-color-scheme: light) and (orientation: portrait)",
+      },
+      {
+        src: "/src/image/dark-landscape.jpg",
+        media: "(prefers-color-scheme: dark) and (orientation: landscape)",
+      },
+      }
+  ]
+  }
+/>
+```
+
 ### `PrimaryProps`
 
-The properties described in the `PrimaryProps` interface are some of the main props and they are shared with the `ArtDirectives` too. All the props of the `PrimaryProps` interface are optional except for the `src` and `alt` properties.
+The properties defined in the `PrimaryProps` interface are some of the primary configuration options. The [`ImageConfig`](#imageconfig) interface and the [`ArtDirective`](#artdirective) interface extend this interface. All the properties except `src` are optional.
 
 #### src
 
@@ -360,11 +505,11 @@ The placeholder to be displayed while the image is loading. If `placeholder` is 
 
 **Default:** `undefined`
 
-An array of widths in pixels to generate image sets for. If not provided, the breakpoints will be calculated automatically based on the width of the provided image.
+An array of widths in pixels to generate image sets for. If not provided, the breakpoints will be calculated automatically.
 
 If an object is passed then the breakpoints will be calculated based on `count`, `minWidth`, and `maxWidth` properties. The `count` property is to specify the number of breakpoints to generate. The `minWidth` and `maxWidth` properties are to specify the widths to generate in the range between their values.
 
-When an object is passed or the `breakpoints` prop is not provided, the breakpoints are calculated using a simple formula or algorithm. Instead of explaining the complete algorithm here, I am linking to the [source code](https://github.com/RafidMuhymin/astro-imagetools/blob/main/src/component/utils/getBreakpoints.js) of it.
+When an object is passed or the `breakpoints` prop is not provided, the breakpoints are calculated using a simple formula/algorithm. Instead of explaining the complete algorithm here, I am linking to the [source code](https://github.com/RafidMuhymin/astro-imagetools/blob/main/src/component/utils/getBreakpoints.js) of it.
 
 **Code example:**
 
@@ -385,18 +530,178 @@ When an object is passed or the `breakpoints` prop is not provided, the breakpoi
 />
 ```
 
+### `FormatOptions`
+
+The `FormatOptions` interface defines the configuration options related to generating image sets for different formats supported by the `<Image />` component. The [`ImageConfig`](#imageconfig) interface and the [`ArtDirective`](#artdirective) interface extend this interface.
+
+The formats supported by the `<Image />` component are:
+
+```ts
+declare type format =
+  | "heic"
+  | "heif"
+  | "avif"
+  | "jpg"
+  | "jpeg"
+  | "png"
+  | "tiff"
+  | "webp"
+  | "gif";
+```
+
+All the properties described in the `FormatOptions` interface are optional. The properties are defined as follows:
+
+#### format
+
+**Type:** `format | format[] | [] | null`
+
+**Default:** `["avif", "webp"]`
+
+The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no _additional_ image set will be generated.
+
+> **Note:** Passing `[]` or `null` does not necessarily mean that no image sets will be generated. Image sets will still be generated for the source format if `includeSourceFormat` is set to `true` (which is the default value) and for the format specified in the `fallbackFormat` prop (the default value is the source format).
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  format={["webp", "jpg"]}
+/>
+```
+
+#### fallbackFormat
+
+**Type:** `format`
+
+**Default:** _The source format of the image_
+
+The format the browser will fallback to if the other formats are not supported.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  format={["webp", "jpg"]}
+  fallbackFormat="png"
+/>
+```
+
+#### includeSourceFormat
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Whether to generate image set for the source format or not.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/images/image.tiff"
+  alt="A random image"
+  fallbackFormat="png"
+  includeSourceFormat={false}
+/>
+```
+
+#### formatOptions
+
+**Type:** `Record<format, ImageToolsConfigs> & { tracedSVG?: PotraceOptions }`
+
+**Default:** The default values for the all the formats except `tracedSVG` are inherited from the props of the `<Image />` component defined in the [`ImageToolsConfigs`](#imagetoolsconfigs) interface. And for more information on the `tracedSVG` property, see the [`PotraceOptions`](#potraceoptions) interface.
+
+The configuration options for the different formats. The ten supported keys are `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif` and `tracedSVG`. These configuration options will be respected when generating image sets for different formats. And the `tracedSVG` config options are used when the `placeholder` prop is set to `"tracedSVG"`.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  placeholder="tracedSVG"
+  format={["webp", "jpg"]}
+  fallbackFormat="png"
+  includeSourceFormat={false}
+  formatOptions={{
+    jpg: {
+      quality: 80,
+    },
+    png: {
+      quality: 80,
+    },
+    webp: {
+      quality: 50,
+    },
+    tracedSVG: {
+      options: {
+        background: "#fff",
+        color: "#000",
+        turnPolicy: "black",
+        turdSize: 1,
+        alphaMax: 1,
+        optCurve: true,
+        threshold: 100,
+        blackOnWhite: false,
+      },
+    },
+  }}
+/>
+```
+
+### `ArtDirective`
+
+The properties defined in the `ArtDirective` interface are used to define art directions for the provided image. It extends the [`PrimaryProps`](#primaryprops), [`FormatOptions`](#formatoptions) and [`ImageConfig`](#imageconfig) interfaces. The only property added is `media`. All the properties except `src` and `media` are optional.
+
+#### media
+
+**Type:** `string`
+
+**Default:** `undefined`
+
+The CSS media query to use.
+
+**Code example:**
+
+```astro
+<Image
+  src="/src/images/landscape.jpg"
+  alt="alt text"
+  artDirectives={[
+    {
+      media: "(max-aspect-ratio: 3/2)",
+      // Properties defined in the PrimaryProps interface
+      src: "/src/images/portrait.jpg",
+      breakpoints: [256, 384, 512],
+      // Properties defined in the ImageToolsConfigs interface
+      width: 768,
+      height: 1024,
+      // Properties defined in the FormatOptions interface
+      format: ["png"],
+      includeSourceFormat: false,
+    },
+  ]}
+/>
+```
+
+<!-- TODO: Investigate what the default values are of the properties defined in the ImageToolsConfigs interface -->
+
 ### `ImageToolsConfigs`
 
-The properties described in the `ImageToolsConfigs` interface are the directives
-supported by the [`imagetools-core`](https://npmjs.com/package/imagetools-core) library. All the directives are documented in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md) of the `imagetools-core` library. They are being documented here to reflect the changes made in the `astro-imagetools` package and for the component syntax.
+The properties defined in the `ImageToolsConfigs` interface are the directives
+supported by the [`imagetools-core`](https://npmjs.com/package/imagetools-core) library. All the directives are documented in the [directives documentation](https://github.com/JonasKruckenberg/imagetools/blob/main/docs/directives.md) of the `imagetools-core` library. They are being documented here to reflect the changes made in the `astro-imagetools` package and for the different component syntax.
 
 > **Note:** The values passed in the `background` and `tint` property will be parsed by the [`color-string`](https://www.npmjs.com/package/color-string) library so all color values known from css like rgb, rgba or named colors can be used.
 >
-> The `format` property is not defined in the `ImageToolsConfigs` interface because it works differently in the context of the `<Image />` component.
+> The `format` property is not defined in the `ImageToolsConfigs` interface because it works differently in the context of the `<Image />` component. Instead, it is defined in the [`FormatOptions`](#format) interface.
 >
 > The values passed in the `width`, `height` and `aspect` properties are used to resize the image when loading. The final image widths will be calculated from the [`breakpoints`](#breakpoints) property.
 >
-> The `imagetools-core` package supports `number[]` values for a few directives. But the `<Image />` component doesn't support them because they don't make sense in the context of the component.
+> The `imagetools-core` package supports `number[]` values for a few directives. But the `<Image />` component doesn't support them because they don't make sense in the context it.
 
 #### flip
 
@@ -585,8 +890,7 @@ Resizes the image to be the specified aspect ratio. If height and width are both
 
 This instructs various directives (e.g. the [`rotate`](#rotate)) to use the specified color when filling empty spots in the image.
 
-> **Note:** This directive does nothing on it's own, it has to be used in conjunction with another directive.
-> You also cannot set multiple values.
+> **Note:** This directive does nothing on it's own, it has to be used in conjunction with another directive. You also cannot set multiple values.
 
 **Code example:**
 
@@ -746,132 +1050,9 @@ See sharps [resize options](https://sharp.pixelplumbing.com/api-resize#resize) f
 />
 ```
 
-### `FormatOptions`
-
-The `FormatOptions` interface defines the configuration options supported by the `<Image />` component for generating image sets for different formats.
-
-The formats supported by the `<Image />` component are:
-
-```ts
-declare type format =
-  | "heic"
-  | "heif"
-  | "avif"
-  | "jpg"
-  | "jpeg"
-  | "png"
-  | "tiff"
-  | "webp"
-  | "gif";
-```
-
-All the properties described in the `FormatOptions` interface are optional. The properties are defined as follows:
-
-#### format
-
-**Type:** `format | format[] | [] | null`
-
-**Default:** `["avif", "webp"]`
-
-The image format or formats to generate image sets for. If `format` is set to `null` or `[]`, no _additional_ image set will be generated.
-
-> **Note:** Passing `[]` or `null` does not necessarily mean that no image will be generated. Image sets will still be generated for the source format if `includeSourceFormat` is set to `true` (which is the default value) and for the format specified in the `fallbackFormat` prop (the default value is the source format).
-
-**Code example:**
-
-```astro
-<Image
-  src="https://picsum.photos/200/300"
-  alt="A random image"
-  format={["webp", "jpg"]}
-/>
-```
-
-#### fallbackFormat
-
-**Type:** `format`
-
-**Default:** The source format of the image
-
-The format the browser will fallback to if the other formats are not supported.
-
-**Code example:**
-
-```astro
-<Image
-  src="https://picsum.photos/200/300"
-  alt="A random image"
-  format={["webp", "jpg"]}
-  fallbackFormat="png"
-/>
-```
-
-#### includeSourceFormat
-
-**Type:** `boolean`
-
-**Default:** `true`
-
-Whether to generate image set for the source format or not.
-
-**Code example:**
-
-```astro
-<Image
-  src="/src/images/image.tiff"
-  alt="A random image"
-  fallbackFormat="png"
-  includeSourceFormat={false}
-/>
-```
-
-#### formatOptions
-
-**Type:** `Record<format, ImageToolsConfigs> & { tracedSVG?: PotraceOptions }`
-
-**Default:** The default values for the all the formats except `tracedSVG` are inherited from the props of the `<Image />` component defined in the [`ImageToolsConfigs`](#imagetoolsconfigs) interface. And for more information on `tracedSVG` see the [`PotraceOptions`](#potraceoptions) interface.
-
-The configuration options for the different formats. The ten supported keys are `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif` and `tracedSVG`. These configuration options will be respected when generating image sets for different formats. And the `tracedSVG` config options are used when the `placeholder` prop is set to `"tracedSVG"`.
-
-**Code example:**
-
-```astro
-<Image
-  src="https://picsum.photos/200/300"
-  alt="A random image"
-  placeholder="tracedSVG"
-  format={["webp", "jpg"]}
-  fallbackFormat="png"
-  includeSourceFormat={false}
-  formatOptions={{
-    jpg: {
-      quality: 80,
-    },
-    png: {
-      quality: 80,
-    },
-    webp: {
-      quality: 50,
-    },
-    tracedSVG: {
-      options: {
-        background: "#fff",
-        color: "#000",
-        turnPolicy: "black",
-        turdSize: 1,
-        alphaMax: 1,
-        optCurve: true,
-        threshold: 100,
-        blackOnWhite: false,
-      },
-    },
-  }}
-/>
-```
-
 ### `PotraceOptions`
 
-The `PotraceOptions` interface defines the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined in the `PotraceOptions` interface are optional.
+The `PotraceOptions` interface defines the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used to generate traced SVGs when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined in the `PotraceOptions` interface are optional.
 
 > **Note:** Most of the things below have gone above my head. I'm not even sure if some of the things I have said below are correct. And unless you are a SVG expert, and master at tracing bitmaps, and posterizing (What??) bitmaps, I think the below options will go above your head too.
 >
@@ -1057,169 +1238,6 @@ const posterizeOptions = {
 />
 ```
 
-### `ArtDirective`
-
-The properties defined in the `ArtDirective` interface are used to define art directions for the provided image. All the properties except `src` and `media` are optional.
-
-The `ArtDirective` interface extends the `PrimaryProps`, `FormatOptions` and `ImageToolsConfigs` interface. So, all the properties defined in them are also supported in the `ArtDirective` interface. It only adds the `media` property.
-
-#### media
-
-**Type:** `string`
-
-**Default:** `undefined`
-
-The CSS media query to use.
-
-**Code example:**
-
-```astro
-<Image
-  src="/src/images/landscape.jpg"
-  alt="alt text"
-  artDirectives={[
-    {
-      media: "(max-aspect-ratio: 3/2)",
-      // Properties defined in the PrimaryProps interface
-      src: "/src/images/portrait.jpg",
-      breakpoints: [256, 384, 512],
-      // Properties defined in the ImageToolsConfigs interface
-      width: 768,
-      height: 1024,
-      // Properties defined in the FormatOptions interface
-      format: ["png"],
-      includeSourceFormat: false,
-    },
-  ]}
-/>
-```
-
-### `ImageConfig`
-
-The `ImageConfig` interface is the main interface used to define the configuration of the image that extends the `PrimaryProps`, `FormatOptions` and `ImageToolsConfigs` interface. All the properties except `src` and `alt` are optional.
-
-#### alt
-
-**Type:** `string`
-
-**Default:** `undefined`
-
-The value of the `alt` attribute of the `<img />` element.
-
-**Code example:**
-
-```astro
-<Image
-  src="https://mdn.github.io/learning-area/html/multimedia-and-embedding/responsive-images/elva-800w.jpg"
-  alt="A father holiding his beloved daughter in his arms"
-/>
-```
-
-#### preload
-
-**Type:** `boolean | format`
-
-**Default:** `undefined`
-
-Whether to preload the image or not or what format of image to preload.
-
-**Code example:**
-
-```astro
-<Image src="https://picsum.photos/200/300" alt="A random image" preload="avif"
-/>
-```
-
-#### loading
-
-**Type:** `"lazy" | "eager" | "auto" | null`
-
-**Default:** `preload ? "eager" : "lazy"`
-
-The value of the `loading` attribute of the `<img />` element. If `null` is provided, the `loading` attribute will be omitted.
-
-**Code example:**
-
-```astro
-<Image src="https://picsum.photos/200/300" alt="A random image" loading="eager"
-/>
-```
-
-#### decoding
-
-**Type:** `"async" | "sync" | "auto" | null`
-
-**Default:** `"async"`
-
-The value of the `decoding` attribute of the `<img />` element. If `null` is provided, the `decoding` attribute will be omitted.
-
-**Code example:**
-
-```astro
-<Image src="https://picsum.photos/200/300" alt="A random image" decoding="sync"
-/>
-```
-
-#### layout
-
-**Type:** `"constrained" | "fixed" | "fullWidth" | "fill"`
-
-**Default:** `"constrained"`
-
-The layout mode to determine the resizing behavior of the image in the browser.
-
-In `constrained` mode, the image will occupy full width of the container with `max-width` set to its width. The height of the image will be calculated based on the aspect ratio of the image. The image will be scaled down to fit the container but won't be enlarged.
-
-In `fixed` mode, the image will have a fixed width and height. The `width` and `height` props will be used to set the width and height of the image. The image won't be scaled down nor enlarged.
-
-In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
-
-In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
-
-**Code example:**
-
-<!-- prettier-ignore -->
-```astro
-<Image
-  src="https://picsum.photos/200/300"
-  alt="A random image"
-  layout="fixed"
-/>
-```
-
-#### artDirectives
-
-**Type:** `ArtDirective[]`
-
-**Default:** `undefined`
-
-The array of art directives to apply to the image. Check the `ArtDirective` interface for more details.
-
-**Code example:**
-
-```astro
-<Image
-  src="/src/image/landscape.jpg"
-  alt="A landscape image"
-  artDirectives={[
-      {
-        src: "/src/image/dark-potrait.jpg",
-        media: "(prefers-color-scheme: dark) and (orientation: portrait)",
-      },
-      {
-        src: "/src/image/light-potrait.jpg",
-        media: "(prefers-color-scheme: light) and (orientation: portrait)",
-      },
-      {
-        src: "/src/image/dark-landscape.jpg",
-        media: "(prefers-color-scheme: dark) and (orientation: landscape)",
-      },
-      }
-  ]
-  }
-/>
-```
-
 ## Acknowledgements
 
 ### The people for whom this project became possible
@@ -1255,9 +1273,3 @@ _...and many more people for their help and inspiration. And, thanks to the [Ast
 [Responsive images and art direction](https://web.dev/patterns/web-vitals-patterns/images/responsive-images/) by [Web.dev](https://web.dev/).
 
 _...and many more articles and resources that have helped me to understand responsive images and image optimization._
-
-<!-- TODO -->
-
-<!-- Image example of the `layout` and `placeholder` props -->
-
-<!-- Investigate what the default values are in ImageToolsConfigs -->
