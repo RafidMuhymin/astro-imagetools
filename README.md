@@ -235,25 +235,11 @@ export interface ImageConfig
     FormatOptions,
     ImageToolsConfigs {
   alt: string;
-  // The value of the `alt` attribute of the `<img />` element.
   preload?: boolean | format;
-  // Whether to preload the image or not or what format of image to preload.
   loading?: "lazy" | "eager" | "auto" | null;
-  // The value of the `loading` attribute of the `<img />` element.
   decoding?: "async" | "sync" | "auto" | null;
-  // The value of the `decoding` attribute of the `<img />` element.
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
-  // The layout mode of the image.
-
-  // In `constrained` mode, the image will occupy full width of the container with `max-width` set to its width. The height of the image will be calculated based on the aspect ratio of the image. The image will be scaled down to fit the container but won't be enlarged.
-
-  // In `fixed` mode, the image will have a fixed width and height. The `width` and `height` props will be used to set the width and height of the image. The image won't be scaled down nor enlarged.
-
-  // In `fullWidth` mode, the image will be scaled up or down to occupy the full width of the container. The height of the image will be calculated based on the aspect ratio of the image.
-
-  // In `fill` mode, the image will be scaled up or down to fill the entire width and height of the container.
   artDirectives?: ArtDirective[];
-  // Check the ArtDirective interface for more details.
 }
 ```
 
