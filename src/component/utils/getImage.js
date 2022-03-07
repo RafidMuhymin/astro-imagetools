@@ -53,6 +53,7 @@ export default async function (
       artDirectives,
       placeholder,
       format,
+      imagesizes,
       breakpoints,
       fallbackFormat,
       includeSourceFormat,
