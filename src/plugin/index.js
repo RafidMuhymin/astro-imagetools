@@ -4,10 +4,13 @@ import path from "path";
 import stream from "stream";
 import { getConfigOptions, getImagePath } from "./utils/shared.js";
 import {
+  config,
+  fsCachePath,
+  fsCacheIndex,
   getLoadedImage,
   getTransformedImage,
-  supportedFileTypes,
-} from "./utils/sharpCheck.js";
+  supportedImageTypes,
+} from "./utils/runtimeChecks.js";
 
 let viteConfig;
 const bundled = [];
@@ -48,7 +51,7 @@ export default {
 
     const ext = path.extname(src).slice(1);
 
-    if (supportedFileTypes.includes(ext)) {
+    if (supportedImageTypes.includes(ext)) {
       const base = path.basename(src, path.extname(src));
 
       const { base: projectBase } = viteConfig;
