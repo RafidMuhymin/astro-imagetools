@@ -1,16 +1,17 @@
 // @ts-check
 
 export default function getBackgroundStyles(
-  images,
-  className,
-  objectFit,
-  objectPosition
+	images,
+	className,
+	objectFit,
+	objectPosition,
+	style
 ) {
-  const bgStyles = images
-    .map(({ media, fallback, object }) =>
-      fallback
-        ? media
-          ? `@media ${media} {
+	const bgStyles = images
+		.map(({ media, fallback, object }) =>
+			fallback
+				? media
+					? `@media ${media} {
   .${className} {
     object-fit: ${object?.fit || objectFit};
     object-position: ${object?.position || objectPosition};
@@ -19,17 +20,17 @@ export default function getBackgroundStyles(
     background-position: ${object?.position || objectPosition};
   }
 }`
-          : `.${className} {
+					: `.${className} {
   object-fit: ${objectFit};
   object-position: ${objectPosition};
   background-image: url('${encodeURI(fallback)}');
   background-size: ${objectFit};
   background-position: ${objectPosition};
 }`
-        : null
-    )
-    .filter(Boolean)
-    .reverse();
+				: null
+		)
+		.filter(Boolean)
+		.reverse();
 
-  return bgStyles;
+	return bgStyles;
 }

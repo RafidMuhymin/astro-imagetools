@@ -2,7 +2,7 @@
 import type { ImageConfig as Props } from "../types.d.ts";
 import renderImage from "./utils/renderImage.js";
 
-const { image, link, style } = await renderImage(Astro.props as Props);
+const { image, link, srcStyle } = await renderImage(Astro.props as Props);
 ---
 
-<Fragment set:html={link + style + image} />
+<Fragment set:html={link + srcSstyle + image} />
