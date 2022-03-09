@@ -2,11 +2,10 @@
 import findCacheDir from "find-cache-dir";
 
 // FS Cache related checks
-export const fsCachePath =
-  findCacheDir({
-    name: "astro-imagetools",
-    create: true,
-  }) + "/";
+export const fsCachePath = findCacheDir({
+  name: "astro-imagetools/",
+  create: true,
+});
 
 // Sharp related checks
 const sharp = await (async () => {
