@@ -184,13 +184,11 @@ export default {
 
       await Promise.all(
         assetNames.map(async (assetName) => {
-          const { buffer, image } = store.get(assetName);
+          const { buffer, image, extension: ext } = store.get(assetName);
 
-          const extname = path.extname(assetName);
+          const extname = `.${ext}`;
 
           const base = path.basename(assetName, extname);
-
-          const ext = extname.slice(1);
 
           const name = base.slice(0, base.lastIndexOf("."));
 
