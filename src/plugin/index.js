@@ -86,7 +86,7 @@ export default {
 
         const config = { width, ...options };
 
-        const hash = objectHash(config);
+        const hash = objectHash(config).slice(0, 8);
 
         const { assetName } = getImagePath(
           base,
@@ -116,7 +116,7 @@ export default {
           widths.map(async (width) => {
             const config = { width, ...options };
 
-            const hash = objectHash(config);
+            const hash = objectHash(config).slice(0, 8);
 
             const { name, path } = getImagePath(
               base,
