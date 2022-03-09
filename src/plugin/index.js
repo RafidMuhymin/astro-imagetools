@@ -82,9 +82,13 @@ export default {
 
         const [width] = widths;
 
-        const params = [base, projectBase, extension, width, hash];
-
-        const { assetName } = getImagePath(...params);
+        const { assetName } = getImagePath(
+          base,
+          { projectBase, assetsDir },
+          extension,
+          width,
+          hash
+        );
 
         if (store.has(assetName)) {
           return `export default "${store.get(assetName)}"`;
@@ -102,9 +106,13 @@ export default {
       } else {
         const sources = await Promise.all(
           widths.map(async (width) => {
-            const params = [base, projectBase, extension, width, hash];
-
-            const { name, path } = getImagePath(...params);
+            const { name, path } = getImagePath(
+              base,
+              { projectBase, assetsDir },
+              extension,
+              width,
+              hash
+            );
 
             if (!store.has(path)) {
               const config = { width, ...options };

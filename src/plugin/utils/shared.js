@@ -37,12 +37,18 @@ export function getConfigOptions(config, ext, imageWidth) {
   };
 }
 
-export function getImagePath(base, projectBase, extension, width, hash) {
+export function getImagePath(
+  base,
+  { projectBase, assetsDir },
+  extension,
+  width,
+  hash
+) {
   const name = `${base}@${width}w.${extension}`;
 
   const assetName = `${base}@${width}w.${hash}.${extension}`;
 
-  const path = `${projectBase}assets/${assetName}`;
+  const path = `${projectBase}${assetsDir}/${assetName}`;
 
   return { name, assetName, path };
 }
