@@ -18,15 +18,8 @@ export function getConfigOptions(config, ext, imageWidth) {
     ...rest,
   };
 
-  const hash = crypto
-    .createHash("md5")
-    .update(JSON.stringify(options))
-    .digest("hex")
-    .substring(0, 8);
-
   return {
     type,
-    hash,
     widths,
     options,
     extension,

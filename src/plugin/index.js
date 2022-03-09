@@ -2,6 +2,7 @@
 import fs from "fs";
 import path from "path";
 import stream from "stream";
+import objectHash from "object-hash";
 import { getConfigOptions, getImagePath } from "./utils/shared.js";
 import {
   fsCachePath,
@@ -68,8 +69,11 @@ export default {
         store.get(src) ||
         store.set(src, await getLoadedImage(src, ext)).get(src);
 
-      const { type, hash, widths, options, extension, inline } =
-        getConfigOptions(config, ext, imageWidth);
+      const { type, widths, options, extension, inline } = getConfigOptions(
+        config,
+        ext,
+        imageWidth
+      );
 
       if (inline) {
         if (widths.length > 1) {
@@ -79,6 +83,10 @@ export default {
         }
 
         const [width] = widths;
+
+        const config = { width, ...options };
+
+        const hash = objectHash(config);
 
         const { assetName } = getImagePath(
           base,
@@ -91,8 +99,6 @@ export default {
         if (store.has(assetName)) {
           return `export default "${store.get(assetName)}"`;
         } else {
-          const config = { width, ...options };
-
           const params = [src, loadedImage, config, type, true];
 
           const { dataUri } = await getTransformedImage(...params);
@@ -104,6 +110,10 @@ export default {
       } else {
         const sources = await Promise.all(
           widths.map(async (width) => {
+            const config = { width, ...options };
+
+            const hash = objectHash(config);
+
             const { name, path } = getImagePath(
               base,
               { projectBase, assetsDir },
@@ -113,8 +123,6 @@ export default {
             );
 
             if (!store.has(path)) {
-              const config = { width, ...options };
-
               const params = [src, loadedImage, config, type];
 
               const { image, buffer } = await getTransformedImage(...params);
