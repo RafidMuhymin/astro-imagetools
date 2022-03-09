@@ -16,6 +16,8 @@ let viteConfig;
 const bundled = [];
 const store = new Map();
 
+let projectBase, outDir, assetsDir, assetFileNames;
+
 export default {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
@@ -30,6 +32,14 @@ export default {
 
   configResolved(config) {
     viteConfig = config;
+
+    ({ base: projectBase } = viteConfig);
+
+    ({ outDir, assetsDir } = viteConfig.build);
+
+    assetFileNames =
+      viteConfig.build.rollupOptions.output?.assetFileNames ||
+      `/${assetsDir}/[name].[hash][extname]`;
   },
 
   async load(id) {
@@ -53,8 +63,6 @@ export default {
 
     if (supportedImageTypes.includes(ext)) {
       const base = path.basename(src, path.extname(src));
-
-      const { base: projectBase } = viteConfig;
 
       const config = Object.fromEntries(searchParams);
 
@@ -151,15 +159,10 @@ export default {
         (item) => item.startsWith("/assets/") && !bundled.includes(item)
       );
 
-      const { outDir, assetsDir } = viteConfig.build;
-
       const assetsDirPath = `${outDir}${assetsDir}`;
 
       fs.existsSync(assetsDirPath) ||
         fs.mkdirSync(assetsDirPath, { recursive: true });
-
-      const { assetFileNames = `/${assetsDir}/[name].[hash][extname]` } =
-        viteConfig.build.rollupOptions.output;
 
       await Promise.all(
         assetNames.map(async (assetName) => {
