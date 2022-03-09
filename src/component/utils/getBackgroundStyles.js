@@ -17,7 +17,9 @@ export default function getBackgroundStyles(
     object-position: ${object?.position || objectPosition};
     background-image: url('${encodeURI(fallback)}');
     background-size: ${object?.fit || objectFit};
-    background-position: ${object?.position || objectPosition};
+    background-position: ${object?.position || objectPosition}; ${
+							style ? "\n" + style : ""
+					  }
   }
 }`
 					: `.${className} {
@@ -26,6 +28,7 @@ export default function getBackgroundStyles(
   background-image: url('${encodeURI(fallback)}');
   background-size: ${objectFit};
   background-position: ${objectPosition};
+  ${style}
 }`
 				: null
 		)

@@ -33,6 +33,7 @@ export default async function renderImage(props) {
 		style,
 		...configOptions
 	} = props;
+	const classProp = props.class;
 
 	const start = performance.now();
 	const { uuid, images } = await getImage(
@@ -87,7 +88,7 @@ export default async function renderImage(props) {
             src="${src}"
             alt="${alt}"
             srcset="${srcset}"
-            class="${className}"
+            class="${className} ${classProp ? classProp : ""}"
             sizes="${imagesizes}"
             width="${sizes.width}"
             height="${sizes.height}"
