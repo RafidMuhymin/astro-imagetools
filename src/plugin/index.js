@@ -4,9 +4,7 @@ import path from "path";
 import stream from "stream";
 import { getConfigOptions, getImagePath } from "./utils/shared.js";
 import {
-  config,
   fsCachePath,
-  fsCacheIndex,
   getLoadedImage,
   getTransformedImage,
   supportedImageTypes,
@@ -192,10 +190,25 @@ export default {
             .replace("[ext]", ext)
             .replace("[extname]", extname);
 
-          await fs.promises.writeFile(
-            outDir + assetFileName,
-            buffer || (await image.clone().toBuffer())
-          );
+          const cacheFilePath = fsCachePath + base + extname;
+
+          const assetFilePath = `${outDir}${assetFileName}`;
+
+          await fs.promises
+            .copyFile(cacheFilePath, assetFilePath)
+            .catch(async (error) => {
+              if (error.code === "ENOENT") {
+                const imageBuffer = buffer || (await image.toBuffer());
+
+                await Promise.all(
+                  [cacheFilePath, assetFilePath].map(async (dir) => {
+                    await fs.promises.writeFile(dir, imageBuffer);
+                  })
+                );
+              } else {
+                throw error;
+              }
+            });
 
           bundled.push(assetName);
         })
