@@ -99,9 +99,13 @@ export default {
         if (store.has(assetName)) {
           return `export default "${store.get(assetName)}"`;
         } else {
-          const params = [src, loadedImage, config, type, true];
+          const params = [src, loadedImage, config, type];
 
-          const { dataUri } = await getTransformedImage(...params);
+          const { image, buffer } = await getTransformedImage(...params);
+
+          const dataUri = `data:${type};base64,${(
+            buffer || (await image.clone().toBuffer())
+          ).toString("base64")}`;
 
           store.set(assetName, dataUri);
 
