@@ -86,18 +86,8 @@ export default {
 
         const config = { width, ...options };
 
-        const hash = objectHash(config).slice(0, 8);
-
-        const { assetName } = getImagePath(
-          base,
-          { projectBase, assetsDir },
-          extension,
-          width,
-          hash
-        );
-
-        if (store.has(assetName)) {
-          return `export default "${store.get(assetName)}"`;
+        if (store.has(id)) {
+          return `export default "${store.get(id)}"`;
         } else {
           const params = [src, loadedImage, config, type];
 
@@ -107,7 +97,7 @@ export default {
             buffer || (await image.clone().toBuffer())
           ).toString("base64")}`;
 
-          store.set(assetName, dataUri);
+          store.set(id, dataUri);
 
           return `export default "${dataUri}"`;
         }
