@@ -108,9 +108,9 @@ export default {
 
             const hash = objectHash(config).slice(0, 8);
 
-            const { name, path } = getImagePath(
+            const { path, assetName } = getImagePath(
               base,
-              { projectBase, assetsDir },
+              { assetFileNames },
               extension,
               width,
               hash
@@ -121,7 +121,7 @@ export default {
 
               const { image, buffer } = await getTransformedImage(...params);
 
-              const imageObject = { type, name, buffer, extension, image };
+              const imageObject = { type, image, buffer, assetName };
 
               store.set(path, imageObject);
             }
@@ -163,7 +163,7 @@ export default {
 
   async closeBundle() {
     if (viteConfig.mode === "production") {
-      const assetNames = Object.keys(Object.fromEntries(store)).filter(
+      const paths = Object.keys(Object.fromEntries(store)).filter(
         (item) => item.startsWith("/assets/") && !bundled.includes(item)
       );
 
@@ -173,26 +173,12 @@ export default {
         fs.mkdirSync(assetsDirPath, { recursive: true });
 
       await Promise.all(
-        assetNames.map(async (assetName) => {
-          const { buffer, image, extension: ext } = store.get(assetName);
+        paths.map(async (path) => {
+          const { image, buffer, assetName } = store.get(path);
 
-          const extname = `.${ext}`;
+          const cacheFilePath = fsCachePath + assetName;
 
-          const base = path.basename(assetName, extname);
-
-          const name = base.slice(0, base.lastIndexOf("."));
-
-          const hash = base.slice(base.lastIndexOf(".") + 1);
-
-          const assetFileName = assetFileNames
-            .replace("[name]", name)
-            .replace("[hash]", hash)
-            .replace("[ext]", ext)
-            .replace("[extname]", extname);
-
-          const cacheFilePath = fsCachePath + base + extname;
-
-          const assetFilePath = `${outDir}${assetFileName}`;
+          const assetFilePath = `${outDir}${path}`;
 
           await fs.promises
             .copyFile(cacheFilePath, assetFilePath)
@@ -210,7 +196,7 @@ export default {
               }
             });
 
-          bundled.push(assetName);
+          bundled.push(path);
         })
       );
     }
