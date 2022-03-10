@@ -1,5 +1,4 @@
 // @ts-check
-import crypto from "crypto";
 
 export function getConfigOptions(config, ext, imageWidth) {
   const { w, width = w, format = ext, base64, raw, inline, ...rest } = config;
@@ -30,18 +29,16 @@ export function getConfigOptions(config, ext, imageWidth) {
   };
 }
 
-export function getImagePath(base, { assetFileNames }, ext, width, hash) {
+export function getAssetPath(base, assetFileNames, ext, width, hash) {
   const name = `${base}@${width}w`;
 
   const extname = `.${ext}`;
 
-  const assetName = `${name}.${hash}.${ext}`;
-
-  const path = assetFileNames
+  const assetPath = assetFileNames
     .replace("[name]", name)
-    .replace("[hash]", hash)
+    .replace("[hash]", hash.slice(0, 8))
     .replace("[ext]", ext)
     .replace("[extname]", extname);
 
-  return { assetName, path };
+  return assetPath;
 }

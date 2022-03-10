@@ -1,18 +1,16 @@
 // @ts-check
-import fs from "fs";
 import path from "path";
 import stream from "stream";
 import objectHash from "object-hash";
-import { getConfigOptions, getImagePath } from "./utils/shared.js";
+import { getConfigOptions, getAssetPath } from "./utils/shared.js";
 import {
-  fsCachePath,
   getLoadedImage,
   getTransformedImage,
   supportedImageTypes,
 } from "./utils/runtimeChecks.js";
+import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
 
 let viteConfig;
-const bundled = [];
 const store = new Map();
 
 let projectBase, outDir, assetsDir, assetFileNames;
@@ -84,77 +82,79 @@ export default {
 
         const [width] = widths;
 
-        const config = { width, ...options };
+        const hash = objectHash([src, width, options]);
 
-        if (store.has(id)) {
-          return `export default "${store.get(id)}"`;
+        if (store.has(hash)) {
+          return `export default "${store.get(hash)}"`;
         } else {
+          const config = { width, ...options };
+
           const params = [src, loadedImage, config, type];
 
           const { image, buffer } = await getTransformedImage(...params);
 
           const dataUri = `data:${type};base64,${(
-            buffer || (await image.clone().toBuffer())
+            buffer || (await getCachedBuffer(hash, image))
           ).toString("base64")}`;
 
-          store.set(id, dataUri);
+          store.set(hash, dataUri);
 
           return `export default "${dataUri}"`;
         }
       } else {
         const sources = await Promise.all(
           widths.map(async (width) => {
-            const config = { width, ...options };
+            const hash = objectHash([src, width, options]);
 
-            const hash = objectHash(config).slice(0, 8);
-
-            const { path, assetName } = getImagePath(
+            const assetPath = getAssetPath(
               base,
-              { assetFileNames },
+              assetFileNames,
               extension,
               width,
               hash
             );
 
-            if (!store.has(path)) {
+            if (!store.has(assetPath)) {
+              const config = { width, ...options };
+
               const params = [src, loadedImage, config, type];
 
               const { image, buffer } = await getTransformedImage(...params);
 
-              const imageObject = { type, image, buffer, assetName };
+              const imageObject = { hash, type, image, buffer };
 
-              store.set(path, imageObject);
+              store.set(assetPath, imageObject);
             }
 
-            return { width, path };
+            return { width, assetPath };
           })
         );
 
-        const path =
+        const srcset =
           sources.length > 1
-            ? sources.map(({ width, path }) => `${path} ${width}w`).join(", ")
+            ? sources
+                .map(({ width, assetPath }) => `${assetPath} ${width}w`)
+                .join(", ")
             : sources[0].path;
 
-        return `export default "${path}"`;
+        return `export default "${srcset}"`;
       }
     }
   },
 
-  configureServer(server) {
+  async configureServer(server) {
     server.middlewares.use(async (request, response, next) => {
       const imageObject = store.get(request.url);
 
       if (imageObject) {
-        const { type, buffer, image } = imageObject;
+        const { hash, type, image, buffer } = imageObject;
 
         response.setHeader("Content-Type", type);
         response.setHeader("Cache-Control", "no-cache");
 
-        if (buffer) {
-          return stream.Readable.from(buffer).pipe(response);
-        }
-
-        return image.clone().pipe(response);
+        return stream.Readable.from(
+          buffer || (await getCachedBuffer(hash, image))
+        ).pipe(response);
       }
 
       next();
@@ -163,41 +163,22 @@ export default {
 
   async closeBundle() {
     if (viteConfig.mode === "production") {
-      const paths = Object.keys(Object.fromEntries(store)).filter(
-        (item) => item.startsWith("/assets/") && !bundled.includes(item)
-      );
-
-      const assetsDirPath = `${outDir}${assetsDir}`;
-
-      fs.existsSync(assetsDirPath) ||
-        fs.mkdirSync(assetsDirPath, { recursive: true });
-
       await Promise.all(
-        paths.map(async (path) => {
-          const { image, buffer, assetName } = store.get(path);
-
-          const cacheFilePath = fsCachePath + assetName;
-
-          const assetFilePath = `${outDir}${path}`;
-
-          await fs.promises
-            .copyFile(cacheFilePath, assetFilePath)
-            .catch(async (error) => {
-              if (error.code === "ENOENT") {
-                const imageBuffer = buffer || (await image.toBuffer());
-
-                await Promise.all(
-                  [cacheFilePath, assetFilePath].map(async (dir) => {
-                    await fs.promises.writeFile(dir, imageBuffer);
-                  })
-                );
-              } else {
-                throw error;
-              }
-            });
-
-          bundled.push(path);
-        })
+        [...store.entries()]
+          .filter(([assetPath]) =>
+            assetPath.startsWith(projectBase + assetsDir + "/")
+          )
+          .map(
+            async ([assetPath, { hash, image, buffer }]) =>
+              await saveAndCopyAsset(
+                hash,
+                image,
+                buffer,
+                outDir,
+                assetsDir,
+                assetPath
+              )
+          )
       );
     }
   },
