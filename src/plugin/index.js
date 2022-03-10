@@ -23,7 +23,13 @@ export default {
       exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
     },
     ssr: {
-      external: ["sharp", "potrace", "object-hash", "@astropub/codecs"],
+      external: [
+        "sharp",
+        "potrace",
+        "object-hash",
+        "find-cache-dir",
+        "@astropub/codecs",
+      ],
     },
   }),
 
