@@ -43,6 +43,9 @@ export default {
     assetFileNames =
       viteConfig.build.rollupOptions.output?.assetFileNames ||
       `/${assetsDir}/[name].[hash][extname]`;
+
+    assetFileNames.startsWith(projectBase) ||
+      (assetFileNames = projectBase + assetFileNames);
   },
 
   async load(id) {
