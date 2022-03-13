@@ -3,12 +3,13 @@ import path from "path";
 import stream from "stream";
 import objectHash from "object-hash";
 import { getConfigOptions, getAssetPath } from "./utils/shared.js";
-import {
-  getLoadedImage,
-  getTransformedImage,
-  supportedImageTypes,
-} from "./utils/runtimeChecks.js";
+import { sharp, supportedImageTypes } from "../runtimeChecks.js";
 import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
+
+// @ts-ignore
+const { getLoadedImage, getTransformedImage } = await import(
+  sharp ? "./utils/imagetools.js" : "./utils/codecs.js"
+);
 
 let viteConfig;
 const store = new Map();

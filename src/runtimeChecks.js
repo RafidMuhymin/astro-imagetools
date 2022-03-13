@@ -8,7 +8,7 @@ export const fsCachePath = findCacheDir({
 });
 
 // Sharp related checks
-const sharp = await (async () => {
+export const sharp = await (async () => {
   try {
     if (await import("sharp")) {
       return true;
@@ -26,7 +26,3 @@ export const supportedImageTypes = [
   "webp",
   ...(sharp ? ["heic", "heif", "tiff", "gif"] : ["jxl", "wp2"]),
 ];
-
-export const { getLoadedImage, getTransformedImage } = await (sharp
-  ? import("./imagetools.js")
-  : import("./codecs.js"));

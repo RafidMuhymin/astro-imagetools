@@ -1,7 +1,12 @@
 // @ts-check
 import fs from "fs";
 import crypto from "crypto";
-import { getImageDetails } from "./sharpCheck.js";
+import { sharp } from "../../runtimeChecks.js";
+
+// @ts-ignore
+const { getImageDetails } = await import(
+  sharp ? "./imagetools.js" : "./codecs.js"
+);
 
 const isStaticBuild =
   // @ts-ignore

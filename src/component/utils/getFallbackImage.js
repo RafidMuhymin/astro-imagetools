@@ -3,7 +3,7 @@
 import util from "util";
 import potrace from "potrace";
 import getSrcset from "./getSrcset.js";
-import { sharp } from "./sharpCheck.js";
+import { sharp } from "../../runtimeChecks.js";
 
 export default async function getFallbackImage(
   src,
