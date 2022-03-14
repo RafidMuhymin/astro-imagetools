@@ -145,7 +145,7 @@ export default {
             ? sources
                 .map(({ width, assetPath }) => `${assetPath} ${width}w`)
                 .join(", ")
-            : sources[0].path;
+            : sources[0].assetPath;
 
         return `export default "${srcset}"`;
       }
