@@ -3,10 +3,9 @@ import fs from "fs";
 import crypto from "crypto";
 import { sharp } from "../../runtimeChecks.js";
 
-// @ts-ignore
-const { getImageDetails } = await import(
-  sharp ? "./imagetools.js" : "./codecs.js"
-);
+const { getImageDetails } = await (sharp
+  ? import("./imagetools.js")
+  : import("./codecs.js"));
 
 const isStaticBuild =
   // @ts-ignore

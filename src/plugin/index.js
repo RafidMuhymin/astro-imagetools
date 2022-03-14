@@ -6,10 +6,9 @@ import { getConfigOptions, getAssetPath } from "./utils/shared.js";
 import { sharp, supportedImageTypes } from "../runtimeChecks.js";
 import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
 
-// @ts-ignore
-const { getLoadedImage, getTransformedImage } = await import(
-  sharp ? "./utils/imagetools.js" : "./utils/codecs.js"
-);
+const { getLoadedImage, getTransformedImage } = await (sharp
+  ? import("./utils/imagetools.js")
+  : import("./utils/codecs.js"));
 
 let viteConfig;
 const store = new Map();
