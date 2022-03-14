@@ -94,7 +94,7 @@ export default async function renderImage(props) {
             ${decoding ? `decoding="${decoding}"` : ""}
             ${
               style
-                ? `style="display: block; overflow: hidden;${
+                ? `style="display: inline-block; overflow: hidden;${
                     layout === "fill"
                       ? `width: 100%; height: 100%;`
                       : layout === "fullWidth"
