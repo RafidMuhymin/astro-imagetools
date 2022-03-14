@@ -1,5 +1,4 @@
 // @ts-check
-
 import getImage from "./getImage.js";
 // @ts-ignore
 import astroConfig from "/astro.config";
@@ -51,7 +50,7 @@ export default async function renderImage(props) {
 
   console.log(`Image at ${src} optimized in ${end - start}ms`);
 
-  const className = `astro-imagetools-${uuid}`;
+  const className = `astro-imagetools-picture-${uuid}`;
 
   const imagesrcset =
     preload &&
@@ -59,15 +58,12 @@ export default async function renderImage(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const bgStyles = getBackgroundStyles(
+  const style = getBackgroundStyles(
     images,
     className,
     objectFit,
     objectPosition
   );
-
-  const style =
-    bgStyles.length > 0 ? `<style>${bgStyles.join("\n\n")}</style>` : "";
 
   const link = preload
     ? `<link
@@ -85,16 +81,16 @@ export default async function renderImage(props) {
             src="${src}"
             alt="${alt}"
             srcset="${srcset}"
-            class="${className}"
             sizes="${imagesizes}"
             width="${sizes.width}"
             height="${sizes.height}"
-            onload="style.backgroundImage = 'none'"
+            class="astro-imagetools-img"
             ${loading ? `loading="${loading}"` : ""}
             ${decoding ? `decoding="${decoding}"` : ""}
             ${
               style
-                ? `style="display: inline-block; overflow: hidden;${
+                ? `onload="parentElement.style.setProperty('--bg-opacity', 0)"
+                  style="display: inline-block; overflow: hidden;${
                     layout === "fill"
                       ? `width: 100%; height: 100%;`
                       : layout === "fullWidth"
@@ -115,12 +111,11 @@ export default async function renderImage(props) {
     )
   );
 
-  const image =
-    sources.length > 1 ? `<picture>${sources.join("\n")}</picture>` : sources;
+  const image = `<picture
+    class="astro-imagetools-picture ${style ? className : ""}"
+    ${style ? `style="position: relative; display: inline-block"` : ""}
+    >${sources.join("\n")}</picture
+  >`;
 
-  return {
-    link,
-    style,
-    image,
-  };
+  return { link, style, image };
 }
