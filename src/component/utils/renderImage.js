@@ -27,6 +27,7 @@ export default async function renderImage(props) {
         function: "trace",
       },
     },
+    fadeInTransition = true,
     fallbackFormat,
     includeSourceFormat = true,
     ...configOptions
@@ -89,8 +90,25 @@ export default async function renderImage(props) {
             ${decoding ? `decoding="${decoding}"` : ""}
             ${
               style
-                ? `onload="nextElementSibling.animate({opacity:[1,0]},1000).onfinish=()=>{nextElementSibling.remove()}"
-                  onerror="nextElementSibling.style.zIndex='-1'"
+                ? `onerror="nextElementSibling.style.zIndex='-1'"
+                  onload="${
+                    fadeInTransition
+                      ? `nextElementSibling.animate({opacity:[1,0]},${
+                          typeof fadeInTransition === "number"
+                            ? fadeInTransition
+                            : fadeInTransition.duration &&
+                              Object.keys(fadeInTransition).length === 1
+                            ? fadeInTransition.duration
+                            : typeof fadeInTransition === "object"
+                            ? // @ts-ignore
+                              JSON.stringify(fadeInTransition).replaceAll(
+                                '"',
+                                `'`
+                              )
+                            : 1000
+                        }).onfinish=()=>{nextElementSibling.remove()}`
+                      : "nextElementSibling.remove()"
+                  }"
                   style="display: inline-block; overflow: hidden;${
                     layout === "fill"
                       ? `width: 100%; height: 100%;`

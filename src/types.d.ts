@@ -134,6 +134,7 @@ export interface ImageConfig
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
+  fadeInTransition: boolean | number | KeyframeEffectOptions;
   artDirectives?: ArtDirective[];
 }
 
