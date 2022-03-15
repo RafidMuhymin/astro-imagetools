@@ -17,7 +17,6 @@ export default function getBackgroundStyles(
       inset: 0;
       opacity: 1;
       content: "";
-      z-index: -1;
       position: absolute;
     }
   `;

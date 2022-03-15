@@ -90,6 +90,7 @@ export default async function renderImage(props) {
             ${
               style
                 ? `onload="nextElementSibling.animate({opacity:[1,0]},1000).onfinish=()=>{nextElementSibling.remove()}"
+                  onerror="nextElementSibling.style.zIndex='-1'"
                   style="display: inline-block; overflow: hidden;${
                     layout === "fill"
                       ? `width: 100%; height: 100%;`
