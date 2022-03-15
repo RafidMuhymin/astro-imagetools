@@ -7,10 +7,6 @@ const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
   : import("./codecs.js"));
 
-const isStaticBuild =
-  // @ts-ignore
-  import.meta.env.PROD && process.argv.includes("--experimental-static-build");
-
 export default async (src, configOptions, globalConfigOptions) => {
   const { search, searchParams } = new URL(src, "file://");
 
@@ -46,7 +42,7 @@ export default async (src, configOptions, globalConfigOptions) => {
     ...rest
   } = configOptions;
 
-  const path = `./${src}`;
+  const path = process.cwd() + src;
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
     path,
@@ -56,7 +52,7 @@ export default async (src, configOptions, globalConfigOptions) => {
   );
 
   return {
-    path: isStaticBuild ? `.${src}` : src,
+    path,
     rest,
     image,
     imageWidth,
