@@ -41,10 +41,9 @@ export default function getBackgroundStyles(
     })
     .reverse();
 
-  const bgStyles = `<style>${[staticStyles, ...dynamicStyles]
-    .join("")
-    .replace(/([^0-9a-zA-Z\.#])\s+/g, "$1")
-    .replace(/\s([^0-9a-zA-Z\.#]+)/g, "$1")}</style>`;
+  const bgStyles = `<style>
+    ${[staticStyles, ...dynamicStyles].join("")}
+  </style>`;
 
   return bgStyles;
 }
