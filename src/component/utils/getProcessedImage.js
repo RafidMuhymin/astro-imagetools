@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "fs";
 import crypto from "crypto";
-import { sharp } from "../../runtimeChecks.js";
+import { fsCachePath, sharp } from "../../runtimeChecks.js";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
@@ -15,16 +15,15 @@ export default async (src, configOptions, globalConfigOptions) => {
   src = src.replace(search, "");
 
   if (src.match("(http://|https://|data:image/).*")) {
-    const hash = crypto.createHash("sha256").update(src).digest("hex");
-    const directory = "node_modules/.cache";
-    const filepath = `${directory}/${hash}.jpeg`;
-    fs.existsSync(directory) || fs.mkdirSync(directory);
+    const hash = crypto.createHash("md5").update(src).digest("hex");
+
+    const filepath = `${fsCachePath}${hash}.jpeg`;
+
     fs.existsSync(filepath) ||
       fs.writeFileSync(
         filepath,
         Buffer.from(await (await fetch(src)).arrayBuffer())
       );
-    src = `/${filepath}`;
   }
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
