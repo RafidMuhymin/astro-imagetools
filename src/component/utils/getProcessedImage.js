@@ -1,7 +1,13 @@
 // @ts-check
 import fs from "fs";
+import { relative } from "path";
 import crypto from "crypto";
-import { fsCachePath, sharp } from "../../runtimeChecks.js";
+import { fileTypeFromBuffer } from "file-type";
+import {
+  sharp,
+  fsCachePath,
+  supportedImageTypes,
+} from "../../runtimeChecks.js";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
@@ -17,13 +23,31 @@ export default async (src, configOptions, globalConfigOptions) => {
   if (src.match("(http://|https://|data:image/).*")) {
     const hash = crypto.createHash("md5").update(src).digest("hex");
 
-    const filepath = `${fsCachePath}${hash}.jpeg`;
+    let filepath = fsCachePath + hash;
 
-    fs.existsSync(filepath) ||
-      fs.writeFileSync(
-        filepath,
-        Buffer.from(await (await fetch(src)).arrayBuffer())
-      );
+    const fileExists = (() => {
+      for (const type of supportedImageTypes) {
+        const fileExists = fs.existsSync(filepath + `.${type}`);
+
+        if (fileExists) {
+          filepath += `.${type}`;
+
+          return true;
+        }
+      }
+    })();
+
+    if (!fileExists) {
+      const buffer = Buffer.from(await (await fetch(src)).arrayBuffer());
+
+      const { ext } = await fileTypeFromBuffer(buffer);
+
+      filepath += `.${ext}`;
+
+      fs.writeFileSync(filepath, buffer);
+    }
+
+    src = "/" + relative(process.cwd(), filepath);
   }
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
