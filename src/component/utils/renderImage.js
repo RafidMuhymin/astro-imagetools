@@ -115,8 +115,7 @@ export default async function renderImage(props) {
   const image = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
     ${style ? `style="position: relative; display: inline-block"` : ""}
-    >${sources.join("\n")}
-    <span></span>
+    >${sources.join("\n")} ${style ? "<span></span>" : ""}
   </picture>`;
 
   return { link, style, image };
