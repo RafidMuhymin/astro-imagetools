@@ -13,12 +13,11 @@ export default function getBackgroundStyles(
   }
 
   const staticStyles = `
-    .${className}:after {
+    .${className} span {
       inset: 0;
+      opacity: 1;
       content: "";
       position: absolute;
-      opacity: var(--bg-opacity, 1);
-      transition: opacity 0.4s ease;
     }
   `;
 
@@ -30,7 +29,7 @@ export default function getBackgroundStyles(
           object-position: ${object?.position || objectPosition};
         }
 
-        .${className}:after {
+        .${className} span {
           background-size: ${object?.fit || objectFit};
           background-image: url("${encodeURI(fallback)}");
           background-position: ${object?.position || objectPosition};

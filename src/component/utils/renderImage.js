@@ -89,7 +89,7 @@ export default async function renderImage(props) {
             ${decoding ? `decoding="${decoding}"` : ""}
             ${
               style
-                ? `onload="parentElement.style.setProperty('--bg-opacity', 0)"
+                ? `onload="nextElementSibling.animate({opacity:[1,0]},1000).onfinish=()=>{nextElementSibling.remove()}"
                   style="display: inline-block; overflow: hidden;${
                     layout === "fill"
                       ? `width: 100%; height: 100%;`
@@ -114,8 +114,9 @@ export default async function renderImage(props) {
   const image = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
     ${style ? `style="position: relative; display: inline-block"` : ""}
-    >${sources.join("\n")}</picture
-  >`;
+    >${sources.join("\n")}
+    <span></span>
+  </picture>`;
 
   return { link, style, image };
 }
