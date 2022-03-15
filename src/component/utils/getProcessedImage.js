@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "fs";
-import { relative } from "path";
 import crypto from "crypto";
+import { extname, relative } from "path";
 import { fileTypeFromBuffer } from "file-type";
 import {
   sharp,
@@ -9,11 +9,21 @@ import {
   supportedImageTypes,
 } from "../../runtimeChecks.js";
 
+const throwErrorIfUnsupported = (src, ext) => {
+  if (ext && !supportedImageTypes.includes(ext)) {
+    throw new Error(
+      `Failed to load ${src}. Invalid image format or the format is not supported by astro-imagetools`
+    );
+  }
+};
+
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
   : import("./codecs.js"));
 
 export default async (src, configOptions, globalConfigOptions) => {
+  throwErrorIfUnsupported(src, extname(src).slice(1));
+
   const { search, searchParams } = new URL(src, "file://");
 
   const paramOptions = Object.fromEntries(searchParams);
@@ -41,6 +51,8 @@ export default async (src, configOptions, globalConfigOptions) => {
       const buffer = Buffer.from(await (await fetch(src)).arrayBuffer());
 
       const { ext } = await fileTypeFromBuffer(buffer);
+
+      throwErrorIfUnsupported(src, extname(src).slice(1));
 
       filepath += `.${ext}`;
 
