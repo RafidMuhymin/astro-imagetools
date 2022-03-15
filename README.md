@@ -394,6 +394,16 @@ In `fill` mode, the image will be scaled up or down to fill the entire width and
 />
 ```
 
+#### fadeInTransition
+
+**Type:** `boolean` | `number` | [`KeyframeEffectOptions`](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/KeyframeEffect#:~:text=options%20Optional,above%29.%20Defaults%20to%20replace.)
+
+**Default:** `true`
+
+Whether or not to fade in the image when it is loaded. If a number is provided, it will be used as the duration of the transition. If an object is provided it will be used as the options for the [`element.animate()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) method.
+
+> **Note:** This prop is only available when the `placeholder` prop of at least one source is not `"none"`.
+
 #### artDirectives
 
 **Type:** `ArtDirective[]`
