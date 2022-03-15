@@ -15,7 +15,6 @@ export default function getBackgroundStyles(
   const staticStyles = `
     .${className} span {
       inset: 0;
-      opacity: 1;
       content: "";
       position: absolute;
     }
