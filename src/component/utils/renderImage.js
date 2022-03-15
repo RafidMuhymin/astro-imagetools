@@ -88,6 +88,13 @@ export default async function renderImage(props) {
             class="astro-imagetools-img"
             ${loading ? `loading="${loading}"` : ""}
             ${decoding ? `decoding="${decoding}"` : ""}
+            style="display: inline-block; overflow: hidden;${
+              layout === "fill"
+                ? `width: 100%; height: 100%;`
+                : layout === "fullWidth"
+                ? `width: 100%; height: auto;`
+                : "max-width: 100%; height: auto;"
+            }"
             ${
               style
                 ? `onerror="nextElementSibling.style.zIndex='-1'"
@@ -109,13 +116,7 @@ export default async function renderImage(props) {
                         }).onfinish=()=>{nextElementSibling.remove()}`
                       : "nextElementSibling.remove()"
                   }"
-                  style="display: inline-block; overflow: hidden;${
-                    layout === "fill"
-                      ? `width: 100%; height: 100%;`
-                      : layout === "fullWidth"
-                      ? `width: 100%; height: auto;`
-                      : "max-width: 100%; height: auto;"
-                  }"`
+                  `
                 : ""
             }
           />`
