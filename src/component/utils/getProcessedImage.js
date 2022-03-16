@@ -81,10 +81,10 @@ export default async (src, configOptions, globalConfigOptions) => {
     ...rest
   } = configOptions;
 
-  const path = join(process.cwd() + src);
+  const path = src.replaceAll(`\\`, `/`);
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
-    path,
+    `./${src}`,
     width,
     height,
     aspect

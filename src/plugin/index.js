@@ -10,6 +10,9 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("./utils/imagetools.js")
   : import("./utils/codecs.js"));
 
+// @ts-ignore
+const cwd = process.cwd().replaceAll(`\\`, `/`);
+
 let viteConfig;
 const store = new Map();
 
@@ -64,11 +67,13 @@ export default {
 
     const { search, searchParams } = fileURL;
 
-    const src = id.replace(search, "");
+    id = id.replace(search, "");
 
-    const ext = path.extname(src).slice(1);
+    const ext = path.extname(id).slice(1);
 
     if (supportedImageTypes.includes(ext)) {
+      const src = id.startsWith(cwd) ? id : cwd + id;
+
       const base = path.basename(src, path.extname(src));
 
       const config = Object.fromEntries(searchParams);
