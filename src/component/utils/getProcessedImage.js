@@ -10,9 +10,13 @@ import {
 } from "../../runtimeChecks.js";
 
 const throwErrorIfUnsupported = (src, ext) => {
+  if (!ext && typeof ext !== "string") {
+    throw new Error(`Failed to load ${src}; Invalid image format`);
+  }
+
   if (ext && !supportedImageTypes.includes(ext)) {
     throw new Error(
-      `Failed to load ${src}. Invalid image format or the format is not supported by astro-imagetools`
+      `Failed to load ${src}; Invalid image format ${ext} or the format is not supported by astro-imagetools`
     );
   }
 };
@@ -22,13 +26,13 @@ const { getImageDetails } = await (sharp
   : import("./codecs.js"));
 
 export default async (src, configOptions, globalConfigOptions) => {
-  throwErrorIfUnsupported(src, extname(src).slice(1));
-
   const { search, searchParams } = new URL(src, "file://");
 
-  const paramOptions = Object.fromEntries(searchParams);
-
   src = src.replace(search, "");
+
+  throwErrorIfUnsupported(src, extname(src).slice(1));
+
+  const paramOptions = Object.fromEntries(searchParams);
 
   if (src.match("(http://|https://|data:image/).*")) {
     const hash = crypto.createHash("md5").update(src).digest("hex");
@@ -50,9 +54,9 @@ export default async (src, configOptions, globalConfigOptions) => {
     if (!fileExists) {
       const buffer = Buffer.from(await (await fetch(src)).arrayBuffer());
 
-      const { ext } = await fileTypeFromBuffer(buffer);
+      const { ext } = (await fileTypeFromBuffer(buffer)) || {};
 
-      throwErrorIfUnsupported(src, extname(src).slice(1));
+      throwErrorIfUnsupported(src, ext);
 
       filepath += `.${ext}`;
 
