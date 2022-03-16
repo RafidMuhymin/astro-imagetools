@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "fs";
 import crypto from "crypto";
-import { extname, relative } from "path";
+import { join, extname, relative } from "path";
 import { fileTypeFromBuffer } from "file-type";
 import {
   sharp,
@@ -63,7 +63,7 @@ export default async (src, configOptions, globalConfigOptions) => {
       fs.writeFileSync(filepath, buffer);
     }
 
-    src = "/" + relative(process.cwd(), filepath);
+    src = join("/", relative(process.cwd(), filepath));
   }
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
@@ -81,7 +81,7 @@ export default async (src, configOptions, globalConfigOptions) => {
     ...rest
   } = configOptions;
 
-  const path = process.cwd() + src;
+  const path = join(process.cwd() + src);
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
     path,
