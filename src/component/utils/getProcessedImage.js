@@ -2,12 +2,13 @@
 import fs from "fs";
 import crypto from "crypto";
 import { join, extname, relative } from "path";
-import { fileTypeFromBuffer } from "file-type";
 import {
   sharp,
   fsCachePath,
   supportedImageTypes,
 } from "../../runtimeChecks.js";
+
+const { fileTypeFromBuffer } = await import("file-type");
 
 const throwErrorIfUnsupported = (src, ext) => {
   if (!ext && typeof ext !== "string") {
