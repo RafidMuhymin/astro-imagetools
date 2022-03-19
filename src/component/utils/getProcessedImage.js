@@ -8,6 +8,7 @@ import {
   supportedImageTypes,
 } from "../../runtimeChecks.js";
 
+// @ts-ignore
 const { fileTypeFromBuffer } = await import("file-type");
 
 const throwErrorIfUnsupported = (src, ext) => {
