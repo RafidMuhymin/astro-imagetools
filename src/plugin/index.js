@@ -11,7 +11,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   : import("./utils/codecs.js"));
 
 // @ts-ignore
-const cwd = process.cwd().replaceAll(`\\`, `/`);
+const cwd = process.cwd().replace(/\\/g, `/`); // change replaceAll method with replace method for node 14 compatibility
 
 let viteConfig;
 const store = new Map();
