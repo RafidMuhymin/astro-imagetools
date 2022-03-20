@@ -117,6 +117,48 @@ The `<Image />` component can't work on its own without the vite plugin. The vit
 
 And it allows you to import images and add them to the assets graph in the situations when the `<Image />` component or the `renderImage` function can't be used.
 
+## Markdown Images
+
+**Astro Imagetools** comes with built-in support for optimizing markdown images. The Vite plugin included in the package is able to detect if images are used inside markdown files using the `![](...)` syntax. If found any, it will automatically generate the image sets using the source and alternative text as the `src` and `alt` props, and then it will replace the original string with them.
+
+Like the `<Image />` component both absolute paths, remote URLs and data URIs are supported as source path. But in addition to that relative paths are also supported as source path for markdown images. 🎉🎉🎉
+
+In more complex scenarios where you have to pass more config options or dynamically adjust them, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. For more information, check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown).
+
+### Example Usage
+
+```md
+---
+src: https://picsum.photos/1024/768
+alt: A random image
+setup: |
+  import Image from "astro-imagetools";
+---
+
+# Hello Markdown Images
+
+<!-- A remote image -->
+
+![A random remote image](https://picsum.photos/1024/768)
+
+<!-- A local image relative to the markdown file -->
+
+![A local image](./images/landscape.jpg)
+
+<!-- A local image relative to the project root -->
+
+![Another local image](../src/images/landscape.jpg)
+
+<!-- An example of the `<Image />` component inside MD pages -->
+
+<Image
+  src={frontmatter.src}
+  alt={frontmatter.alt}
+/>
+```
+
+> **Note:** Automatic markdown image optimization is only supported for markdown files. You have to use the `<Image />` component if you are using the `<Markdown />` component.
+
 <!-- TODO: Plugin Configuration Documentation -->
 
 ## Configuration Options
