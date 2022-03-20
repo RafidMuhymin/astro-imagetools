@@ -123,7 +123,7 @@ And it allows you to import images and add them to the assets graph in the situa
 
 Like the `<Image />` component both absolute paths, remote URLs and data URIs are supported as source path. But in addition to that relative paths are also supported as source path for markdown images. 🎉🎉🎉
 
-In more complex scenarios where you have to pass more config options or dynamically adjust them, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. For more information, check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown).
+In more complex scenarios where you have to pass more config options you can pass them as query params. Or, if you have to dynamically adjust them, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. For more information, check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown).
 
 ### Example Markdown Images Usage
 
@@ -148,6 +148,10 @@ setup: |
 <!-- A local image relative to the project root -->
 
 ![Another local image](../src/images/landscape.jpg)
+
+<!-- An example of using query params -->
+
+![A remote image with query params](https://picsum.photos/1024/768?grayscale)
 
 <!-- An example of the `<Image />` component inside MD pages -->
 
