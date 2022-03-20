@@ -119,11 +119,11 @@ And it allows you to import images and add them to the assets graph in the situa
 
 ## Markdown Images
 
-**Astro Imagetools** comes with built-in support for optimizing markdown images. The Vite plugin included in the package is able to detect if images are used inside markdown files using the `![](...)` syntax. If found any, it will automatically generate the image sets using the source and alternative text as the `src` and `alt` props, and then it will replace the original string with them.
+**Astro Imagetools** comes with built-in support for optimizing markdown images. The Vite plugin included in the package will detect if images are used inside markdown files using the `![](...)` syntax. If found any, it will automatically generate the image sets using the source and alternative text as the `src` and `alt` props, and then it will replace the original string with them.
 
-Like the `<Image />` component both absolute paths, remote URLs and data URIs are supported as source path. But in addition to that relative paths are also supported as source path for markdown images. 🎉🎉🎉
+Like the `<Image />` component, both absolute paths, remote, and data URIs are supported as the source path. But in addition to that, relative paths are also supported as source paths for markdown images. 🎉🎉🎉
 
-In more complex scenarios where you have to pass more config options you can pass them as query params. Or, if you have to dynamically adjust them, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. For more information, check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown).
+In complex scenarios where you need more config options, you can pass them as query parameters. Or, to set their values dynamically, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. Check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown) for more info on this.
 
 ### Example Markdown Images Usage
 
@@ -161,7 +161,7 @@ setup: |
 />
 ```
 
-> **Note:** Automatic markdown image optimization is only supported for markdown files. You have to use the `<Image />` component if you are using the `<Markdown />` component.
+> **Note:** Automatic markdown image optimization is supported only for markdown files. If you are using the `<Markdown />` component, you can use the `<Image />` component to generate necessary image sets.
 
 <!-- TODO: Plugin Configuration Documentation -->
 
