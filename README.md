@@ -125,7 +125,7 @@ Like the `<Image />` component both absolute paths, remote URLs and data URIs ar
 
 In more complex scenarios where you have to pass more config options or dynamically adjust them, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. For more information, check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown).
 
-### Example Usage
+### Example Markdown Images Usage
 
 ```md
 ---
@@ -167,7 +167,7 @@ Both the `<Image />` component and the `renderImage` function supports a total o
 
 The `<Image />` component and the `renderImage` function support passing the configuration options as query params too. But the props will take precedence over the query params. And you may be able to pass only the simple ones as query params because in complex cases it's not possible to properly parse them.
 
-### Example Usage
+### Example Configuration Options Usage
 
 #### `<Image />` Component
 
