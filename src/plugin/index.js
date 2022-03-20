@@ -185,7 +185,9 @@ export default {
         );
 
         for (const match of matches) {
-          const src = path.resolve(path.dirname(id), match[1]).replace(cwd, "");
+          const src = path.posix
+            .resolve(path.dirname(id), match[1])
+            .replace(cwd, "");
 
           s.overwrite(
             match.index,
