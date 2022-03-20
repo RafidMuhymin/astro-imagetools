@@ -21,10 +21,10 @@ const store = new Map();
 let projectBase, outDir, assetsDir, assetFileNames, sourcemap;
 
 const regexTestPattern =
-  /<img\s+src\s*=(?:"|')([^(?:"|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^(?:"|')]*)(?:"|')[^>]*>/g;
+  /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/g;
 
 const regexExecPattern =
-  /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^(?:"|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^(?:"|')]*)(?:"|')[^>]*>(?=.*`)/gs;
+  /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
 export default {
   name: "vite-plugin-astro-imagetools",
