@@ -70,8 +70,16 @@ export default async (src, configOptions, globalConfigOptions) => {
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
 
-  configOptions.aspect &&= `${configOptions.aspect}`;
-  configOptions.ar &&= `${configOptions.ar}`;
+  //configOptions.aspect &&= `${configOptions.aspect}`;
+  // use if statement for node 14 compatibillity
+  if (configOptions.aspect) {
+    configOptions.aspect = `${configOptions.aspect}`;
+  }
+  // configOptions.ar &&= `${configOptions.ar}`;
+  // use if statement for node 14 compatibillity
+  if (configOptions.ar) {
+    configOptions.ar = `${configOptions.ar}`;
+  }
 
   const {
     w,
