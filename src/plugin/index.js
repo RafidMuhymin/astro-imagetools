@@ -4,8 +4,8 @@ import crypto from "crypto";
 import stream from "stream";
 import objectHash from "object-hash";
 import MagicString from "magic-string";
-import { sharp, supportedImageTypes } from "../runtimeChecks.js";
 import { getConfigOptions, getAssetPath } from "./utils/shared.js";
+import { sharp, supportedImageTypes } from "../runtimeChecks.js";
 import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
@@ -185,10 +185,12 @@ export default {
         );
 
         for (const match of matches) {
+          const src = path.resolve(path.dirname(id), match[1]).replace(cwd, "");
+
           s.overwrite(
             match.index,
             match.index + match[0].length,
-            `\${${renderComponent}($$result, "${Image}", ${Image}, { "src": "${match[1]}", "alt": "${match[2]}" })}`
+            `\${${renderComponent}($$result, "${Image}", ${Image}, { "src": "${src}", "alt": "${match[2]}" })}`
           );
         }
 
