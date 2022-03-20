@@ -1,9 +1,11 @@
 // @ts-check
 import path from "path";
+import crypto from "crypto";
 import stream from "stream";
 import objectHash from "object-hash";
-import { getConfigOptions, getAssetPath } from "./utils/shared.js";
+import MagicString from "magic-string";
 import { sharp, supportedImageTypes } from "../runtimeChecks.js";
+import { getConfigOptions, getAssetPath } from "./utils/shared.js";
 import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
@@ -16,7 +18,13 @@ const cwd = process.cwd().replaceAll(`\\`, `/`);
 let viteConfig;
 const store = new Map();
 
-let projectBase, outDir, assetsDir, assetFileNames;
+let projectBase, outDir, assetsDir, assetFileNames, sourcemap;
+
+const regexTestPattern =
+  /<img\s+src\s*=(?:"|')([^(?:"|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^(?:"|')]*)(?:"|')[^>]*>/g;
+
+const regexExecPattern =
+  /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^(?:"|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^(?:"|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
 export default {
   name: "vite-plugin-astro-imagetools",
@@ -42,7 +50,7 @@ export default {
 
     ({ base: projectBase } = viteConfig);
 
-    ({ outDir, assetsDir } = viteConfig.build);
+    ({ outDir, assetsDir, sourcemap } = viteConfig.build);
 
     assetFileNames =
       viteConfig.build.rollupOptions.output?.assetFileNames ||
@@ -153,6 +161,41 @@ export default {
             : sources[0].assetPath;
 
         return `export default "${srcset}"`;
+      }
+    }
+  },
+
+  async transform(code, id) {
+    if (id.endsWith(".md") && regexTestPattern.test(code)) {
+      let matches;
+
+      if ((matches = code.matchAll(regexExecPattern)) !== null) {
+        const s = new MagicString(code);
+
+        const uuid = crypto.randomBytes(4).toString("hex");
+
+        const Image = "Image" + uuid;
+
+        const renderComponent = "renderComponent" + uuid;
+
+        s.append(
+          `import ${Image} from "astro-imagetools";\nimport { renderComponent as ${renderComponent} } from "${
+            cwd + "/node_modules/astro/dist/runtime/server/index.js"
+          }"`
+        );
+
+        for (const match of matches) {
+          s.overwrite(
+            match.index,
+            match.index + match[0].length,
+            `\${${renderComponent}($$result, "${Image}", ${Image}, { "src": "${match[1]}", "alt": "${match[2]}" })}`
+          );
+        }
+
+        return {
+          code: s.toString(),
+          map: sourcemap ? s.generateMap({ hires: true }) : null,
+        };
       }
     }
   },
