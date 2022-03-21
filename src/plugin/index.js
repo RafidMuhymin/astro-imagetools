@@ -4,8 +4,8 @@ import crypto from "crypto";
 import stream from "stream";
 import objectHash from "object-hash";
 import MagicString from "magic-string";
-import { getConfigOptions, getAssetPath } from "./utils/shared.js";
 import { sharp, supportedImageTypes } from "../runtimeChecks.js";
+import { getConfigOptions, getAssetPath } from "./utils/shared.js";
 import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
@@ -13,7 +13,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   : import("./utils/codecs.js"));
 
 // @ts-ignore
-const cwd = process.cwd().replace(/\\/g, `/`); // change replaceAll method with replace method for node 14 compatibility
+const cwd = process.cwd().split(path.sep).join(path.posix.sep);
 
 let viteConfig;
 const store = new Map();
@@ -62,6 +62,7 @@ export default {
 
   async load(id) {
     if (this.load) {
+      // @ts-ignore
       global.vitePluginContext = {
         load: this.load,
       };
@@ -185,9 +186,7 @@ export default {
         );
 
         for (const match of matches) {
-          const src = path.posix
-            .resolve(path.dirname(id), match[1])
-            .replace(cwd, "");
+          const src = path.resolve(path.dirname(id), match[1]).replace(cwd, "");
 
           s.overwrite(
             match.index,
