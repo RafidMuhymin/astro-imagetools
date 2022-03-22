@@ -68,7 +68,6 @@ export default async function renderImage(props) {
     defaultClassName,
     objectFit,
     objectPosition,
-    imgStyle,
   );
 
   const link = preload
@@ -81,51 +80,51 @@ export default async function renderImage(props) {
     : "";
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
-    sources.map(({ format, src, srcset, imgClass }) =>
-      src
-        ? `<img
+		sources.map(({ format, src, srcset, imgClass }) =>
+			src
+				? `<img
             src="${src}"
             alt="${alt}"
             srcset="${srcset}"
             sizes="${imagesizes}"
             width="${sizes.width}"
             height="${sizes.height}"
-            class="astro-imagetools-img${imgClass ? ' ' + imgClass: ''}"
+            class="astro-imagetools-img${imgClass ? " " + imgClass : ""}"
             ${loading ? `loading="${loading}"` : ""}
             ${decoding ? `decoding="${decoding}"` : ""}
             style="display: inline-block; overflow: hidden;${
-              layout === "fill"
-                ? `width: 100%; height: 100%;`
-                : layout === "fullWidth"
-                ? `width: 100%; height: auto;`
-                : "max-width: 100%; height: auto;"
-            }"
+							layout === "fill"
+								? `width: 100%; height: 100%;`
+								: layout === "fullWidth"
+								? `width: 100%; height: auto;`
+								: "max-width: 100%; height: auto;"
+						}${imgStyle ? "\n" + imgStyle : ""}"
             ${
-              styling
-                ? `onerror="nextElementSibling.style.zIndex='-1'"
+							styling
+								? `onerror="nextElementSibling.style.zIndex='-1'"
                   onload="${
-                    fadeInTransition
-                      ? `nextElementSibling.animate({opacity:[1,0]},${
-                          typeof fadeInTransition === "number"
-                            ? fadeInTransition
-                            : fadeInTransition.duration &&
-                              Object.keys(fadeInTransition).length === 1
-                            ? fadeInTransition.duration
-                            : typeof fadeInTransition === "object"
-                            ? // @ts-ignore
-                              JSON.stringify(fadeInTransition).replaceAll(
-                                '"',
-                                `'`
-                              )
-                            : 1000
-                        }).onfinish=()=>{nextElementSibling.remove()}`
-                      : "nextElementSibling.remove()"
-                  }"
+										fadeInTransition
+											? `nextElementSibling.animate({opacity:[1,0]},${
+													typeof fadeInTransition === "number"
+														? fadeInTransition
+														: fadeInTransition.duration &&
+														  Object.keys(fadeInTransition).length === 1
+														? fadeInTransition.duration
+														: typeof fadeInTransition === "object"
+														? // @ts-ignore
+														  JSON.stringify(fadeInTransition).replaceAll(
+																'"',
+																`'`
+														  )
+														: 1000
+											  }).onfinish=()=>{nextElementSibling.remove()}`
+											: "nextElementSibling.remove()"
+									}"
                   `
-                : ""
-            }
+								: ""
+						}
           />`
-        : `<source
+				: `<source
             srcset="${srcset}"
             sizes="${imagesizes}"
             width="${sizes.width}"
@@ -133,8 +132,8 @@ export default async function renderImage(props) {
             type="${`image/${format}`}"
             ${media ? `media="${media}"` : ""}
           />`
-    )
-  );
+		)
+	);
 
   const image = `<picture
     class="astro-imagetools-picture ${styling ? defaultClassName : ""}${className ? ' ' + className: ''}"

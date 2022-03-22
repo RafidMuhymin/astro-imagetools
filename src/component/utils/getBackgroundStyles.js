@@ -5,7 +5,6 @@ export default function getBackgroundStyles(
   className,
   objectFit,
   objectPosition,
-  imgStyle,
 ) {
   const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
@@ -26,7 +25,7 @@ export default function getBackgroundStyles(
       const style = `
         .${className} img {
           object-fit: ${object?.fit || objectFit};
-          object-position: ${object?.position || objectPosition};${imgStyle ? '\n' + imgStyle : ''}
+          object-position: ${object?.position || objectPosition};
         }
 
         .${className} span {
