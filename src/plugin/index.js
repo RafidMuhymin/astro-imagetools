@@ -1,191 +1,247 @@
 // @ts-check
-import fs from "fs";
 import path from "path";
+import crypto from "crypto";
 import stream from "stream";
-import { getConfigOptions, getImagePath } from "./utils/shared.js";
-import {
-  getLoadedImage,
-  getTransformedImage,
-  supportedFileTypes,
-} from "./utils/sharpCheck.js";
+import objectHash from "object-hash";
+import MagicString from "magic-string";
+import { getConfigOptions, getAssetPath } from "./utils/shared.js";
+import { sharp, supportedImageTypes } from "../runtimeChecks.js";
+import { saveAndCopyAsset, getCachedBuffer } from "./utils/cache.js";
+
+const { getLoadedImage, getTransformedImage } = await (sharp
+	? import("./utils/imagetools.js")
+	: import("./utils/codecs.js"));
+
+// @ts-ignore
+const cwd = process.cwd().replace(/\\/g, `/`); // change replaceAll method with replace method for node 14 compatibility
 
 let viteConfig;
-const bundled = [];
 const store = new Map();
 
+let projectBase, outDir, assetsDir, assetFileNames, sourcemap;
+
+const regexTestPattern =
+	/<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/g;
+
+const regexExecPattern =
+	/(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
+
 export default {
-  name: "vite-plugin-astro-imagetools",
-  enforce: "pre",
-  config: () => ({
-    optimizeDeps: {
-      exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
-    },
-    ssr: {
-      external: ["sharp", "potrace", "object-hash", "@astropub/codecs"],
-    },
-  }),
+	name: "vite-plugin-astro-imagetools",
+	enforce: "pre",
+	config: () => ({
+		optimizeDeps: {
+			exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
+		},
+		ssr: {
+			external: [
+				"sharp",
+				"potrace",
+				"file-type",
+				"object-hash",
+				"find-cache-dir",
+				"@astropub/codecs",
+			],
+		},
+	}),
 
-  configResolved(config) {
-    viteConfig = config;
-  },
+	configResolved(config) {
+		viteConfig = config;
 
-  async load(id) {
-    if (this.load) {
-      global.vitePluginContext = {
-        load: this.load,
-      };
-    }
+		({ base: projectBase } = viteConfig);
 
-    try {
-      var fileURL = new URL(`file://${id}`);
-    } catch (error) {
-      return null;
-    }
+		({ outDir, assetsDir, sourcemap } = viteConfig.build);
 
-    const { search, searchParams } = fileURL;
+		assetFileNames =
+			viteConfig.build.rollupOptions.output?.assetFileNames ||
+			`/${assetsDir}/[name].[hash][extname]`;
 
-    const src = id.replace(search, "");
+		assetFileNames.startsWith(projectBase) ||
+			(assetFileNames = projectBase + assetFileNames);
+	},
 
-    const ext = path.extname(src).slice(1);
+	async load(id) {
+		if (this.load) {
+			global.vitePluginContext = {
+				load: this.load,
+			};
+		}
 
-    if (supportedFileTypes.includes(ext)) {
-      const base = path.basename(src, path.extname(src));
+		try {
+			var fileURL = new URL(`file://${id}`);
+		} catch (error) {
+			return null;
+		}
 
-      const { base: projectBase } = viteConfig;
+		const { search, searchParams } = fileURL;
 
-      const config = Object.fromEntries(searchParams);
+		id = id.replace(search, "");
 
-      const { image: loadedImage, width: imageWidth } =
-        store.get(src) ||
-        store.set(src, await getLoadedImage(src, ext)).get(src);
+		const ext = path.extname(id).slice(1);
 
-      const { type, hash, widths, options, extension, inline } =
-        getConfigOptions(config, ext, imageWidth);
+		if (supportedImageTypes.includes(ext)) {
+			const src = id.startsWith(cwd) ? id : cwd + id;
 
-      if (inline) {
-        if (widths.length > 1) {
-          throw new Error(
-            `Cannot use base64 or raw or inline with multiple widths`
-          );
-        }
+			const base = path.basename(src, path.extname(src));
 
-        const [width] = widths;
+			const config = Object.fromEntries(searchParams);
 
-        const params = [base, projectBase, extension, width, hash];
+			const { image: loadedImage, width: imageWidth } =
+				store.get(src) ||
+				store.set(src, await getLoadedImage(src, ext)).get(src);
 
-        const { assetName } = getImagePath(...params);
+			const { type, widths, options, extension, inline } = getConfigOptions(
+				config,
+				ext,
+				imageWidth
+			);
 
-        if (store.has(assetName)) {
-          return `export default "${store.get(assetName)}"`;
-        } else {
-          const config = { width, ...options };
+			if (inline) {
+				if (widths.length > 1) {
+					throw new Error(
+						`Cannot use base64 or raw or inline with multiple widths`
+					);
+				}
 
-          const params = [src, loadedImage, config, type, true];
+				const [width] = widths;
 
-          const { dataUri } = await getTransformedImage(...params);
+				const hash = objectHash([src, width, options]);
 
-          store.set(assetName, dataUri);
+				if (store.has(hash)) {
+					return `export default "${store.get(hash)}"`;
+				} else {
+					const config = { width, ...options };
 
-          return `export default "${dataUri}"`;
-        }
-      } else {
-        const sources = await Promise.all(
-          widths.map(async (width) => {
-            const params = [base, projectBase, extension, width, hash];
+					const params = [src, loadedImage, config, type];
 
-            const { name, path } = getImagePath(...params);
+					const { image, buffer } = await getTransformedImage(...params);
 
-            if (!store.has(path)) {
-              const config = { width, ...options };
+					const dataUri = `data:${type};base64,${(
+						buffer || (await getCachedBuffer(hash, image))
+					).toString("base64")}`;
 
-              const params = [src, loadedImage, config, type];
+					store.set(hash, dataUri);
 
-              const { image, buffer } = await getTransformedImage(...params);
+					return `export default "${dataUri}"`;
+				}
+			} else {
+				const sources = await Promise.all(
+					widths.map(async (width) => {
+						const hash = objectHash([src, width, options]);
 
-              const imageObject = { type, name, buffer, extension, image };
+						const assetPath = getAssetPath(
+							base,
+							assetFileNames,
+							extension,
+							width,
+							hash
+						);
 
-              store.set(path, imageObject);
-            }
+						if (!store.has(assetPath)) {
+							const config = { width, ...options };
 
-            return { width, path };
-          })
-        );
+							const params = [src, loadedImage, config, type];
 
-        const path =
-          sources.length > 1
-            ? sources.map(({ width, path }) => `${path} ${width}w`).join(", ")
-            : sources[0].path;
+							const { image, buffer } = await getTransformedImage(...params);
 
-        return `export default "${path}"`;
-      }
-    }
-  },
+							const imageObject = { hash, type, image, buffer };
 
-  configureServer(server) {
-    server.middlewares.use(async (request, response, next) => {
-      const imageObject = store.get(request.url);
+							store.set(assetPath, imageObject);
+						}
 
-      if (imageObject) {
-        const { type, buffer, image } = imageObject;
+						return { width, assetPath };
+					})
+				);
 
-        response.setHeader("Content-Type", type);
-        response.setHeader("Cache-Control", "no-cache");
+				const srcset =
+					sources.length > 1
+						? sources
+								.map(({ width, assetPath }) => `${assetPath} ${width}w`)
+								.join(", ")
+						: sources[0].assetPath;
 
-        if (buffer) {
-          return stream.Readable.from(buffer).pipe(response);
-        }
+				return `export default "${srcset}"`;
+			}
+		}
+	},
 
-        return image.clone().pipe(response);
-      }
+	async transform(code, id) {
+		if (id.endsWith(".md") && regexTestPattern.test(code)) {
+			let matches;
 
-      next();
-    });
-  },
+			if ((matches = code.matchAll(regexExecPattern)) !== null) {
+				const s = new MagicString(code);
 
-  async closeBundle() {
-    if (viteConfig.mode === "production") {
-      const assetNames = Object.keys(Object.fromEntries(store)).filter(
-        (item) => item.startsWith("/assets/") && !bundled.includes(item)
-      );
+				const uuid = crypto.randomBytes(4).toString("hex");
 
-      const { outDir, assetsDir } = viteConfig.build;
+				const Image = "Image" + uuid;
 
-      const assetsDirPath = `${outDir}${assetsDir}`;
+				const renderComponent = "renderComponent" + uuid;
 
-      fs.existsSync(assetsDirPath) ||
-        fs.mkdirSync(assetsDirPath, { recursive: true });
+				s.append(
+					`import ${Image} from "astro-imagetools";\nimport { renderComponent as ${renderComponent} } from "${
+						cwd + "/node_modules/astro/dist/runtime/server/index.js"
+					}"`
+				);
 
-      const { assetFileNames = `/${assetsDir}/[name].[hash][extname]` } =
-        viteConfig.build.rollupOptions.output;
+				for (const match of matches) {
+					const src = path.posix
+						.resolve(path.dirname(id), match[1])
+						.replace(cwd, "");
 
-      await Promise.all(
-        assetNames.map(async (assetName) => {
-          const { buffer, image } = store.get(assetName);
+					s.overwrite(
+						match.index,
+						match.index + match[0].length,
+						`\${${renderComponent}($$result, "${Image}", ${Image}, { "src": "${src}", "alt": "${match[2]}" })}`
+					);
+				}
 
-          const extname = path.extname(assetName);
+				return {
+					code: s.toString(),
+					map: sourcemap ? s.generateMap({ hires: true }) : null,
+				};
+			}
+		}
+	},
 
-          const base = path.basename(assetName, extname);
+	async configureServer(server) {
+		server.middlewares.use(async (request, response, next) => {
+			const imageObject = store.get(request.url);
 
-          const ext = extname.slice(1);
+			if (imageObject) {
+				const { hash, type, image, buffer } = imageObject;
 
-          const name = base.slice(0, base.lastIndexOf("."));
+				response.setHeader("Content-Type", type);
+				response.setHeader("Cache-Control", "no-cache");
 
-          const hash = base.slice(base.lastIndexOf(".") + 1);
+				return stream.Readable.from(
+					buffer || (await getCachedBuffer(hash, image))
+				).pipe(response);
+			}
 
-          const assetFileName = assetFileNames
-            .replace("[name]", name)
-            .replace("[hash]", hash)
-            .replace("[ext]", ext)
-            .replace("[extname]", extname);
+			next();
+		});
+	},
 
-          await fs.promises.writeFile(
-            outDir + assetFileName,
-            buffer || (await image.clone().toBuffer())
-          );
-
-          bundled.push(assetName);
-        })
-      );
-    }
-  },
+	async closeBundle() {
+		if (viteConfig.mode === "production") {
+			await Promise.all(
+				[...store.entries()]
+					.filter(([assetPath]) =>
+						assetPath.startsWith(projectBase + assetsDir + "/")
+					)
+					.map(
+						async ([assetPath, { hash, image, buffer }]) =>
+							await saveAndCopyAsset(
+								hash,
+								image,
+								buffer,
+								outDir,
+								assetsDir,
+								assetPath
+							)
+					)
+			);
+		}
+	},
 };

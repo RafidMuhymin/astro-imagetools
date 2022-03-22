@@ -14,13 +14,7 @@ export const getLoadedImage = async (src) => {
   return { image, width };
 };
 
-export const getTransformedImage = async (
-  src,
-  image,
-  config,
-  type,
-  dataUri
-) => {
+export const getTransformedImage = async (src, image, config, type) => {
   const { transforms } = generateTransforms(config, builtins);
 
   const { image: encodedImage } = await applyTransforms(
@@ -28,13 +22,5 @@ export const getTransformedImage = async (
     image.clone()
   );
 
-  dataUri &&= `data:${type};base64,${(
-    await encodedImage.clone().toBuffer()
-  ).toString("base64")}`;
-
-  return {
-    image: encodedImage,
-    buffer: null,
-    dataUri,
-  };
+  return { image: encodedImage, buffer: null };
 };

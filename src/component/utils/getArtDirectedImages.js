@@ -33,6 +33,7 @@ export default async function getArtDirectedImages(
         ...configOptions
       }) => {
         const {
+          path,
           rest: rest2,
           image,
           imageWidth,
@@ -60,7 +61,7 @@ export default async function getArtDirectedImages(
 
         const sources = await Promise.all(
           formats.map(async (format) => {
-            const srcset = await getSrcset(src, requiredBreakpoints, format, {
+            const srcset = await getSrcset(path, requiredBreakpoints, format, {
               ...rest,
               ...rest2,
               ...formatOptions[format],
@@ -85,7 +86,7 @@ export default async function getArtDirectedImages(
         };
 
         const fallback = await getFallbackImage(
-          src,
+          path,
           directivePlaceholder || placeholder,
           image,
           imageFormat,

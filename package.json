@@ -1,6 +1,6 @@
 {
   "name": "astro-imagetools",
-  "version": "0.1.6",
+  "version": "0.3.1",
   "description": "Image Optimization tools for the Astro JS framework",
   "type": "module",
   "main": "./src/index.js",
@@ -39,13 +39,15 @@
   "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
+    "find-cache-dir": "3.3.2",
     "object-hash": "3.0.0",
+    "file-type": "17.1.1",
     "potrace": "2.1.8"
   },
   "optionalDependencies": {
     "imagetools-core": "3.0.2"
   },
   "peerDependencies": {
-    "astro": "^0.23.0"
+    "astro": ">=0.23.0"
   }
 }

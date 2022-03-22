@@ -1,39 +1,48 @@
 // @ts-check
 
 export default function getBackgroundStyles(
-	images,
-	className,
-	objectFit,
-	objectPosition,
-	style
+  images,
+  className,
+  objectFit,
+  objectPosition,
+  imgStyle,
 ) {
-	const bgStyles = images
-		.map(({ media, fallback, object }) =>
-			fallback
-				? media
-					? `@media ${media} {
-  .${className} {
-    object-fit: ${object?.fit || objectFit};
-    object-position: ${object?.position || objectPosition};
-    background-image: url('${encodeURI(fallback)}');
-    background-size: ${object?.fit || objectFit};
-    background-position: ${object?.position || objectPosition}; ${
-							style ? "\n" + style : ""
-					  }
-  }
-}`
-					: `.${className} {
-  object-fit: ${objectFit};
-  object-position: ${objectPosition};
-  background-image: url('${encodeURI(fallback)}');
-  background-size: ${objectFit};
-  background-position: ${objectPosition};
-  ${style}
-}`
-				: null
-		)
-		.filter(Boolean)
-		.reverse();
+  const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
-	return bgStyles;
+  if (sourcesWithFallback.length === 0) {
+    return "";
+  }
+
+  const staticStyles = `
+    .${className} span {
+      inset: 0;
+      content: "";
+      position: absolute;
+    }
+  `;
+
+  const dynamicStyles = images
+    .map(({ media, fallback, object, imgStyle }) => {
+      const style = `
+        .${className} img {
+          object-fit: ${object?.fit || objectFit};
+          object-position: ${object?.position || objectPosition};${imgStyle ? '\n' + imgStyle : ''}
+        }
+
+        .${className} span {
+          background-size: ${object?.fit || objectFit};
+          background-image: url("${encodeURI(fallback)}");
+          background-position: ${object?.position || objectPosition};
+        }
+      `;
+
+      return media ? `@media ${media} { ${style} }` : style;
+    })
+    .reverse();
+
+  const bgStyles = `<style>
+    ${[staticStyles, ...dynamicStyles].join("")}
+  </style>`;
+
+  return bgStyles;
 }

@@ -117,6 +117,52 @@ The `<Image />` component can't work on its own without the vite plugin. The vit
 
 And it allows you to import images and add them to the assets graph in the situations when the `<Image />` component or the `renderImage` function can't be used.
 
+## Markdown Images
+
+**Astro Imagetools** comes with built-in support for optimizing markdown images. The Vite plugin included in the package will detect if images are used inside markdown files using the `![](...)` syntax. If found any, it will automatically generate the image sets using the source and alternative text as the `src` and `alt` props, and then it will replace the original string with them.
+
+Like the `<Image />` component, both absolute paths, remote, and data URIs are supported as the source path. But in addition to that, relative paths are also supported as source paths for markdown images. 🎉🎉🎉
+
+In complex scenarios where you need more config options, you can pass them as query parameters. Or, to set their values dynamically, you can use the `<Image />` component. **Astro** supports importing and using Astro components inside MD files. Check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown) for more info on this.
+
+### Example Markdown Images Usage
+
+```md
+---
+src: https://picsum.photos/1024/768
+alt: A random image
+setup: |
+  import Image from "astro-imagetools";
+---
+
+# Hello Markdown Images
+
+<!-- A remote image -->
+
+![A random remote image](https://picsum.photos/1024/768)
+
+<!-- A local image relative to the markdown file -->
+
+![A local image](./images/landscape.jpg)
+
+<!-- A local image relative to the project root -->
+
+![Another local image](../src/images/landscape.jpg)
+
+<!-- An example of using query params -->
+
+![A remote image with query params](https://picsum.photos/1024/768?grayscale)
+
+<!-- An example of the `<Image />` component inside MD pages -->
+
+<Image
+  src={frontmatter.src}
+  alt={frontmatter.alt}
+/>
+```
+
+> **Note:** Automatic markdown image optimization is supported only for markdown files. If you are using the `<Markdown />` component, you can use the `<Image />` component to generate necessary image sets.
+
 <!-- TODO: Plugin Configuration Documentation -->
 
 ## Configuration Options
@@ -125,7 +171,7 @@ Both the `<Image />` component and the `renderImage` function supports a total o
 
 The `<Image />` component and the `renderImage` function support passing the configuration options as query params too. But the props will take precedence over the query params. And you may be able to pass only the simple ones as query params because in complex cases it's not possible to properly parse them.
 
-### Example Usage
+### Example Configuration Options Usage
 
 #### `<Image />` Component
 
@@ -393,6 +439,16 @@ In `fill` mode, the image will be scaled up or down to fill the entire width and
   layout="fixed"
 />
 ```
+
+#### fadeInTransition
+
+**Type:** `boolean` | `number` | [`KeyframeEffectOptions`](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/KeyframeEffect#:~:text=options%20Optional,above%29.%20Defaults%20to%20replace.)
+
+**Default:** `true`
+
+Whether or not to fade in the image when it is loaded. If a number is provided, it will be used as the duration of the transition. If an object is provided it will be used as the options for the [`element.animate()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) method.
+
+> **Note:** This prop is only available when the `placeholder` prop of at least one source is not `"none"`.
 
 #### artDirectives
 
