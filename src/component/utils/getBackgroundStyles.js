@@ -21,7 +21,7 @@ export default function getBackgroundStyles(
   `;
 
   const dynamicStyles = images
-    .map(({ media, fallback, object, imgStyle }) => {
+    .map(({ media, fallback, object }) => {
       const style = `
         .${className} img {
           object-fit: ${object?.fit || objectFit};

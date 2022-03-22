@@ -123,6 +123,7 @@ export default async function renderImage(props) {
                   `
 								: ""
 						}
+
           />`
 				: `<source
             srcset="${srcset}"
@@ -142,4 +143,5 @@ export default async function renderImage(props) {
   </picture>`;
 
   return { link, styling, image };
+
 }
