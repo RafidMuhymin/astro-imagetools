@@ -138,10 +138,13 @@ export interface ImageConfig
   artDirectives?: ArtDirective[];
 }
 
+export type GlobalConfigOptions = Pick<
+  ImageConfig,
+  Exclude<keyof ImageConfig, "src" | "alt" | "artDirectives">
+>;
+
 export interface ImageHTMLData {
   link: string;
   style: string;
   image: string;
 }
-
-export function renderImage(props: ImageConfig): Promise<ImageHTMLData>;

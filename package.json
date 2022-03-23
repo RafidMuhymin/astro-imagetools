@@ -6,6 +6,7 @@
   "main": "./src/index.js",
   "types": "./src/types.d.ts",
   "exports": {
+    "./config": "./src/config.mjs",
     ".": "./src/component/Image.astro",
     "./plugin": "./src/plugin/index.js",
     "./renderImage": "./src/component/utils/renderImage.js"
