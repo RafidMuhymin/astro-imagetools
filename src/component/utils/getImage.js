@@ -32,11 +32,10 @@ export default async function (
   src = path;
 
   rest.aspect = `${imageWidth / imageHeight}`;
-  //fallbackFormat ||= imageFormat; 
-  // use if statement for node 14 compatibillity
-if (!fallbackFormat) {
-  fallbackFormat = imageFormat;
-}
+
+  if (!fallbackFormat) {
+    fallbackFormat = imageFormat;
+  }
 
   const [mainImage, artDirectedImages] = await Promise.all([
     getImageSources(
