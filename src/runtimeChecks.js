@@ -33,14 +33,15 @@ export const supportedImageTypes = [
 ];
 
 // Resolve Astro ImageTools Config
-const configPath =
-  "file://" +
-  process.cwd().replace(":\\", ":\\\\") +
-  path.sep +
-  "astro-imagetools.config.mjs";
-
 export const { default: globalConfigOptions } = await (async () => {
-  return await import(configPath)
-    .catch(() => import(process.cwd() + "/astro-imagetools.config"))
+  return await import(process.cwd() + "/astro-imagetools.config")
+    .catch(() =>
+      import(
+        "file://" +
+          process.cwd().replace(":\\", ":\\\\") +
+          path.sep +
+          "astro-imagetools.config.mjs"
+      )
+    )
     .catch(() => ({}));
 })();
