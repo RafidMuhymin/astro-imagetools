@@ -1,4 +1,5 @@
 // @ts-check
+import fs from "fs";
 import path from "path";
 import findCacheDir from "find-cache-dir";
 
@@ -32,12 +33,14 @@ export const supportedImageTypes = [
 ];
 
 // Resolve Astro ImageTools Config
-// @ts-ignore
-export const astroConfig = await import("/astro-imagetools.config").catch(() =>
-  import(
-    "file://" +
-      process.cwd().replace(":\\", ":\\\\") +
-      path.sep +
-      "astro-imagetools.config.mjs"
-  ).catch(() => ({}))
-);
+const configPath =
+  "file://" +
+  process.cwd().replace(":\\", ":\\\\") +
+  path.sep +
+  "astro-imagetools.config.mjs";
+
+export const { default: globalConfigOptions } = await (async () => {
+  return await import(configPath)
+    .catch(() => import(process.cwd() + "/astro-imagetools.config"))
+    .catch(() => ({}));
+})();

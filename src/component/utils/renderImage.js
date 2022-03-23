@@ -1,6 +1,6 @@
 // @ts-check
 import getImage from "./getImage.js";
-import { astroConfig } from "../../runtimeChecks.js";
+import { globalConfigOptions } from "../../runtimeChecks.js";
 import getBackgroundStyles from "./getBackgroundStyles.js";
 
 export default async function renderImage(props) {
@@ -44,7 +44,7 @@ export default async function renderImage(props) {
     includeSourceFormat,
     formatOptions,
     configOptions,
-    astroConfig.image
+    globalConfigOptions
   );
   const end = performance.now();
 
