@@ -32,16 +32,18 @@ export const supportedImageTypes = [
   ...(sharp ? ["heic", "heif", "tiff", "gif"] : ["jxl", "wp2"]),
 ];
 
-const posixPath = process.cwd() + "/astro-imagetools.config.mjs";
+const posixPath = process.cwd() + "/astro-imagetools.config";
 
 const win32Path =
   "file://" +
   process.cwd().replace(":\\", ":\\\\") +
   path.sep +
-  "astro-imagetools.config.mjs";
+  "astro-imagetools.config";
 
 const configPath = process.platform !== "win32" ? posixPath : win32Path;
 
 // Resolve Astro ImageTools Config
 export const { default: globalConfigOptions } = await (async () =>
-  await import(configPath).catch(() => ({})))();
+  await import(configPath + ".js").catch(() =>
+    import(configPath + ".mjs").catch(() => ({}))
+  ))();
