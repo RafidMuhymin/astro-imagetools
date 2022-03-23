@@ -196,6 +196,48 @@ const { link, style, image } = await renderImage({
 });
 ```
 
+### Global Config Options
+
+**Astro Imagetools** supports global config options too. They will be used if the specified config options are not passed as props, parameters or query params.
+
+To define global config options, you have to create a `astro-imagetools.config.js` or `astro-imagetools.config.mjs` file in the root of your project directory.
+
+All the config options supported by the `<Image />` component and the `renderImage` function are supported by the global config options except for the `src`, `alt`, and `artDirectives` props.
+
+#### Example Global Config Options Usage
+
+```js
+// `astro-imagetools.config.mjs`
+export default {
+  layout: "constrained",
+  placeholder: "blurred",
+  format: ["avif", "webp"],
+};
+```
+
+**Astro Imagetools** ships TypeScript typings so that you can leverage your IDE's intellisense using the `defineConfig` helper function or JSDoc comments.
+
+```js
+import { defineConfig } from "astro-imagetools/config";
+
+export default defineConfig({
+  // ...
+});
+```
+
+_Or,_
+
+```js
+/**
+ * @type {import('astro-imagetools').GlobalConfigOptions}
+ */
+const config = {
+  // ...
+};
+
+export default config;
+```
+
 ### TypeScript Interface
 
 The `ImageConfig` interface below describes the config options supported by both the `<Image />` component and the `renderImage` function.
