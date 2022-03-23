@@ -108,8 +108,8 @@ export default async function renderImage(props) {
                             ? fadeInTransition.duration
                             : typeof fadeInTransition === "object"
                             ? // @ts-ignore
-                              JSON.stringify(fadeInTransition).replaceAll(
-                                '"',
+                              JSON.stringify(fadeInTransition).replace(
+                                /"/g,
                                 `'`
                               )
                             : 1000
