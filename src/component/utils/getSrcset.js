@@ -7,6 +7,7 @@ export default async function getSrcset(src, breakpoints, format, options) {
     ...options,
   };
 
+  // @ts-ignore
   const load = global.vitePluginContext?.load;
 
   const keys = Object.keys(options);

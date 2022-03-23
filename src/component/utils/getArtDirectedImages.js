@@ -1,9 +1,8 @@
 // @ts-check
-
+import getSrcset from "./getSrcset.js";
 import getConfigOptions from "./getConfigOptions.js";
 import getFallbackImage from "./getFallbackImage.js";
 import getProcessedImage from "./getProcessedImage.js";
-import getSrcset from "./getSrcset.js";
 
 export default async function getArtDirectedImages(
   artDirectives = [],

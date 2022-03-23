@@ -70,13 +70,10 @@ export default async (src, configOptions, globalConfigOptions) => {
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
 
-  //configOptions.aspect &&= `${configOptions.aspect}`;
-  // use if statement for node 14 compatibillity
   if (configOptions.aspect) {
     configOptions.aspect = `${configOptions.aspect}`;
   }
-  // configOptions.ar &&= `${configOptions.ar}`;
-  // use if statement for node 14 compatibillity
+
   if (configOptions.ar) {
     configOptions.ar = `${configOptions.ar}`;
   }
@@ -91,7 +88,7 @@ export default async (src, configOptions, globalConfigOptions) => {
     ...rest
   } = configOptions;
 
-  const path = src.replaceAll(`\\`, `/`);
+  const path = src.replace(/\\/g, `/`);
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
     `./${src}`,
