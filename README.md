@@ -1235,7 +1235,7 @@ Specifies colors by which side from threshold should be turned into vector shape
 
 Fill color for the traced image. If `"auto"` is provided, the color will be black or white depending on the `blackOnWhite` property.
 
-##### background
+<h5 id="svg-background">background</h5>
 
 **Type:** `"transparent" | string`
 
