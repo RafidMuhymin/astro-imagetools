@@ -1,7 +1,6 @@
 // @ts-check
 import getImage from "./getImage.js";
 import { astroConfig } from "../../runtimeChecks.js";
-// @ts-ignore
 import getBackgroundStyles from "./getBackgroundStyles.js";
 
 export default async function renderImage(props) {
@@ -107,8 +106,7 @@ export default async function renderImage(props) {
                               Object.keys(fadeInTransition).length === 1
                             ? fadeInTransition.duration
                             : typeof fadeInTransition === "object"
-                            ? // @ts-ignore
-                              JSON.stringify(fadeInTransition).replace(
+                            ? JSON.stringify(fadeInTransition).replace(
                                 /"/g,
                                 `'`
                               )

@@ -12,7 +12,6 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("./utils/imagetools.js")
   : import("./utils/codecs.js"));
 
-// @ts-ignore
 const cwd = process.cwd().split(path.sep).join(path.posix.sep);
 
 let viteConfig;

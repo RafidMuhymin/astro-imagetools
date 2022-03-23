@@ -1,11 +1,11 @@
 // @ts-check
+import fs from "fs";
 import * as codecs from "@astropub/codecs";
-import { readFileSync } from "fs";
 
 const resizedImages = new Map();
 
 export const getLoadedImage = async (src, ext) => {
-  const buffer = readFileSync(src);
+  const buffer = fs.readFileSync(src);
 
   const image = await codecs[ext].decode(buffer);
 
