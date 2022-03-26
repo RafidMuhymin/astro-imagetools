@@ -1,3 +1,4 @@
-import type { ImageConfig, ImageHTMLData } from "./../../types";
+type ImageConfig = import("./../../types").ImageConfig;
+type ImageHTMLData = import("./../../types").ImageHTMLData;
 
-export default function (config: ImageConfig): ImageHTMLData;
+export default function (config: ImageConfig): Promise<ImageHTMLData>;
