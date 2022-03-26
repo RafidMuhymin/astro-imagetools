@@ -70,14 +70,6 @@ export default async (src, configOptions, globalConfigOptions) => {
 
   configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
 
-  if (configOptions.aspect) {
-    configOptions.aspect = `${configOptions.aspect}`;
-  }
-
-  if (configOptions.ar) {
-    configOptions.ar = `${configOptions.ar}`;
-  }
-
   const {
     w,
     h,

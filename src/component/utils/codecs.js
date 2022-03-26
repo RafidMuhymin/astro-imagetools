@@ -11,23 +11,17 @@ export async function getImageDetails(path, width, height, aspect) {
   const buffer = fs.readFileSync(path);
   const decodedImage = await codecs.jpg.decode(buffer);
 
-  let { width: imageWidth = width, height: imageHeight = height } =
-    decodedImage;
+  if (aspect && !width && !height) {
+    if (!width && !height) ({ width } = decodedImage);
 
-  if (!(width && height) && aspect) {
-    if (width) {
-      imageHeight = width / aspect;
-    } else if (height) {
-      imageWidth = height * aspect;
-    } else {
-      imageHeight = decodedImage.width / aspect;
-    }
+    if (width) height = width / aspect;
+
+    if (height) width = height * aspect;
   }
 
-  const image =
-    imageWidth || imageHeight
-      ? await decodedImage.resize({ width: imageWidth, height: imageHeight })
-      : decodedImage;
+  const image = await decodedImage.resize({ width, height });
+
+  const { width: imageWidth, height: imageHeight } = image;
 
   return {
     image,
