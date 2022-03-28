@@ -10,11 +10,17 @@ export async function getImageDetails(path, width, height, aspect) {
   const loadedImage = loadImage(path);
 
   if (aspect && !width && !height) {
-    if (!width && !height) ({ width } = await loadedImage.metadata());
+    if (!width && !height) {
+      ({ width } = await loadedImage.metadata());
+    }
 
-    if (width) height = width / aspect;
+    if (width) {
+      height = width / aspect;
+    }
 
-    if (height) width = height * aspect;
+    if (height) {
+      width = height * aspect;
+    }
   }
 
   const { image, metadata } = await applyTransforms(

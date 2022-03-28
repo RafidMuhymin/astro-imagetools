@@ -8,9 +8,7 @@ export default function getBackgroundStyles(
 ) {
   const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
-  if (sourcesWithFallback.length === 0) {
-    return "";
-  }
+  if (sourcesWithFallback.length === 0) return "";
 
   const staticStyles = `
     .${className} span {

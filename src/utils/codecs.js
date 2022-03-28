@@ -12,11 +12,17 @@ export async function getImageDetails(path, width, height, aspect) {
   const decodedImage = await codecs.jpg.decode(buffer);
 
   if (aspect && !width && !height) {
-    if (!width && !height) ({ width } = decodedImage);
+    if (!width && !height) {
+      ({ width } = decodedImage);
+    }
 
-    if (width) height = width / aspect;
+    if (width) {
+      height = width / aspect;
+    }
 
-    if (height) width = height * aspect;
+    if (height) {
+      width = height * aspect;
+    }
   }
 
   const image = await decodedImage.resize({ width, height });

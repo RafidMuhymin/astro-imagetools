@@ -22,9 +22,7 @@ export default async function (
 ) {
   const hash = objectHash(Array.from(arguments));
 
-  if (imagesData.has(hash)) {
-    return imagesData.get(hash);
-  }
+  if (imagesData.has(hash)) return imagesData.get(hash);
 
   const { path, rest, image, imageWidth, imageHeight, imageFormat } =
     await getProcessedImage(src, configOptions, globalConfigOptions);

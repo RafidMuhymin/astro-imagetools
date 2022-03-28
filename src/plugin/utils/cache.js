@@ -48,9 +48,7 @@ export async function saveAndCopyAsset(
           await fs.promises.writeFile(dir, imageBuffer);
         })
       );
-    } else {
-      throw error;
-    }
+    } else throw error;
   });
 
   copied.push(assetPath);
