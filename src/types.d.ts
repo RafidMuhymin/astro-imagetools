@@ -38,12 +38,15 @@ declare interface PosterizeOptions {
 }
 
 declare interface FormatOptions {
-  format?: format | format[] | [] | null;
-  fallbackFormat?: format;
-  includeSourceFormat?: boolean;
   formatOptions?: Record<format, ImageToolsConfigs> & {
     tracedSVG?: PotraceOptions;
   };
+}
+
+declare interface PictureFormatOptions extends FormatOptions {
+  format?: format | format[] | [] | null;
+  fallbackFormat?: format;
+  includeSourceFormat?: boolean;
 }
 
 declare interface ImageToolsConfigs {
@@ -96,7 +99,7 @@ declare interface ImageToolsConfigs {
 
 declare interface ArtDirective
   extends PrimaryProps,
-    FormatOptions,
+    PictureFormatOptions,
     ImageToolsConfigs {
   media: string;
 }
@@ -125,22 +128,24 @@ declare interface PrimaryProps {
       };
 }
 
-export interface ImageConfig
-  extends PrimaryProps,
-    FormatOptions,
-    ImageToolsConfigs {
+declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
   alt: string;
   preload?: format;
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
   fadeInTransition?: boolean | number | KeyframeEffectOptions;
+}
+
+export interface PictureConfigOptions
+  extends ConfigOptions,
+    PictureFormatOptions {
   artDirectives?: ArtDirective[];
 }
 
 export type GlobalConfigOptions = Pick<
-  ImageConfig,
-  Exclude<keyof ImageConfig, "src" | "alt" | "artDirectives">
+  ConfigOptions,
+  Exclude<keyof ConfigOptions, "src" | "alt">
 >;
 
 export interface ImageHTMLData {
