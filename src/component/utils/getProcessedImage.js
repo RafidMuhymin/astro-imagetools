@@ -11,6 +11,10 @@ import {
 // @ts-ignore
 const { fileTypeFromBuffer } = await import("file-type");
 
+const { getImageDetails } = await (sharp
+  ? import("./imagetools.js")
+  : import("./codecs.js"));
+
 const throwErrorIfUnsupported = (src, ext) => {
   if (!ext && typeof ext !== "string") {
     throw new Error(`Failed to load ${src}; Invalid image format`);
@@ -22,10 +26,6 @@ const throwErrorIfUnsupported = (src, ext) => {
     );
   }
 };
-
-const { getImageDetails } = await (sharp
-  ? import("./imagetools.js")
-  : import("./codecs.js"));
 
 export default async (src, configOptions, globalConfigOptions) => {
   const { search, searchParams } = new URL(src, "file://");

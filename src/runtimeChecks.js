@@ -1,5 +1,4 @@
 // @ts-check
-import fs from "fs";
 import path from "path";
 import findCacheDir from "find-cache-dir";
 
