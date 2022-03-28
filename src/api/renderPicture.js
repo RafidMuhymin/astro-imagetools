@@ -1,7 +1,7 @@
 // @ts-check
-import getImage from "./getImage.js";
-import { globalConfigOptions } from "../../runtimeChecks.js";
-import getBackgroundStyles from "./getBackgroundStyles.js";
+import getImage from "../utils/getImage.js";
+import { globalConfigOptions } from "../runtimeChecks.js";
+import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 
 export default async function renderImage(props) {
   const {

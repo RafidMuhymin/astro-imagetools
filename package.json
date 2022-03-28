@@ -6,8 +6,8 @@
   "types": "./src/types.d.ts",
   "exports": {
     "./config": "./src/config.mjs",
-    ".": "./src/component/Image.astro",
     "./plugin": "./src/plugin/index.js",
+    ".": "./src/component/Picture.astro",
     "./renderImage": "./src/component/utils/renderImage.js"
   },
   "scripts": {

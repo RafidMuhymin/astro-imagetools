@@ -1,5 +1,4 @@
 // @ts-check
-
 import {
   builtins,
   loadImage,

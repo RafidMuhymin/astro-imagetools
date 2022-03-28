@@ -2,11 +2,7 @@
 import fs from "fs";
 import crypto from "crypto";
 import { join, extname, relative } from "path";
-import {
-  sharp,
-  fsCachePath,
-  supportedImageTypes,
-} from "../../runtimeChecks.js";
+import { sharp, fsCachePath, supportedImageTypes } from "../runtimeChecks.js";
 
 // @ts-ignore
 const { fileTypeFromBuffer } = await import("file-type");

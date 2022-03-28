@@ -1,0 +1,10 @@
+---
+import renderPicture from "../api/renderPicture.js";
+import type { ImageConfig, ImageHTMLData } from "../types.d";
+
+const { image, link, style }: ImageHTMLData = await renderPicture(
+  Astro.props as ImageConfig
+);
+---
+
+<Fragment set:html={link + style + image} />
