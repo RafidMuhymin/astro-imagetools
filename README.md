@@ -484,11 +484,11 @@ In `fill` mode, the image will be scaled up or down to fill the entire width and
 
 #### fadeInTransition
 
-**Type:** `boolean` | `number` | [`KeyframeEffectOptions`](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/KeyframeEffect#:~:text=options%20Optional,above%29.%20Defaults%20to%20replace.)
+**Type:** `boolean | { delay?: string; duration?: string; timingFunction?: string; }`
 
-**Default:** `true`
+**Default:** `true | { delay: "0s"; duration?: "1s"; timingFunction: "ease"; }`
 
-Whether or not to fade in the image when it is loaded. If a number is provided, it will be used as the duration of the transition. If an object is provided it will be used as the options for the [`element.animate()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) method.
+Whether or not to fade in the image when it is loaded. You can pass an object too with config options to customize the transition. The `delay`, `duration`, and `timingFunction` properties are used as values for the [`transition-delay`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-delay), [`transition-duration`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-duration), and [`transition-timing-function`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition-timing-function) CSS properties, respectively.
 
 > **Note:** This prop is only available when the `placeholder` prop of at least one source is not `"none"`.
 
