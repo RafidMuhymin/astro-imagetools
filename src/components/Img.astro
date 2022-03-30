@@ -2,7 +2,7 @@
 import renderImg from "../api/renderImg.js";
 import type { ImgConfigOptions, ImgHTMLData } from "../types.d";
 
-const { img, link, style }: ImgHTMLData = await renderImg(
+const { link, style, img }: ImgHTMLData = await renderImg(
   Astro.props as ImgConfigOptions
 );
 ---
