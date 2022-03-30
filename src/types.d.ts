@@ -134,6 +134,12 @@ declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
+}
+
+export interface PictureConfigOptions
+  extends ConfigOptions,
+    PictureFormatOptions {
+  artDirectives?: ArtDirective[];
   fadeInTransition?:
     | boolean
     | {
