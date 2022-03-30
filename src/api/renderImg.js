@@ -52,8 +52,6 @@ export default async function renderImg(props) {
   );
   const end = performance.now();
 
-  const result = await renderImg({});
-
   console.log(`Image at ${src} optimized in ${end - start}ms`);
 
   const className = `astro-imagetools-img-${uuid}`;
