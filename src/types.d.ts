@@ -165,6 +165,10 @@ declare interface HTMLData {
   style: string;
 }
 
+export interface ImageHTMLData extends HTMLData {
+  image: string;
+}
+
 export interface PictureHTMLData extends HTMLData {
   picture: string;
 }
