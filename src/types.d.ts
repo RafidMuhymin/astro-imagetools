@@ -134,7 +134,13 @@ declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
   loading?: "lazy" | "eager" | "auto" | null;
   decoding?: "async" | "sync" | "auto" | null;
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
-  fadeInTransition?: boolean | number | KeyframeEffectOptions;
+  fadeInTransition?:
+    | boolean
+    | {
+        delay?: string;
+        duration?: string;
+        timingFunction?: string;
+      };
 }
 
 export interface PictureConfigOptions
