@@ -49,6 +49,10 @@ declare interface PictureFormatOptions extends FormatOptions {
   includeSourceFormat?: boolean;
 }
 
+declare interface ImgFormatOptions extends FormatOptions {
+  format?: format;
+}
+
 declare interface ImageToolsConfigs {
   flip?: boolean;
   flop?: boolean;
@@ -149,11 +153,7 @@ export interface PictureConfigOptions
       };
 }
 
-export interface PictureConfigOptions
-  extends ConfigOptions,
-    PictureFormatOptions {
-  artDirectives?: ArtDirective[];
-}
+export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
 export type GlobalConfigOptions = Pick<
   ConfigOptions,
@@ -167,4 +167,8 @@ declare interface HTMLData {
 
 export interface PictureHTMLData extends HTMLData {
   picture: string;
+}
+
+export interface ImgHTMLData extends HTMLData {
+  img: string;
 }

@@ -7,7 +7,9 @@
   "exports": {
     "./config": "./src/config.mjs",
     "./plugin": "./src/plugin/index.js",
-    ".": "./src/component/Picture.astro",
+    "./img": "./src/component/img.astro",
+    "./renderImg": "./src/component/api/renderImg.js",
+    "./picture": "./src/component/Picture.astro",
     "./renderPicture": "./src/component/api/renderPicture.js"
   },
   "scripts": {

@@ -47,12 +47,12 @@ export default function getBackgroundStyles(
   const dynamicStyles = images
     .map(({ media, fallback, object }) => {
       const style = `
-        .${className} img {
+        .${className + (fadeInTransition ? " img" : "")} {
           object-fit: ${object?.fit || objectFit};
           object-position: ${object?.position || objectPosition};
         }
 
-        .${className}::after {
+        .${className + (fadeInTransition ? "::after" : "")} {
           background-size: ${object?.fit || objectFit};
           background-image: url("${encodeURI(fallback)}");
           background-position: ${object?.position || objectPosition};

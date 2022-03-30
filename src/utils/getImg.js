@@ -10,7 +10,8 @@ export default function getImg(
   loading,
   decoding,
   imagesizes,
-  fadeInTransition
+  fadeInTransition,
+  imgClassName
 ) {
   return `<img
     src="${src}"
@@ -19,9 +20,9 @@ export default function getImg(
     sizes="${imagesizes}"
     width="${sizes.width}"
     height="${sizes.height}"
-    class="astro-imagetools-img"
     ${loading ? `loading="${loading}"` : ""}
     ${decoding ? `decoding="${decoding}"` : ""}
+    class="${imgClassName || "astro-imagetools-img"}"
     style="display: inline-block; overflow: hidden;${
       layout === "fill"
         ? `width: 100%; height: 100%;`
@@ -30,7 +31,7 @@ export default function getImg(
         : "max-width: 100%; height: auto;"
     }"
     ${
-      style
+      !imgClassName && style
         ? `onerror="parentElement.style.setProperty('--z-index', -1)"
           onload="${
             fadeInTransition
