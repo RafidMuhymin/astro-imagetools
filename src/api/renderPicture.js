@@ -62,7 +62,8 @@ export default async function renderPicture(props) {
     images,
     className,
     objectFit,
-    objectPosition
+    objectPosition,
+    fadeInTransition
   );
 
   const link = preload
@@ -96,23 +97,11 @@ export default async function renderPicture(props) {
             }"
             ${
               style
-                ? `onerror="nextElementSibling.style.zIndex='-1'"
+                ? `onerror="parentElement.style.setProperty('--z-index', -1)"
                   onload="${
                     fadeInTransition
-                      ? `nextElementSibling.animate({opacity:[1,0]},${
-                          typeof fadeInTransition === "number"
-                            ? fadeInTransition
-                            : fadeInTransition.duration &&
-                              Object.keys(fadeInTransition).length === 1
-                            ? fadeInTransition.duration
-                            : typeof fadeInTransition === "object"
-                            ? JSON.stringify(fadeInTransition).replace(
-                                /"/g,
-                                `'`
-                              )
-                            : 1000
-                        }).onfinish=()=>{nextElementSibling.remove()}`
-                      : "nextElementSibling.remove()"
+                      ? `parentElement.style.setProperty('--opacity', 0)`
+                      : ""
                   }"
                   `
                 : ""
@@ -132,7 +121,7 @@ export default async function renderPicture(props) {
   const image = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
     ${style ? `style="position: relative; display: inline-block"` : ""}
-    >${sources.join("\n")} ${style ? "<span></span>" : ""}
+    >${sources.join("\n")}
   </picture>`;
 
   return { link, style, image };
