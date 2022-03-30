@@ -1,6 +1,5 @@
-type ImageConfig = import("../types").ImageConfig;
-type ImageHTMLData = import("../types").ImageHTMLData;
+import type { PictureConfigOptions, ImageHTMLData } from "../types";
 
 export default function renderPicture(
-  config: ImageConfig
+  config: PictureConfigOptions
 ): Promise<ImageHTMLData>;
