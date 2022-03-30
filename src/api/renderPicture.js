@@ -96,11 +96,11 @@ export default async function renderPicture(props) {
     )
   );
 
-  const image = `<picture
+  const picture = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
     ${style ? `style="position: relative; display: inline-block"` : ""}
     >${sources.join("\n")}
   </picture>`;
 
-  return { link, style, image };
+  return { link, style, picture };
 }

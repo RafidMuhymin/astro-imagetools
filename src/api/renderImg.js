@@ -92,7 +92,7 @@ export default async function renderImg(props) {
     )
   );
 
-  const [image] = sources;
+  const [img] = sources;
 
-  return { link, style, image };
+  return { link, style, img };
 }
