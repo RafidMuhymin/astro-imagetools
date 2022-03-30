@@ -1,4 +1,6 @@
 // @ts-check
+import getImg from "../utils/getImg.js";
+import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
 import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
@@ -66,47 +68,23 @@ export default async function renderPicture(props) {
     fadeInTransition
   );
 
-  const link = preload
-    ? `<link
-        as="image"
-        rel="preload"
-        imagesizes="${imagesizes}"
-        imagesrcset="${imagesrcset}"
-      />`
-    : "";
+  const link = getLink(preload, imagesizes, imagesrcset);
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>
       src
-        ? `<img
-            src="${src}"
-            alt="${alt}"
-            srcset="${srcset}"
-            sizes="${imagesizes}"
-            width="${sizes.width}"
-            height="${sizes.height}"
-            class="astro-imagetools-img"
-            ${loading ? `loading="${loading}"` : ""}
-            ${decoding ? `decoding="${decoding}"` : ""}
-            style="display: inline-block; overflow: hidden;${
-              layout === "fill"
-                ? `width: 100%; height: 100%;`
-                : layout === "fullWidth"
-                ? `width: 100%; height: auto;`
-                : "max-width: 100%; height: auto;"
-            }"
-            ${
-              style
-                ? `onerror="parentElement.style.setProperty('--z-index', -1)"
-                  onload="${
-                    fadeInTransition
-                      ? `parentElement.style.setProperty('--opacity', 0)`
-                      : ""
-                  }"
-                  `
-                : ""
-            }
-          />`
+        ? getImg(
+            src,
+            alt,
+            sizes,
+            style,
+            srcset,
+            layout,
+            loading,
+            decoding,
+            imagesizes,
+            fadeInTransition
+          )
         : `<source
             srcset="${srcset}"
             sizes="${imagesizes}"
