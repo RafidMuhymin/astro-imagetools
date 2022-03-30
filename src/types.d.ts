@@ -160,8 +160,11 @@ export type GlobalConfigOptions = Pick<
   Exclude<keyof ConfigOptions, "src" | "alt">
 >;
 
-export interface ImageHTMLData {
+declare interface HTMLData {
   link: string;
   style: string;
-  image: string;
+}
+
+export interface PictureHTMLData extends HTMLData {
+  picture: string;
 }
