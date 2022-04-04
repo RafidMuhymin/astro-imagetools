@@ -41,11 +41,13 @@ export default async function getImageSources(
         ...formatOptions[format],
       });
 
+      const srcObject =
+        format === fallbackFormat
+          ? { src: srcset.split(", ").at(-1).slice(0, sliceLength) }
+          : {};
+
       return {
-        src:
-          format === fallbackFormat
-            ? srcset.split(", ").at(-1).slice(0, sliceLength)
-            : null,
+        ...srcObject,
         format,
         srcset,
       };
