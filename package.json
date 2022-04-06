@@ -3,12 +3,12 @@
   "version": "0.4.1",
   "description": "Image Optimization tools for the Astro JS framework",
   "type": "module",
-  "types": "./src/types.d.ts",
+  "types": "./types.d.ts",
   "exports": {
-    "./config": "./src/config.mjs",
+    "./config": "./config.mjs",
     "./plugin": "./plugin/index.js",
     ".": "./components/Image.astro",
-    "./renderImage": "./components/api/renderImage.js",
+    "./renderImage": "./api/renderImage.js",
     "./api": "./api/index.js",
     "./components": "./components/index.js"
   },
