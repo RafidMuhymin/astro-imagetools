@@ -35,7 +35,7 @@ export default async function renderBackgroundImage(props) {
     backgroundStyles;
 
   const start = performance.now();
-  const { uuid, images /*, breakpoints*/ } = await getImage(
+  const { uuid, images } = await getImage(
     src,
     sizes,
     format,
@@ -80,7 +80,6 @@ export default async function renderBackgroundImage(props) {
       .map(({ media, sources }) => {
         const newSources = {};
 
-        // image.media
         sources.forEach(({ src, format, srcset }) => {
           const sources = srcset
             .split(", ")
@@ -134,10 +133,10 @@ export default async function renderBackgroundImage(props) {
 
         return media
           ? `
-        @media ${media} {
-          ${styles}
-        }
-      `
+              @media ${media} {
+                ${styles}
+              }
+            `
           : styles;
       })
       .join("");
