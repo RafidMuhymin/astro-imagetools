@@ -155,6 +155,11 @@ export interface PictureConfigOptions
 
 export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
+export interface BackgroundPictureConfigOptions extends PictureConfigOptions {
+  Tag?: string;
+  content?: string;
+}
+
 export type GlobalConfigOptions = Pick<
   ConfigOptions,
   Exclude<keyof ConfigOptions, "src" | "alt">
@@ -175,4 +180,8 @@ export interface PictureHTMLData extends HTMLData {
 
 export interface ImgHTMLData extends HTMLData {
   img: string;
+}
+
+export interface BackgroundPictureHTMLData extends HTMLData {
+  htmlElement: string;
 }
