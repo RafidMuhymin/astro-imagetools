@@ -6,7 +6,7 @@ const { Tag = "section", ...props } = Astro.props;
 const { link, style, className } = await renderBackgroundImage(props);
 ---
 
-<script>
+<script hoist>
   const { classList } = document.documentElement;
 
   const addClass = classList.add.bind(classList);
