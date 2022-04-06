@@ -109,13 +109,13 @@ export default async function renderBackgroundImage(props) {
             const styles = sources
               .map(
                 ({ format, path }) => `
-          .${format} .${className} {
-            background-repeat: no-repeat;
-            background-image: url(${path});
-            background-size: ${backgroundSize};
-            background-position: ${backgroundPosition};
-          }
-        `
+                  .${format} .${className} {
+                    background-repeat: no-repeat;
+                    background-image: url(${path});
+                    background-size: ${backgroundSize};
+                    background-position: ${backgroundPosition};
+                  }
+                `
               )
               .reverse()
               .join("");
@@ -123,10 +123,10 @@ export default async function renderBackgroundImage(props) {
             return width === maxWidth
               ? styles
               : `
-            @media screen and (max-width: ${width}px) {
-              ${styles}
-            }
-          `;
+                  @media screen and (max-width: ${width}px) {
+                    ${styles}
+                  }
+                `;
           })
           .join("");
 
