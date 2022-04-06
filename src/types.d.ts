@@ -160,7 +160,6 @@ export interface BackgroundImageConfigOptions
     ImgConfigOptions,
     Exclude<
       keyof ImgConfigOptions,
-      | "src"
       | "alt"
       | "sizes"
       | "loading"
@@ -177,7 +176,11 @@ export interface BackgroundImageConfigOptions
   artDirectives?: ArtDirective[];
 }
 
-export interface BackgroundPictureConfigOptions extends PictureConfigOptions {
+export interface BackgroundPictureConfigOptions
+  extends Pick<
+    PictureConfigOptions,
+    Exclude<keyof PictureConfigOptions, "layout">
+  > {
   Tag?: string;
   content?: string;
 }
