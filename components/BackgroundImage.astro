@@ -11,7 +11,7 @@ const { link, style, htmlElement } = await renderBackgroundImage({
 
 <Fragment set:html={link + style + htmlElement} />
 
-<script hoist>
+<script>
   const { classList } = document.documentElement;
 
   const addClass = classList.add.bind(classList);
