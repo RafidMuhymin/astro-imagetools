@@ -11,8 +11,10 @@ export default function getImg(
   decoding,
   imagesizes,
   fadeInTransition,
-  imgClassName
+  extra
 ) {
+  const { className: imgClassName, isBackgroundImage } = extra || {};
+
   return `<img
     src="${src}"
     alt="${alt}"
@@ -24,7 +26,9 @@ export default function getImg(
     ${decoding ? `decoding="${decoding}"` : ""}
     class="${imgClassName || "astro-imagetools-img"}"
     style="display: inline-block; overflow: hidden;${
-      layout === "fill"
+      isBackgroundImage
+        ? "width: 100%; height: 100%;"
+        : layout === "fill"
         ? `width: 100%; height: 100%;`
         : layout === "fullWidth"
         ? `width: 100%; height: auto;`
@@ -32,7 +36,9 @@ export default function getImg(
     }"
     ${
       !imgClassName && style
-        ? `onerror="parentElement.style.setProperty('--z-index', -1)"
+        ? `onerror="parentElement.style.setProperty('--z-index', ${
+            isBackgroundImage ? "-2" : "-1"
+          })"
           onload="${
             fadeInTransition
               ? `parentElement.style.setProperty('--opacity', 0)`

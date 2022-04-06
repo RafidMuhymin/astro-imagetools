@@ -1,0 +1,12 @@
+---
+import renderBgImage from "../api/renderBgImage.js";
+
+const content = await Astro.slots.render("default");
+
+const { link, style, htmlElement } = await renderBgImage({
+  content,
+  ...Astro.props,
+});
+---
+
+<Fragment set:html={link + style + htmlElement} />

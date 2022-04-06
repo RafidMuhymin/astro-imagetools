@@ -85,7 +85,7 @@ export default async function renderImg(props) {
         decoding,
         imagesizes,
         fadeInTransition,
-        className
+        { className }
       )
     )
   );
