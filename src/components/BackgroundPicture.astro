@@ -1,9 +1,9 @@
 ---
-import renderBgImage from "../api/renderBgImage.js";
+import renderBackgroundPicture from "../api/renderBackgroundPicture.js";
 
 const content = await Astro.slots.render("default");
 
-const { link, style, htmlElement } = await renderBgImage({
+const { link, style, htmlElement } = await renderBackgroundPicture({
   content,
   ...Astro.props,
 });

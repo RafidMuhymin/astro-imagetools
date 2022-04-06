@@ -5,7 +5,7 @@ import getImage from "../utils/getImage.js";
 import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 
-export default async function renderPicture(props) {
+export default async function renderBackgroundPicture(props) {
   const {
     src,
     alt,
