@@ -155,6 +155,28 @@ export interface PictureConfigOptions
 
 export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
+export interface BackgroundImageConfigOptions
+  extends Pick<
+    ImgConfigOptions,
+    Exclude<
+      keyof ImgConfigOptions,
+      | "src"
+      | "alt"
+      | "sizes"
+      | "loading"
+      | "decoding"
+      | "layout"
+      | "objectFit"
+      | "objectPosition"
+    >
+  > {
+  Tag?: string;
+  content?: string;
+  backgroundSize?: string;
+  backgroundPosition?: string;
+  artDirectives?: ArtDirective[];
+}
+
 export interface BackgroundPictureConfigOptions extends PictureConfigOptions {
   Tag?: string;
   content?: string;
@@ -182,6 +204,8 @@ export interface ImgHTMLData extends HTMLData {
   img: string;
 }
 
-export interface BackgroundPictureHTMLData extends HTMLData {
+export interface BackgroundImageHTMLData extends HTMLData {
   htmlElement: string;
 }
+
+export type BackgroundPictureHTMLData = BackgroundImageHTMLData;
