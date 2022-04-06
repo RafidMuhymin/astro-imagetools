@@ -7,7 +7,7 @@
   "exports": {
     "./config": "./src/config.mjs",
     "./plugin": "./src/plugin/index.js",
-    ".": "./src/components/image.astro",
+    ".": "./src/components/Image.astro",
     "./renderImage": "./src/components/api/renderImage.js",
     "./api": "./src/api/index.js",
     "./components": "./src/components/index.js"
