@@ -1,9 +1,12 @@
 ---
 import renderBackgroundImage from "../api/renderBackgroundImage.js";
 
-const { Tag = "section", ...props } = Astro.props;
+const content = await Astro.slots.render("default");
 
-const { link, style, className } = await renderBackgroundImage(props);
+const { link, style, htmlElement } = await renderBackgroundImage({
+  content,
+  ...Astro.props,
+});
 ---
 
 <script hoist>
@@ -33,8 +36,4 @@ const { link, style, className } = await renderBackgroundImage(props);
   );
 </script>
 
-<Fragment set:html={link + style} />
-
-<Tag class={className}>
-  <slot />
-</Tag>
+<Fragment set:html={link + style + htmlElement} />
