@@ -35,6 +35,7 @@ export function getAssetPath(base, assetFileNames, ext, width, hash) {
   const extname = `.${ext}`;
 
   const assetPath = assetFileNames
+    .replace("asset.", name + ".")
     .replace("[name]", name)
     .replace("[hash]", hash.slice(0, 8))
     .replace("[ext]", ext)
