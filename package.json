@@ -6,11 +6,11 @@
   "types": "./src/types.d.ts",
   "exports": {
     "./config": "./src/config.mjs",
-    "./plugin": "./src/plugin/index.js",
-    ".": "./src/components/Image.astro",
-    "./renderImage": "./src/components/api/renderImage.js",
-    "./api": "./src/api/index.js",
-    "./components": "./src/components/index.js"
+    "./plugin": "./plugin/index.js",
+    ".": "./components/Image.astro",
+    "./renderImage": "./components/api/renderImage.js",
+    "./api": "./api/index.js",
+    "./components": "./components/index.js"
   },
   "scripts": {
     "test": "echo \"No test specified\""
