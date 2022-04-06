@@ -10,9 +10,13 @@
     ".": "./src/component/img.astro",
     "./img": "./src/component/img.astro",
     "./picture": "./src/component/Picture.astro",
+    "./background-image": "./src/component/BackgroundImage.astro",
+    "./background-picture": "./src/component/BackgroundPicture.astro",
     "./renderImg": "./src/component/api/renderImg.js",
     "./renderImage": "./src/component/api/renderImage.js",
-    "./renderPicture": "./src/component/api/renderPicture.js"
+    "./renderPicture": "./src/component/api/renderPicture.js",
+    "./renderBackgroundImage": "./src/component/renderBackgroundImage.astro",
+    "./renderBackgroundPicture": "./src/component/renderBackgroundPicture.astro"
   },
   "scripts": {
     "test": "echo \"No test specified\""
