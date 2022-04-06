@@ -10,11 +10,7 @@ export default function getImg(
   decoding,
   imagesizes,
   fadeInTransition,
-  {
-    layout = "constrained",
-    isBackgroundImage = false,
-    imgClassName = "astro-imagetools-img",
-  }
+  { imgClassName = "", layout = "constrained", isBackgroundImage = false }
 ) {
   return `<img
     src="${src}"
