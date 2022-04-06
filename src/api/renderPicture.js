@@ -79,11 +79,13 @@ export default async function renderPicture(props) {
             sizes,
             style,
             srcset,
-            layout,
             loading,
             decoding,
             imagesizes,
-            fadeInTransition
+            fadeInTransition,
+            {
+              layout,
+            }
           )
         : `<source
             srcset="${srcset}"

@@ -6,15 +6,16 @@ export default function getImg(
   sizes,
   style,
   srcset,
-  layout,
   loading,
   decoding,
   imagesizes,
   fadeInTransition,
-  extra
+  {
+    layout = "constrained",
+    isBackgroundImage = false,
+    imgClassName = "astro-imagetools-img",
+  }
 ) {
-  const { className: imgClassName, isBackgroundImage } = extra || {};
-
   return `<img
     src="${src}"
     alt="${alt}"
@@ -24,7 +25,7 @@ export default function getImg(
     height="${sizes.height}"
     ${loading ? `loading="${loading}"` : ""}
     ${decoding ? `decoding="${decoding}"` : ""}
-    class="${imgClassName || "astro-imagetools-img"}"
+    class="${imgClassName}"
     style="display: inline-block; overflow: hidden;${
       isBackgroundImage
         ? "width: 100%; height: 100%;"

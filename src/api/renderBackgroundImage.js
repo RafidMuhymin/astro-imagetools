@@ -15,7 +15,6 @@ export default async function renderBackgroundImage(props) {
     },
     preload,
     breakpoints,
-    layout = "constrained",
     placeholder = "blurred",
     artDirectives,
     format = ["avif", "webp"],

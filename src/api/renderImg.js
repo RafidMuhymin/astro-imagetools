@@ -80,12 +80,11 @@ export default async function renderImg(props) {
         sizes,
         style,
         srcset,
-        layout,
         loading,
         decoding,
         imagesizes,
         fadeInTransition,
-        { className }
+        { imgClassName: className }
       )
     )
   );
