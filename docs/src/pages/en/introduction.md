@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: Docs intro
+description: A basic intro to Astro ImageTools
 layout: ../../layouts/MainLayout.astro
 ---
 
