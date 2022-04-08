@@ -157,9 +157,9 @@ export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
 export interface BackgroundImageConfigOptions
   extends Pick<
-    ImgConfigOptions,
+  PictureConfigOptions,
     Exclude<
-      keyof ImgConfigOptions,
+      keyof PictureConfigOptions,
       | "alt"
       | "sizes"
       | "loading"
@@ -167,13 +167,13 @@ export interface BackgroundImageConfigOptions
       | "layout"
       | "objectFit"
       | "objectPosition"
+      | "fadeInTransition"
     >
   > {
   Tag?: string;
   content?: string;
   backgroundSize?: string;
   backgroundPosition?: string;
-  artDirectives?: ArtDirective[];
 }
 
 export interface BackgroundPictureConfigOptions
