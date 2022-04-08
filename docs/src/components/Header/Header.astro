@@ -19,15 +19,13 @@ const lang = currentPage && getLanguageFromURL(currentPage);
       <SidebarToggle client:idle />
     </div>
 
-    <div class="logo flex">
+    <div class="logo flex flex-grow">
       <AstroLogo size={40} />
 
       <a href="/">
         <h1>{CONFIG.SITE.title ?? "Documentation"}</h1>
       </a>
     </div>
-
-    <div style="flex-grow: 1;"></div>
 
     {KNOWN_LANGUAGE_CODES.length > 1 && (
       <LanguageSelect lang={lang} client:idle />
@@ -106,16 +104,15 @@ const lang = currentPage && getLanguageFromURL(currentPage);
       position: static;
       padding: 2rem 0rem;
     }
+
     .logo {
       width: auto;
       margin: 0;
       z-index: 0;
     }
+
     .menu-toggle {
       display: none;
-    }
-    .logo {
-      width: auto;
     }
   }
 

@@ -94,7 +94,7 @@ p {
 }
 
 .content ul {
-  line-height: 1.1em;
+  line-height: 1.6em;
 }
 
 p,
@@ -239,11 +239,13 @@ table {
 tr:nth-of-type(odd) {
   background: var(--theme-bg-hover);
 }
+
 th {
   background: var(--color-black);
   color: var(--theme-color);
   font-weight: bold;
 }
+
 td,
 th {
   padding: 6px;
@@ -286,6 +288,10 @@ img {
   align-items: center;
 }
 
+.flex-grow {
+  flex-grow: 1;
+}
+
 button {
   display: flex;
   align-items: center;
@@ -322,16 +328,20 @@ h2.heading {
   border-left-color: var(--theme-accent);
   color: var(--theme-accent);
 }
+
 .header-link:focus-within {
   color: var(--theme-text-light);
   border-left-color: hsla(var(--color-gray-40), 1);
 }
+
 .header-link svg {
   opacity: 0.6;
 }
+
 .header-link:hover svg {
   opacity: 0.8;
 }
+
 .header-link a {
   display: inline-flex;
   gap: 0.5em;
@@ -342,6 +352,7 @@ h2.heading {
 .header-link.depth-3 {
   padding-left: 2rem;
 }
+
 .header-link.depth-4 {
   padding-left: 3rem;
 }
