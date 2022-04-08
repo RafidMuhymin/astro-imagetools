@@ -37,10 +37,10 @@ export const SIDEBAR = {
     { text: "", header: true },
     { text: "Introduction", header: true },
     { text: "Introduction", link: "en/introduction" },
-    { text: "Page 2", link: "en/page-2" },
-    { text: "Page 3", link: "en/page-3" },
+    { text: "Installation", link: "en/installation" },
+    // { text: "Page 3", link: "en/page-3" },
 
-    { text: "Another Section", header: true },
-    { text: "Page 4", link: "en/page-4" },
+    // { text: "Another Section", header: true },
+    // { text: "Page 4", link: "en/page-4" },
   ],
 };
