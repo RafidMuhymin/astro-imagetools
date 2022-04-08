@@ -1,0 +1,23 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1,
+    "workspacePrefix": "/media/mariamrafid/WEB-DEVELOPMENT/ubuntu/astro-image-demo/astro-imagetools"
+  },
+  "1 error pnpm": {
+    "code": "ELIFECYCLE",
+    "errno": "ENOENT",
+    "syscall": "spawn",
+    "file": "sh",
+    "pkgid": "@example/starter@0.0.1",
+    "stage": "dev",
+    "script": "astro dev",
+    "pkgname": "@example/starter",
+    "err": {
+      "name": "pnpm",
+      "message": "@example/starter@0.0.1 dev: `astro dev`\nspawn ENOENT",
+      "code": "ELIFECYCLE",
+      "stack": "pnpm: @example/starter@0.0.1 dev: `astro dev`\nspawn ENOENT\n    at ChildProcess.<anonymous> (/usr/local/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.4/node_modules/pnpm/dist/pnpm.cjs:92290:22)\n    at ChildProcess.emit (node:events:527:28)\n    at maybeClose (node:internal/child_process:1090:16)\n    at Process.ChildProcess._handle.onexit (node:internal/child_process:302:5)"
+    }
+  },
+  "2 warn pnpm:global": " Local package.json exists, but node_modules missing, did you mean to install?"
+}
