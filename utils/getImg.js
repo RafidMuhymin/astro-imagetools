@@ -29,7 +29,9 @@ export default function getImg(
         ? `width: 100%; height: 100%;`
         : layout === "fullWidth"
         ? `width: 100%; height: auto;`
-        : "max-width: 100%; height: auto;"
+        : layout === "constrained"
+        ? "max-width: 100%; height: auto;"
+        : ""
     }"
     ${
       !imgClassName && style
