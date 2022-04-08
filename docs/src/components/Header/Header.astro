@@ -13,20 +13,26 @@ const lang = currentPage && getLanguageFromURL(currentPage);
 
 <header>
   <SkipToContent />
+
   <nav class="nav-wrapper" title="Top Navigation">
     <div class="menu-toggle">
       <SidebarToggle client:idle />
     </div>
+
     <div class="logo flex">
       <AstroLogo size={40} />
+
       <a href="/">
         <h1>{CONFIG.SITE.title ?? "Documentation"}</h1>
       </a>
     </div>
+
     <div style="flex-grow: 1;"></div>
+
     {KNOWN_LANGUAGE_CODES.length > 1 && (
       <LanguageSelect lang={lang} client:idle />
     )}
+
     {CONFIG.ALGOLIA && (
       <div class="search-item">
         <Search client:idle />
@@ -128,9 +134,11 @@ const lang = currentPage && getLanguageFromURL(currentPage);
     display: flex;
     max-width: 200px;
   }
+
   :global(.search-item > *) {
     flex-grow: 1;
   }
+
   @media (min-width: 50em) {
     .search-item {
       max-width: 400px;
