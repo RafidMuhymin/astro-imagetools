@@ -4,23 +4,40 @@ description: Docs intro
 layout: ../../layouts/MainLayout.astro
 ---
 
-**Welcome to Astro!**
+## **Welcome to Astro ImageTools!**
 
-This is the `docs` starter template. It contains all of the features that you need to build a Markdown-powered documentation site, including:
+**Astro ImageTools** is a collection of tools for optimizing images, background images, and generating responsive images for the **Astro JS** framework.
 
-- ✅ **Full Markdown support**
-- ✅ **Responsive mobile-friendly design**
-- ✅ **Sidebar navigation**
-- ✅ **Search (powered by Algolia)**
-- ✅ **Multi-language i18n**
-- ✅ **Automatic table of contents**
-- ✅ **Automatic list of contributors**
-- ✅ (and, best of all) **dark mode**
+## Features
+
+Below is a short list of features that **Astro ImageTools** offers. For more information, please see component-specific or API-specific documentation.
+
+- ✅ **Regular Image Optimization** (`<img>` and `<picture`)
+- ✅ **Background Image Optimization**
+- ✅ **Responsive Images**
+- ✅ **Simple and intuitive Art Direction API**
+- ✅ **Lazy Loading**
+- ✅ **Programmatic APIs**
+- ✅ **Asynchronous Decoding**
+- ✅ **Unique Breakpoints Calculation**
+- ✅ **Preloading for urgent images**
+- ✅ **SVG Tracing and Posterization**
+- ✅ **100% Scoped CSS**
+- ✅ **Four kind of Layouts: `constrained`, `fixed`, `fullWidth` & `fill`**
+- ✅ **Three kind of Placeholder Images: `blurred`, `dominantColor` & `tracedSVG`**
+- ✅ **Long list of supported Image Formats**
+- ✅ **Long List of supported Configuration Options**
+- ✅ **Supports Remote Images and Data URIs too**
+- ✅ **Support for _`sharp`less_ Environments**
+- ✅ **Both Memory-based and FS-based Caching for better Performance**
+- ✅ **Respects to _Semantics of HTML_ as much as possible**
 
 ## Getting Started
 
-To get started with this theme, check out the `README.md` in your new project directory. It provides documentation on how to use and customize this template for your own project. Keep the README around so that you can always refer back to it as you build.
+To get started with **Astro ImageTools**, first check out the [Installation](/installation) documentation for instructions on how to install the `astro-imagetools` package.
 
-Found a missing feature that you can't live without? Please suggest it on Discord [(#ideas-and-suggestions channel)](https://astro.build/chat) and even consider adding it yourself on GitHub! Astro is an open source project and contributions from developers like you are how we grow!
+If you are looking for the available components and APIs, please check out the [Components](/components) and [API](/api) documentation.
+
+If you want to report any issues or have found a missing feature, please report it on [GitHub](https://github.com/RafidMuhymin/astro-imagetools/)!
 
 Good luck out there, Astronaut. 🧑‍🚀
