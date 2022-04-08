@@ -1,6 +1,6 @@
 export const SITE = {
-  title: "Your Documentation Website",
-  description: "Your website description.",
+  title: "Astro ImageTools Docs",
+  description: "Documentation for the Astro ImageTools project",
   defaultLanguage: "en_US",
 };
 
@@ -35,7 +35,7 @@ export const KNOWN_LANGUAGES = {
 export const SIDEBAR = {
   en: [
     { text: "", header: true },
-    { text: "Section Header", header: true },
+    { text: "Introduction", header: true },
     { text: "Introduction", link: "en/introduction" },
     { text: "Page 2", link: "en/page-2" },
     { text: "Page 3", link: "en/page-3" },
