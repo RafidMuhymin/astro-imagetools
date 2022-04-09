@@ -157,7 +157,7 @@ export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
 export interface BackgroundImageConfigOptions
   extends Pick<
-  PictureConfigOptions,
+    PictureConfigOptions,
     Exclude<
       keyof PictureConfigOptions,
       | "alt"
@@ -186,8 +186,8 @@ export interface BackgroundPictureConfigOptions
 }
 
 export type GlobalConfigOptions = Pick<
-  ConfigOptions,
-  Exclude<keyof ConfigOptions, "src" | "alt">
+  PictureConfigOptions,
+  Exclude<keyof PictureConfigOptions, "src" | "alt" | "artDirectives">
 >;
 
 declare interface HTMLData {

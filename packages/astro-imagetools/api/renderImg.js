@@ -27,8 +27,7 @@ export default async function renderImg(props) {
         function: "trace",
       },
     },
-
-    ...configOptions
+    ...restConfigOptions
   } = props;
 
   const artDirectives = [],
@@ -47,7 +46,7 @@ export default async function renderImg(props) {
     fallbackFormat,
     includeSourceFormat,
     formatOptions,
-    configOptions,
+    restConfigOptions,
     globalConfigOptions
   );
   const end = performance.now();
