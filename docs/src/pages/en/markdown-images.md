@@ -11,6 +11,8 @@ Like the `<Picture />` component, both absolute paths, remote, and data URIs are
 In complex scenarios where you need more config options, you can pass them as query parameters. Or, if you have to set their values dynamically, you can import the `<Picture />` component (and any other components too)! **Astro** supports importing and using Astro components inside MD files. Check the official [Astro Markdown documentation](https://docs.astro.build/en/guides/markdown-content/#using-components-in-markdown) for more info on this.
 
 > **Note:** Automatic markdown image optimization is supported only for markdown files. If you are using the `<Markdown />` component, you can use the `<Picture />` component to generate necessary image sets.
+>
+> For detecting markdown images, both the Markdown Syntax `![](...)` and HTML Syntax `<img src="..." alt="..." />` are supported.
 
 ### Example Markdown Images Usage
 
