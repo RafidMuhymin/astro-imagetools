@@ -2,8 +2,6 @@
 title: Components and APIs
 description: Components and APIs provided by Astro ImageTools
 layout: ../../layouts/MainLayout.astro
-setup: |
-  import ModuleBrief from '../../components/ModuleBrief.astro'
 ---
 
 Here is a brief overview on the components and APIs provided by **Astro ImageTools**.
