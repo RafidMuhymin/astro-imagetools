@@ -43,6 +43,14 @@ nav ul {
   margin-top: 0;
 }
 
+.content > section > blockquote > * + * {
+  margin-top: 1.25rem;
+}
+
+.content > section > blockquote > :first-child {
+  margin-top: 0;
+}
+
 /* Typography */
 h1,
 h2,
