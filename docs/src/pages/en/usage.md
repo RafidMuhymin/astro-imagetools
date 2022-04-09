@@ -69,7 +69,7 @@ import { Picture } from "astro-imagetools/components";
 </html>
 ```
 
-To know more about the components and available configuration options, please check out the [Components](/en/components) documentation.
+To know more about the components and available configuration options, please check out the [Components](/en/components-and-apis#components) documentation.
 
 ## APIs Usage
 
@@ -96,4 +96,4 @@ const { link, style, img } = await renderImg({
 ---
 ```
 
-To know more about the APIs and available configuration options, please check out the [API](/en/api) documentation.
+To know more about the APIs and available configuration options, please check out the [APIs](/en/components-and-apis#api) documentation.

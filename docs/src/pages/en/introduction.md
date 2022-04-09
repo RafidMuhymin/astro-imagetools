@@ -36,7 +36,7 @@ Below is a short list of features that **Astro ImageTools** offers. For more inf
 
 To get started with **Astro ImageTools**, first check out the [Installation](/en/installation) documentation for instructions on how to install the `astro-imagetools` package.
 
-If you are looking for the available components and APIs, please check out the [Components](/en/components) and [API](/en/api) documentation.
+If you are looking for the available components and APIs, please check out the [Components and APIs](/en/components-and-apis) documentation.
 
 If you want to report any issues or have found a missing feature, please report it on [GitHub](https://github.com/RafidMuhymin/astro-imagetools/)!
 
