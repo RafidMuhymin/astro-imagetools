@@ -54,10 +54,6 @@ export default async function renderPicture(props) {
 
   const className = `astro-imagetools-picture-${uuid}`;
 
-  const imagesrcset =
-    preload &&
-    images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
-
   const { imagesizes } = images.at(-1);
 
   const style = getBackgroundStyles(
@@ -68,7 +64,7 @@ export default async function renderPicture(props) {
     fadeInTransition
   );
 
-  const link = getLink(preload, imagesizes, imagesrcset);
+  const link = getLink(images, preload, imagesizes);
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>

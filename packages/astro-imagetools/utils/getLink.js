@@ -1,6 +1,10 @@
 // @ts-check
 
-export default function getLink(preload, imagesizes, imagesrcset) {
+export default function getLink(images, preload, imagesizes) {
+  const imagesrcset =
+    preload &&
+    images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
+
   const link = preload
     ? `<link
         as="image"

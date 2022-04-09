@@ -53,10 +53,6 @@ export default async function renderBackgroundImage(props) {
 
   const className = `astro-imagetools-background-${uuid}`;
 
-  const imagesrcset =
-    preload &&
-    images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
-
   const { imagesizes } = images.at(-1);
 
   const fallbackStyles = getBackgroundFallbackStyles(
@@ -67,7 +63,7 @@ export default async function renderBackgroundImage(props) {
     fadeInTransition
   );
 
-  const link = getLink(preload, imagesizes, imagesrcset);
+  const link = getLink(images, preload, imagesizes);
 
   const styles =
     `
