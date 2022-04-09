@@ -4,13 +4,13 @@ description: Astro ImageTools Usage Guide
 layout: ../../layouts/MainLayout.astro
 ---
 
-**Astro ImageTools** provides a Vite plugin, five components and four APIs. Read below for guidance on how to use them.
+Here is a brief overview on the usage of the Vite plugin, components and APIs provided by **Astro ImageTools**.
 
 ## Plugin Usage
 
-The Vite plugin is used by the components and APIs interally to perform all kinds of image transformations and optimizations. After you register the Vite plugin as shown in the [Installation](/en/installation) documentation, it takes care of all the necessary configurations and starts looking image imports.
+<!-- The Vite plugin is used by the components and APIs interally to perform all kinds of image transformations and optimizations. After you register the Vite plugin as shown in the [Installation](/en/installation) documentation, it takes care of all the necessary configurations and starts looking image imports. -->
 
-The plugin may come in handy in the scenarios where using the provided components and APIs is not possible. You can use the plugin to perform image transformations and optimizations on your own. The plugin works inside framework components too!
+You can use the plugin to perform simple image transformations and optimizations on your own. It may come in handy in the scenarios where using the provided components and APIs is not possible.You can use the plugin inside framework components too!
 
 ```js
 import React from "react";
@@ -28,23 +28,33 @@ You can pass configuration options via query parameters.
 import src from "../images/image.jpg?w=200&h=200&format=avif&q=80";
 ```
 
+If you want the import to return a `srcset` instead of a `src`, pass multiple values to the `w` or `width` query parameter.
+
+```js
+import srcset from "../images/image.jpg?w=200;400;800";
+```
+
 ## Components Usage
 
-**Astro ImageTools** provides a set of components that handle image transformations and optimizations and provide a simple and intuitive API using props. The components and are highly customizable. And they provide a number of excellent [features](/en/introduction#features).
+**Astro ImageTools** provides a set of components that abstract away all the complexities of image transformations and optimizations. The components are highly customizable and provide a number of excellent features.
 
 All the components, `Img`, `Picture`, `BackgroundImage`, `BackgroundPicture`, and `ImageSupportDetection` are exported using named exports from `astro-imagetools/components`.
 
 ```astro
 ---
-// import the component you want to use
+import { Picture } from "astro-imagetools/components";
+---
+```
+
+You can pass configuration options to the components via props.
+
+```astro
+---
 import { Picture } from "astro-imagetools/components";
 ---
 
 <html>
   <body>
-    <h1>Hello World!</h1>
-
-    <!-- Use the imported Picture component -->
     <Picture
       src="/src/images/landscape.jpg"
       alt="A landscape image"
@@ -63,30 +73,27 @@ To know more about the components and available configuration options, please ch
 
 ## APIs Usage
 
-**Astro ImageTools** provides a set of APIs that handle image transformations and optimizations and provide a simple and intuitive API. The APIs provide a lot of flexibility and are highly customizable. And they provide a number of excellent [features](/en/introduction#features).
+**Astro ImageTools** provides a set of APIs that allow you to generate the rendered HTML for the images programmatically.
 
 All the APIs, `renderImg`, `renderPicture`, `renderBackgroundImage`, and `renderBackgroundPicture` are exported using named exports from `astro-imagetools/api`.
 
 ```astro
 ---
-// import the API you want to use
+import { renderImg } from "astro-imagetools/api";
+---
+```
+
+All the APIs support a single config object as the only argument. You can pass configuration options to the APIs via defining properties in the config object.
+
+```astro
+---
 import { renderImg } from "astro-imagetools/api";
 
-// Generate rendered HTML programmatically
 const { link, style, img } = await renderImg({
   src: "https://picsum.photos/200/300",
   alt: "A random image",
 });
 ---
-
-<html>
-  <body>
-    <h1>Hello World!</h1>
-
-    <!-- Use generated HTML -->
-    <Fragment set:html={link + style + img} />
-  </body>
-</html>
 ```
 
 To know more about the APIs and available configuration options, please check out the [API](/en/api) documentation.
