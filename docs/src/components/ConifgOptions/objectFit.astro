@@ -1,0 +1,24 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `objectFit`
+
+  **Type:** `"fill" | "contain" | "cover" | "none" | "scale-down"`
+
+  **Default:** `cover`
+
+  The value of the `object-fit` CSS property of the generated `<img />` element.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  api={Astro.props.api}
+  component={Astro.props.component}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      objectFit: "cover",
+    },
+  ]}
+/>

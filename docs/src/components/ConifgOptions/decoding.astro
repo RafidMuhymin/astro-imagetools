@@ -1,0 +1,25 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `decoding`
+
+  **Type:** `"async" | "sync" | "auto" | null`
+
+  **Default:** `"async"`
+
+  The value of the `decoding` attribute of the generated `<img />` element. If `null`
+  is provided, the `decoding` attribute will be omitted.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  api={Astro.props.api}
+  component={Astro.props.component}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      decoding: "async",
+    },
+  ]}
+/>

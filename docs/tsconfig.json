@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "es2020",
     "module": "esnext",
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["src/components/ConifgOptions/*"]
+    }
   },
   "moduleResolution": "node"
 }

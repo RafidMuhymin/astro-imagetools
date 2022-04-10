@@ -1,0 +1,31 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `src`
+
+  **Type:** `string`
+
+  **Default:** `undefined`
+
+  The absolute path to the source image stored in the file system or the URL of
+  the image. Data URIs are also supported. The `src` property is required.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  api={Astro.props.api}
+  component={Astro.props.component}
+  values={[
+    "Local Image",
+    { src: "/src/images/image.jpg", alt: "A local image" },
+    "",
+    "Remote URL",
+    { src: "https://example.com/image.jpg", alt: "A remote image" },
+    "",
+    "Data URI",
+    {
+      src: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
+      alt: "A base64 encoded image",
+    },
+  ]}
+/>

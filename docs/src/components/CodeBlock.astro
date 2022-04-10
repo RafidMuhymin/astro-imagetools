@@ -1,0 +1,47 @@
+---
+import { Code } from "astro/components";
+
+const { values, api, component } = Astro.props;
+
+const isJS = api ? true : false;
+
+const comment = (text) => (isJS ? `// ${text}` : `<!-- ${text} -->`) + "\n";
+
+function formatValue(value) {
+  value = Array.isArray(value)
+    ?  `{${value[0]}}`
+    :  `"${value}"`;
+
+  value = value.replaceAll(/\n\s+/g, "\n    ");
+
+  value = value.replace(/\n\s+\}/, "\n  }");
+
+  return value;
+}
+
+function code(props, { api, component }) {
+  const isJS = api ? true : false;
+
+  const builtProps = Object.keys(props)
+    .map((key) => key + (isJS ? ": " : "=") + `${formatValue(props[key])}`)
+    .join((isJS ? "," : "") + "\n  ");
+
+  return (
+    `${isJS ? `const renderedHTML = ${api}({` : `<${component}`}
+  ${builtProps}
+${isJS ? `});` : `/>`}` + "\n"
+  );
+}
+
+const codeBlock = values
+  .map((value) =>
+    value === ""
+      ? "\n"
+      : typeof value === "string"
+      ? comment(value)
+      : code(value, { api, component })
+  )
+  .join("");
+---
+
+<Code code={codeBlock} lang={isJS ? "js" : "astro"} />
