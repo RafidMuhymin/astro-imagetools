@@ -1,0 +1,23 @@
+<Markdown>
+  ### `fallbackFormat`
+
+  **Type:** `format`
+
+  **Default:** _The format of the source image_
+
+  The format the browser will fallback to if the other formats are not supported.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      format: [`["webp", "jpg"]`],
+      fallbackFormat: "png",
+    },
+  ]}
+/>

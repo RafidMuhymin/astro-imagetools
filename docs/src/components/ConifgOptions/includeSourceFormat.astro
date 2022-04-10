@@ -1,0 +1,23 @@
+<Markdown>
+  ### `includeSourceFormat`
+
+  **Type:** `boolean`
+
+  **Default:** `true`
+
+  Whether to generate image set for the source format or not.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "/src/images/image.tiff",
+      alt: "A random image",
+      fallbackFormat: "png",
+      includeSourceFormat: false,
+    },
+  ]}
+/>
