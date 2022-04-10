@@ -9,8 +9,10 @@ const comment = (text) => (isJS ? `// ${text}` : `<!-- ${text} -->`) + "\n";
 
 function formatValue(value) {
   value = Array.isArray(value)
-    ?  `{${value[0]}}`
-    :  `"${value}"`;
+    ? `{${value[0]}}`
+    : typeof value === "boolean" || typeof value === "function"
+    ? `{${value}}`
+    : `"${value}"`;
 
   value = value.replaceAll(/\n\s+/g, "\n    ");
 

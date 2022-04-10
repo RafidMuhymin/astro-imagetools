@@ -27,10 +27,10 @@
     {
       src: "https://picsum.photos/200/300",
       alt: "A random image",
-      sizes: [(breakpoints) => {
+      sizes: (breakpoints) => {
         const maxWidth = breakpoints.at(-1);
         return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-      }],
+      },
     },
   ]}
 />
