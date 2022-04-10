@@ -13,8 +13,7 @@
 </Markdown>
 
 <CodeBlock
-  api={Astro.props.api}
-  component={Astro.props.component}
+  {...Astro.props}
   values={[
     "Local Image",
     { src: "/src/images/image.jpg", alt: "A local image" },
