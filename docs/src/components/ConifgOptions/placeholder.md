@@ -1,0 +1,27 @@
+### `placeholder`
+
+**Type:** `"dominantColor" | "blurred" | "tracedSVG" | "none"`
+
+**Default:** `"blurred"`
+
+The placeholder to be displayed while the image is loading.
+
+If `placeholder` is set to `"dominantColor"`, the dominant color of the source image will be used as the placeholder.
+
+If the value is set to `"blurred"`, a very low-resolution version of the provided image will be enlarged and used as the placeholder.
+
+If the value is set to `"tracedSVG"`, a traced SVG of the image will be used as the placeholder.
+
+If the value is set to `"none"`, no placeholder will be displayed.
+
+> **Note:** If the value is set to `"tracedSVG"`, the placeholder can be customized to be a **Posterized SVG** too. See the [**formatOptions**](#formatOptions) prop for more details.
+
+**Code example:**
+
+```astro
+<Image
+  src="https://picsum.photos/200/300"
+  alt="A random image"
+  placeholder="dominantColor"
+/>
+```
