@@ -1,6 +1,6 @@
 ---
 import { Markdown } from "astro/components";
-import CodeBlock from "../CodeBlock.astro";
+import CodeExample from "../CodeExample.astro";
 
 const isImg =
   Astro.props.component === "Img" || Astro.props.api === "renderImg";
@@ -40,7 +40,7 @@ const isImg =
   **Code Example:**
 </Markdown>
 
-<CodeBlock
+<CodeExample
   {...Astro.props}
   values={[
     {

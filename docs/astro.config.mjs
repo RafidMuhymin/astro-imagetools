@@ -14,7 +14,7 @@ export default defineConfig({
         imports: [
           {
             "astro/components": ["Markdown"],
-            "/src/components/CodeBlock.astro": [["default", "CodeBlock"]],
+            "/src/components/CodeExample.astro": [["default", "CodeExample"]],
           },
         ],
 
