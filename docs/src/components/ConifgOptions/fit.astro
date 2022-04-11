@@ -1,0 +1,27 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `fit`
+
+  **Type:** `"cover" | "contain" | "fill" | "inside" | "outside"`
+
+  **Default:** `undefined`
+
+  When both `width` and `height` are provided, this directive can be used to specify the method by which the image should fit.
+
+  > **Note:** The empty parts are filled with the color specified in the [`background`](#background) prop.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      width: 200,
+      height: 200,
+      fit: "contain",
+    },
+  ]}
+/>

@@ -1,0 +1,24 @@
+<Markdown>
+  ### `grayscale`
+
+  **Type:** `boolean`
+
+  **Default:** `undefined`
+
+  Converts the image to an 8-bit grayscale image.
+
+  > **Note:** This directive will convert the image to the `b-w` colorspace, meaning the resulting image will only have one channel.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      grayscale: true,
+    },
+  ]}
+/>

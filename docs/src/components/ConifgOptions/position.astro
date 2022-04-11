@@ -1,0 +1,28 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `position`
+
+  **Type:** `"top" | "right top" | "right" | "right bottom" | "bottom" | "left bottom" | "left" | "left top" | "north" | "northeast" | "east" | "southeast" | "south" | "southwest" | "west" | "northwest" | "center" | "centre" | "cover" | "entropy" | "attention"`
+
+  **Default:** `undefined`
+
+  When both `width` and `height` are provided AND `fit` is is set to `cover` or `contain`, this directive can be used to set the position of the image.
+
+  > See `sharp`'s [resize options](https://sharp.pixelplumbing.com/api-resize#resize) for more information.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      width: 200,
+      height: 200,
+      fit: "contain",
+      position: "attention",
+    },
+  ]}
+/>

@@ -1,0 +1,24 @@
+<Markdown>
+  ### `width` | `w`
+
+  **Type:** `number`
+
+  **Default:** _The width of the source image_
+
+  Resizes the image to be the specified amount of pixels wide. If not given the height will be scaled accordingly.
+
+  > **Note:** The specified `width` will be used to resize the source image when loading it. The final widths of the image will be based on the final calculated [`breakpoints`](#breakpoints).
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      width: 200,
+    },
+  ]}
+/>

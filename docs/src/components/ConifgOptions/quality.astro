@@ -1,0 +1,27 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `quality`
+
+  **Type:** `number`
+
+  **Default:** `undefined`
+
+  All formats (except `gif`) allow the quality to be adjusted by setting this directive.
+
+  The argument must be a number between `0` and `100`.
+
+  > See sharps [Output options](https://sharp.pixelplumbing.com/api-output) for default quality values.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      quality: 50,
+    },
+  ]}
+/>

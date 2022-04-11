@@ -8,10 +8,10 @@ const isJS = api ? true : false;
 const comment = (text) => (isJS ? `// ${text}` : `<!-- ${text} -->`) + "\n";
 
 function formatValue(value) {
-  value = Array.isArray(value)
-    ? `{${value[0]}}`
-    : typeof value === "boolean" || typeof value === "function"
+  value = ["number", "boolean", "function"].includes(typeof value)
     ? `{${value}}`
+    : Array.isArray(value)
+    ? `{${value[0]}}`
     : `"${value}"`;
 
   value = value.replaceAll(/\n\s+/g, "\n    ");
@@ -25,8 +25,12 @@ function code(props, { api, component }) {
   const isJS = api ? true : false;
 
   const builtProps = Object.keys(props)
-    .map((key) => key + (isJS ? ": " : "=") + `${formatValue(props[key])}`)
-    .join((isJS ? "," : "") + "\n  ");
+    .map((key) =>
+      key === "comment"
+        ? `/* ${props[key]} */`
+        : key + (isJS ? ": " : "=") + `${formatValue(props[key])}`
+    )
+    .join(`${isJS ? "," : ""}\n  `);
 
   return (
     `${isJS ? `const renderedHTML = ${api}({` : `<${component}`}
@@ -41,6 +45,8 @@ const codeBlock = values
       ? "\n"
       : typeof value === "string"
       ? comment(value)
+      : Array.isArray(value)
+      ? value.join("\n") + "\n"
       : code(value, { api, component })
   )
   .join("");

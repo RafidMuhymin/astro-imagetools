@@ -1,0 +1,22 @@
+<Markdown>
+  ### `normalize`
+
+  **Type:** `boolean`
+
+  **Default:** `undefined`
+
+  **Normalizes** the image by stretching its luminance to cover the full dynamic range. This Enhances the output image contrast.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      normalize: true,
+    },
+  ]}
+/>

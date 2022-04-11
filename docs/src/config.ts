@@ -40,7 +40,7 @@ export const SIDEBAR = {
     { text: "Components and APIs", link: "en/components-and-apis" },
     { text: "Markdown Images", link: "en/markdown-images" },
 
-    // { text: "Another Section", header: true },
-    // { text: "Page 4", link: "en/page-4" },
+    { text: "Components", header: true },
+    { text: "<Img />", link: "en/components/img" },
   ],
 };

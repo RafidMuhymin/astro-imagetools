@@ -1,0 +1,23 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `tint`
+
+  **Type:** `string`
+
+  **Default:** `undefined`
+
+  Tints the image using the provided chroma while preserving the image luminance. If the image has an alpha channel it will be untouched.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: 'https://picsum.photos/200/300',
+      alt: 'A random image',
+      tint: 'rgba(10,33,127)',
+    },
+  ]}
+/>

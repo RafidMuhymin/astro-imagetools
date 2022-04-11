@@ -1,0 +1,23 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `kernel`
+
+  **Type:** `"nearest" | "cubic" | "mitchell" | "lanczos2" | "lanczos3"`
+
+  **Default:** `undefined`
+
+  The interpolation kernel to use when resizing the images.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      kernel: "lanczos3",
+    },
+  ]}
+/>

@@ -1,0 +1,37 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `median`
+
+  **Type:** `number | boolean`
+
+  **Default:** `undefined`
+
+  Applies a median filter. This is commonly used to remove noise from images.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    [
+      "--" + "-",
+      'const src = "https://picsum.photos/200/300";',
+      'const alt = "A random image";',
+      "--" + "-",
+    ],
+    "boolean type",
+    {
+      src: ["src"],
+      alt: ["alt"],
+      median: true,
+    },
+    "",
+    "number type",
+    {
+      src: ["src"],
+      alt: ["alt"],
+      median: 50,
+    },
+  ]}
+/>

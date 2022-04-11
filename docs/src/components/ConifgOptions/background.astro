@@ -1,0 +1,49 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `background`
+
+  **Type:** `string`
+
+  **Default:** `undefined`
+
+  This instructs various directives (e.g. the [`rotate`](#rotate)) to use the specified color when filling empty spots in the image.
+
+  > **Note:** This directive does nothing on it's own, it has to be used in conjunction with another directive.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    [
+      "--" + "-",
+      'const src = "https://picsum.photos/200/300";',
+      'const alt = "A random image";',
+      "--" + "-",
+    ],
+    "",
+    {
+      src: [`src`],
+      alt: [`alt`],
+      flatten: true,
+      background: "#FFFFFFAA",
+    },
+    "",
+    {
+      src: [`src`],
+      alt: [`alt`],
+      rotate: 90,
+      background: "hsl(360, 100%, 50%)",
+    },
+    "",
+    {
+      src: [`src`],
+      alt: [`alt`],
+      width: 200,
+      height: 200,
+      fit: "contain",
+      background: "crimson",
+    },
+  ]}
+/>
