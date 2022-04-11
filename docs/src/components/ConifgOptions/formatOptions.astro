@@ -1,0 +1,254 @@
+---
+const { api, component } = Astro.props;
+
+const dynamicText = component
+  ? `${"`"}<${component} />${"`"} component`
+  : `${"`"}render${api}${"`"} API`;
+---
+
+<!-- prettier-ignore -->
+<Markdown>
+  ### `formatOptions`
+
+  **Type:** `Record<format, ImageToolsConfigs> & { tracedSVG?: PotraceOptions }`
+
+  **Default:** _The default values for the all the formats except `tracedSVG` are inherited from the direct configs of the {<Fragment set:html={dynamicText} />}. And for more information on the `tracedSVG` property, see the [`PotraceOptions`](#potraceoptions) interface._
+
+  The configuration options for the different formats. The ten supported _keys_ are `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif` and `tracedSVG`. These configuration options will be respected when generating image sets for different formats.
+  
+  The `tracedSVG` config object is used only when the `placeholder` prop is set to `"tracedSVG"`.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/200/300",
+      alt: "A random image",
+      placeholder: "tracedSVG",
+      format: [`["webp", "jpg"]`],
+      fallbackFormat: "png",
+      includeSourceFormat: false,
+      formatOptions: `{
+    jpg: {
+      quality: 80,
+    },
+    png: {
+      quality: 80,
+    },
+    webp: {
+      quality: 50,
+    },
+    tracedSVG: {
+      options: {
+        background: "#fff",
+        color: "#000",
+        turnPolicy: "black",
+        turdSize: 1,
+        alphaMax: 1,
+        optCurve: true,
+        threshold: 100,
+        blackOnWhite: false,
+      },
+    },
+  }`,
+    },
+  ]}
+/>
+
+<!-- prettier-ignore -->
+<Markdown>
+  #### `tracedSVG`
+
+  All the properties of the `tracedSVG` property are the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used to generate traced SVGs when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined below are optional.
+
+  > **Note:** Most of the below _jargons_ are taken from the [`potrace`](https://npmjs.com/package/potrace) documentation. I have tried my best to simplify the config options and make the documentation as simple and clear as possible.
+  >
+  > If you want to go deeper into this, check the [Technical documentation](http://potrace.sourceforge.net/#technical) of the original C [`potrace`](http://potrace.sourceforge.net/) library.
+  >
+  > If you have a good knowledge on the `potrace` library and about bitmap tracing and posterizing, please consider contributing to update the documentation of this section.
+
+  ##### `function`
+
+  **Type:** `"trace" | "posterize"`
+
+  **Default:** `"trace"`
+
+  Which method of the `node-potrace` library to use. The `posterize` method is basically _tracing_ the image multiple times to produce a more accurate result. See this [example](https://www.npmjs.com/package/potrace#example-and-demo) for more information.
+
+  ##### `options`
+
+  ###### `turnPolicy`
+
+  **Type:** `"black" | "white" | "left" | "right" | "minority" | "majority"`
+
+  **Default:** `"minority"`
+
+  How to resolve ambiguities in path decomposition. Refer to the [**potrace-algorithm**](http://potrace.sourceforge.net/potrace.pdf) documentaion (PDF, page 4) for more information.
+
+  ###### `turdSize`
+
+  **Type:** `number`
+
+  **Default:** `2`
+
+  Suppress speckles of up to this size.
+
+  ###### `alphaMax`
+
+  **Type:** `number`
+
+  **Default:** `1`
+
+  Corner threshold parameter.
+
+  ###### `optCurve`
+
+  **Type:** `boolean`
+
+  **Default:** `true`
+
+  Curve optimization.
+
+  ###### `optTolerance`
+
+  **Type:** `number`
+
+  **Default:** `0.2`
+
+  Curve optimization tolerance.
+
+  ###### `threshold`
+
+  **Type:** `number`
+
+  **Default:** `-1`
+
+  _When `function` is `"trace"` :_
+
+  Threshold below which color is considered black. Should be a number between 0 and 255 or `-1` in which case threshold will be selected automatically using [Algorithm For Multilevel Thresholding](http://www.iis.sinica.edu.tw/page/jise/2001/200109_01.pdf).
+
+  _When `function` is `"posterize"` :_
+
+  Breaks image into foreground and background (and only foreground being broken into desired number of layers). Basically when provided it becomes a threshold for last (least opaque) layer and then `steps - 1` intermediate thresholds calculated. If **steps** is an array of thresholds and every value from the array is lower (or larger if **blackOnWhite** parameter set to `false`) than threshold - threshold will be added to the array, otherwise just ignored.
+
+  ###### `blackOnWhite`
+
+  **Type:** `boolean`
+
+  **Default:** `true`
+
+  Specifies colors by which side from threshold should be turned into vector shape.
+
+  ###### `color`
+
+  **Type:** `"auto" | string`
+
+  **Default:** `"auto"`
+
+  Fill color for the traced image. If `"auto"` is provided, the color will be black or white depending on the `blackOnWhite` property.
+
+  <h6 id="svg-background"><code>background</code></h6>
+
+  **Type:** `"transparent" | string`
+
+  **Default:** `"transparent"`
+
+  Background color of the traced image. If `"transparent"` is provided, no background will be present.
+
+  ###### `fill`
+
+  **Type:** `"spread" | "dominant" | "median" | "mean"`
+
+  Determines how fill color for each layer should be selected.
+
+  - `dominant` - Most frequent color in range (used by default),
+  - `mean` - Arithmetic mean (average),
+  - `median` - Median color,
+  - `spread` - Ignores color information of the image and just spreads colors equally in range between 0 and `threshold` (or `threshold` and ..255 if `blackOnWhite` is set to `false`).
+
+  > **Note:** This option is available only when `function` is `"posterize"`.
+
+  ###### `ranges`
+
+  **Type:** `"auto" | "equal"`
+
+  How color stops for each layer should be selected. Ignored if `steps` is an array. Possible values are:
+
+  - `auto` - Performs automatic thresholding (using [Algorithm For Multilevel Thresholding](http://www.iis.sinica.edu.tw/page/jise/2001/200109_01.pdf)). Preferable method for already posterized sources, but takes long time to calculate 5 or more thresholds (exponential time complexity) _(used by default)_
+  - `equal` - Ignores color information of the image and breaks available color space into equal chunks
+
+  > **Note:** This option is available only when `function` is `"posterize"`.
+
+  ###### `steps`
+
+  **Type:** `number | number[]`
+
+  Specifies desired number of layers in resulting image. If a number provided - thresholds for each layer will be automatically calculated according to `ranges` property. If an array provided it expected to be an array with precomputed thresholds for each layer (in range between 0 and 255).
+
+  > **Note:** This option is available only when `function` is `"posterize"`.
+
+  **Code example:**
+</Markdown>
+
+<CodeBlock
+  {...Astro.props}
+  values={[
+    [
+      // The below hack is used to not break syntax highlighting
+      "--" + "-",
+      'const src = "https://picsum.photos/200/300";',
+      'const alt = "A random image";',
+      'const placeholder = "tracedSVG";',
+      "",
+      "const traceOptions = {",
+      '  background: "#fff",',
+      '  color: "#000",',
+      '  turnPolicy: "black",',
+      "  turdSize: 1,",
+      "  alphaMax: 1,",
+      "  optCurve: true,",
+      "  threshold: 100,",
+      "  blackOnWhite: false,",
+      "};",
+      "",
+      "const posterizeOptions = {",
+      '  fill: "spread",',
+      "  steps: [0, 50, 100],",
+      '  ranges: "equal",',
+      "};",
+      "--" + "-",
+    ],
+    "",
+    {
+      src: [`src`],
+      alt: [`alt`],
+      placeholder: [`placeholder`],
+      comment: [`tracing SVG`],
+      formatOptions: `{
+    tracedSVG: {
+      function: "trace",
+      options: traceOptions,
+    },
+  }`,
+    },
+    "",
+    {
+      src: [`src`],
+      alt: [`alt`],
+      placeholder: [`placeholder`],
+      comment: [`posterizing SVG`],
+      formatOptions: `{
+    tracedSVG: {
+      function: "posterize",
+      options: {
+      ...traceOptions,
+      ...posterizeOptions,
+      },
+    },
+  }`,
+    },
+  ]}
+/>

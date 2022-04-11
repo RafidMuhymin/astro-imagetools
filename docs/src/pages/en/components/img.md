@@ -15,6 +15,7 @@ setup: |
   import ObjectFit from "@config/objectFit.astro"
   import ObjectPosition from "@config/objectPosition.astro"
   import Format from "@config/format.astro"
+  import FormatOptions from "@config/formatOptions.astro"
   import Flip from "@config/flip.astro"
   import Flop from "@config/flop.astro"
   import Invert from "@config/invert.astro"
@@ -56,6 +57,7 @@ Below is the list of props that the `<Img />` component accepts. Only the `src` 
 <ObjectFit component="Img" />
 <ObjectPosition component="Img" />
 <Format component="Img" />
+<FormatOptions component="Img" />
 <Flip component="Img" />
 <Flop component="Img" />
 <Invert component="Img" />
