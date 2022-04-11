@@ -8,17 +8,28 @@ const isJS = api ? true : false;
 const comment = (text) => (isJS ? `// ${text}` : `<!-- ${text} -->`) + "\n";
 
 function formatValue(value) {
-  value = ["number", "boolean", "function"].includes(typeof value)
-    ? `{${value}}`
+  let formattedValue = ["number", "boolean", "function"].includes(typeof value)
+    ? `${value}`
     : Array.isArray(value)
-    ? `{${value[0]}}`
+    ? `${value[0]}`
+    : typeof value === "string" &&
+      (value.startsWith("{") || value.startsWith("["))
+    ? value
     : `"${value}"`;
 
-  value = value.replaceAll(/\n\s+/g, "\n    ");
+  if (typeof value === "function") {
+    formattedValue = formattedValue.replaceAll(/\n\s+/g, "\n    ");
 
-  value = value.replace(/\n\s+\}/, "\n  }");
+    formattedValue = formattedValue.replace(/\n\s+\}$/, "\n  }");
+  }
 
-  return value;
+  (formattedValue.startsWith("{") ||
+    formattedValue.startsWith("[") ||
+    ["number", "boolean", "function"].includes(typeof value) ||
+    Array.isArray(value)) &&
+    (formattedValue = `{${formattedValue}}`);
+
+  return formattedValue;
 }
 
 function code(props, { api, component }) {
