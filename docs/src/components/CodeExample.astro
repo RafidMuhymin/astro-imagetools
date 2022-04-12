@@ -23,11 +23,13 @@ function formatValue(value) {
     formattedValue = formattedValue.replace(/\n\s+\}$/, "\n  }");
   }
 
-  (formattedValue.startsWith("{") ||
-    formattedValue.startsWith("[") ||
-    ["number", "boolean", "function"].includes(typeof value) ||
-    Array.isArray(value)) &&
-    (formattedValue = `{${formattedValue}}`);
+  if (component) {
+    (formattedValue.startsWith("{") ||
+      formattedValue.startsWith("[") ||
+      ["number", "boolean", "function"].includes(typeof value) ||
+      Array.isArray(value)) &&
+      (formattedValue = `{${formattedValue}}`);
+  }
 
   return formattedValue;
 }
@@ -57,7 +59,9 @@ const codeBlock = values
       : typeof value === "string"
       ? comment(value)
       : Array.isArray(value)
-      ? value.join("\n") + "\n"
+      ? api
+        ? value.filter((value) => value !== "---").join("\n") + "\n"
+        : value.join("\n") + "\n"
       : code(value, { api, component })
   )
   .join("");

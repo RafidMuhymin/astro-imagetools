@@ -45,5 +45,8 @@ export const SIDEBAR = {
     { text: "<Picture />", link: "en/components/Picture" },
     { text: "<BackgroundImage />", link: "en/components/BackgroundImage" },
     { text: "<BackgroundPicture />", link: "en/components/BackgroundPicture" },
+
+    { text: "API", header: true },
+    { text: "renderImg", link: "en/api/renderImg" },
   ],
 };
