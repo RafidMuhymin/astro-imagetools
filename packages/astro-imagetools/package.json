@@ -12,6 +12,19 @@
     "./api": "./api/index.js",
     "./components": "./components/index.js"
   },
+  "files": [
+    "./api",
+    "./components",
+    "./plugin",
+    "./utils",
+    ".config.d.ts",
+    "./config.mjs",
+    "LICENSE",
+    "package.json",
+    "README.md",
+    "runtimeChecks.js",
+    "./types.d.ts"
+  ],
   "scripts": {
     "test": "echo \"No test specified\""
   },
