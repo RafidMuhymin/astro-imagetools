@@ -90,7 +90,7 @@ All the APIs support a single config object as the only argument. You can pass c
 import { renderImg } from "astro-imagetools/api";
 
 const { link, style, img } = await renderImg({
-  src: "https://picsum.photos/200/300",
+  src: "https://picsum.photos/1024/768",
   alt: "A random image",
 });
 ---

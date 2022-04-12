@@ -27,7 +27,7 @@ import { BackgroundImage } from "astro-imagetools/components";
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 ---
 
-<BackgroundImage src="https://picsum.photos/1920/1080">
+<BackgroundImage src="https://picsum.photos/1024/768">
   <Fragment set:html={content} />
 </BackgroundImage>
 ```

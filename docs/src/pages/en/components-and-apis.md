@@ -19,7 +19,7 @@ The `<Img />` component is an Astro component that renders an optimized and resp
 import { Img } from "astro-imagetools/components";
 ---
 
-<Img src="https://picsum.photos/200/300" alt="A random image" />
+<Img src="https://picsum.photos/1024/768" alt="A random image" />
 ```
 
 To know more about the `<Img />` component and the available configuration options, please check out the [`<Img />`](/en/components/Img) documentation.
@@ -143,7 +143,7 @@ The `renderImg` API is a function for rendering optimized and responsive images.
 import { renderImg } from "astro-imagetools/api";
 
 const { link, style, img } = renderImg({
-  src: "https://picsum.photos/200/300",
+  src: "https://picsum.photos/1024/768",
   alt: "A random image",
 });
 ```
@@ -160,11 +160,11 @@ The `renderPicture` API is a function for rendering an optimized and responsive 
 import { renderPicture } from "astro-imagetools/api";
 
 const { link, style, picture } = renderPicture({
-  src: "https://picsum.photos/200/300",
+  src: "https://picsum.photos/1024/768",
   alt: "A random image",
   artDirectives: [
     {
-      src: "https://picsum.photos/200/300?image=1",
+      src: "https://picsum.photos/1024/768?image=1",
       media: "(orientation: potrait)",
     },
   ],
@@ -187,11 +187,11 @@ import { renderBackgroundImage } from "astro-imagetools/api";
 import { ImageSupportDetection } from "astro-imagetools/components";
 
 const { link, style, htmlElement } = renderBackgroundImage({
-  src: "https://picsum.photos/200/300",
+  src: "https://picsum.photos/1024/768",
   alt: "A random image",
   artDirectives: [
     {
-      src: "https://picsum.photos/200/300?image=1",
+      src: "https://picsum.photos/1024/768?image=1",
       media: "(orientation: potrait)",
     },
   ],
@@ -223,11 +223,11 @@ Unlike the [`renderBackgroundImage`](#renderbackgroundimage) API, the `renderBac
 import { renderBackgroundPicture } from "astro-imagetools/api";
 
 const { link, style, htmlElement } = renderBackgroundPicture({
-  src: "https://picsum.photos/200/300",
+  src: "https://picsum.photos/1024/768",
   alt: "A random image",
   artDirectives: [
     {
-      src: "https://picsum.photos/200/300?image=1",
+      src: "https://picsum.photos/1024/768?image=1",
       media: "(orientation: potrait)",
     },
   ],
