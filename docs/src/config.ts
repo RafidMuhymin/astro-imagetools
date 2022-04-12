@@ -39,6 +39,7 @@ export const SIDEBAR = {
     { text: "Usage", link: "en/usage" },
     { text: "Components and APIs", link: "en/components-and-apis" },
     { text: "Markdown Images", link: "en/markdown-images" },
+    { text: "Deprecations", link: "en/deprecations" },
     { text: "Acknowledgements", link: "en/acknowledgements" },
 
     { text: "Components", header: true },
