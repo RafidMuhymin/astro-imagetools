@@ -5,7 +5,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@config/*": ["src/components/ConifgOptions/*"]
+      "@config/*": ["src/components/ConfigOptions/*"]
     }
   },
   "moduleResolution": "node"
