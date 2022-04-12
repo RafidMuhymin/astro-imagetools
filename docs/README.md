@@ -1,168 +1,97 @@
-# Astro Starter Kit: Docs Site
+# Astro ImageTools Docs <img align="right" valign="center" height="52" width="39" src="https://raw.githubusercontent.com/withastro/astro/main/assets/brand/logo.svg" alt="Astro logo" />
 
-```bash
-npm init astro -- --template docs
+To all who come to this happy place: welcome.
+
+This is the repo for [https://astro-imagetools-docs.vercel.app/](https://astro-imagetools-docs.vercel.app/).
+This repo contains all the source code to build the docs site.
+
+## We are Astro
+
+Astro is a site builder for the web platform.
+We want everyone to be successful building sites, and that means helping everyone understand how Astro works.
+
+## You are Awesome
+
+You can also help make the docs awesome.
+Your feedback is welcome.
+Your writing, editing, translating, designing, and developing skills are welcome.
+You being a part of our community is welcome.
+
+## Chat with Us
+
+You can learn more about Astro, get support, and meet other devs in [our Discord community](https://astro.build/chat).
+
+## Raise an Issue
+
+Is something missing?
+Is something wrong?
+Could something be better?
+Issues are a quick way for you to offer us feedback about the docs.
+
+Before you share, please [see if your issue has already been reported](https://github.com/RafidMuhymin/astro-imagetools/issues).
+
+## Edit a Page
+
+Every page on [https://astro-imagetools-docs.vercel.app/](https://astro-imagetools-docs.vercel.app/) has an **Edit this page** button in the sidebar.
+You can click that button to edit the source code for that page in **GitHub**.
+
+After you make your changes, click **Commit changes**.
+This will automatically create a [fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) of the docs in your GitHub account with the changes.
+
+Once your edits are ready in GitHub, follow the prompts to **create a pull request** and submit your changes for review.
+
+## Develop
+
+To begin developing locally, checkout this project from your machine.
+
+```shell
+git clone git@github.com:RafidMuhymin/astro-imagetools.git
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/docs)
+You can install and run the project locally using [pnpm](https://pnpm.io/). Head to [the pnpm installation guide](https://pnpm.io/installation) to get that set up. Then, run the following from your terminal:
 
-## Features
+```shell
+pnpm install
 
-- ✅ **Full Markdown support**
-- ✅ **Responsive mobile-friendly design**
-- ✅ **Sidebar navigation**
-- ✅ **Search (powered by Algolia)**
-- ✅ **Multi-language i18n**
-- ✅ **Automatic table of contents**
-- ✅ **Automatic list of contributors**
-- ✅ (and, best of all) **dark mode**
-
-## Commands Cheatsheet
-
-All commands are run from the root of the project, from a terminal:
-
-| Command           | Action                                       |
-| :---------------- | :------------------------------------------- |
-| `npm install`     | Installs dependencies                        |
-| `npm run dev`     | Starts local dev server at `localhost:3000`  |
-| `npm run build`   | Build your production site to `./dist/`      |
-| `npm run preview` | Preview your build locally, before deploying |
-
-To deploy your site to production, check out our [Deploy an Astro Website](https://docs.astro.build/guides/deploy) guide.
-
-## New to Astro?
-
-Welcome! Check out [our documentation](https://github.com/withastro/astro) or jump into our [Discord server](https://astro.build/chat).
-
-## Customize This Theme
-
-### Site metadata
-
-`src/config.ts` contains several data objects that describe metadata about your site like title, description, default language, and Open Graph details. You can customize these to match your project.
-
-### CSS styling
-
-The theme's look and feel is controlled by a few key variables that you can customize yourself. You'll find them in the `public/theme.css` CSS file.
-
-If you've never worked with CSS variables before, give [MDN's guide on CSS variables](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties) a quick read.
-
-This theme uses a "cool blue" accent color by default. To customize this for your project, change the `--theme-accent` variable to whatever color you'd like:
-
-```diff
-/* public/theme.css */
-:root {
-  color-scheme: light;
--  --theme-accent: hsla(var(--color-blue), 1);
-+  --theme-accent: hsla(var(--color-red), 1);   /* or: hsla(#FF0000, 1); */
+pnpm dev
 ```
 
-## Page metadata
+If you’re copying these instructions, remember to [configure this project as a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/configuring-a-remote-for-a-fork).
 
-Astro uses frontmatter in Markdown pages to choose layouts and pass properties to those layouts. If you are using the default layout, you can customize the page in many different ways to optimize SEO and other things. For example, you can use the `title` and `description` properties to set the document title, meta title, meta description, and Open Graph description.
+```shell
+git remote add upstream git@github.com:RafidMuhymin/astro-imagetools.git
+```
+
+At any point, create a branch for your contribution.
+We are not strict about branch names.
+
+```shell
+git checkout -b add/klingon-language
+```
+
+That’s it.
+As you [open a pull request](https://github.com/withastro/astro/compare), please include a clear title and description.
 
 ```markdown
----
-title: Example title
-description: Really cool docs example that uses Astro
-layout: ../../layouts/MainLayout.astro
----
+# Add Klingon language to Getting Started page
 
-# Page content...
+This adds the Klingon language and also updates the sidebar and language selection components.
 ```
 
-For more SEO related properties, look at `src/components/HeadSEO.astro`
+Thank you for helping make the docs awesome.
+And please, [come chat with us](https://astro.build/chat) if you have any questions.
 
-### Sidebar navigation
+## Deploy
 
-The sidebar navigation is controlled by the `SIDEBAR` variable in your `src/config.ts` file. You can customize the sidebar by modifying this object. A default, starter navigation has already been created for you.
+Every pull request generates a preview using **Vercel** for anyone to see.
 
-```ts
-export const SIDEBAR = {
-  en: [
-    { text: "Section Header", header: true },
-    { text: "Introduction", link: "en/introduction" },
-    { text: "Page 2", link: "en/page-2" },
-    { text: "Page 3", link: "en/page-3" },
+Use the **Deploy Preview** of your pull request to review and share your changes.
 
-    { text: "Another Section", header: true },
-    { text: "Page 4", link: "en/page-4" },
-  ],
-};
-```
+The docs site will be automatically updated whenever pull requests are merged.
 
-Note the top-level `en` key: This is needed for multi-language support. You can change it to whatever language you'd like, or add new languages as you go. More details on this below.
+## Next Steps
 
-### Multiple Languages support
-
-The Astro docs template supports multiple langauges out of the box. The default theme only shows `en` documentation, but you can enable multi-language support features by adding a second language to your project.
-
-To add a new language to your project, you'll want to extend the current `src/pages/[lang]/...` layout:
-
-```diff
- 📂 src/pages
- ┣ 📂 en
- ┃ ┣ 📜 page-1.md
- ┃ ┣ 📜 page-2.md
- ┃ ┣ 📜 page-3.astro
-+ ┣ 📂 es
-+ ┃ ┣ 📜 page-1.md
-+ ┃ ┣ 📜 page-2.md
-+ ┃ ┣ 📜 page-3.astro
-```
-
-You'll also need to add the new language name to the `KNOWN_LANGUAGES` map in your `src/config.ts` file. This will enable your new language switcher in the site header.
-
-```diff
-// src/config.ts
-export const KNOWN_LANGUAGES = {
-  English: 'en',
-+  Spanish: 'es',
-};
-```
-
-Last step: you'll need to add a new entry to your sidebar, to create the table of contents for that language. While duplicating every page might not sound ideal to everyone, this extra control allows you to create entirely custom content for every language.
-
-> Make sure the sidebar `link` value points to the correct language!
-
-```diff
-// src/config.ts
-export const SIDEBAR = {
-  en: [
-    { text: 'Section Header', header: true, },
-    { text: 'Introduction', link: 'en/introduction' },
-    // ...
-  ],
-+  es: [
-+    { text: 'Encabezado de sección', header: true, },
-+    { text: 'Introducción', link: 'es/introduction' },
-+    // ...
-+  ],
-};
-
-// ...
-```
-
-If you plan to use Spanish as the the default language, you just need to modify the redirect path in `src/pages/index.astro`:
-
-```diff
-<script>
-- window.location.pathname = `/en/introduction`;
-+ window.location.pathname = `/es/introduction`;
-</script>
-```
-
-You can also remove the above script and write a landing page in Spanish instead.
-
-### What if I don't plan to support multiple languages?
-
-That's totally fine! Not all projects need (or can support) multiple languages. You can continue to use this theme without ever adding a second language.
-
-If that single language is not English, you can just replace `en` in directory layouts and configurations with the preferred language.
-
-### Search (Powered by Algolia)
-
-[Algolia](https://www.algolia.com/) offers a free service to qualified open source projects called [DocSearch](https://docsearch.algolia.com/). If you are accepted to the DocSearch program, provide your API Key & index name in `src/config.ts` and a search box will automatically appear in your site header.
-
-Note that Aglolia and Astro are not affiliated. We have no say over acceptance to the DocSearch program.
-
-If you'd prefer to remove Algolia's search and replace it with your own, check out the `src/components/Header.astro` component to see where the component is added.
+- [Read the docs](https://astro-imagetools-docs.vercel.app/)
+- [Fork the project](https://github.com/RafidMuhymin/astro-imagetools/fork)
+- [Raise an issue](https://github.com/RafidMuhymin/astro-imagetools/issues/new)
+- [Discuss the docs](https://discord.gg/cZDZU3hJHc)
