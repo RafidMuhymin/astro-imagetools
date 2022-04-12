@@ -12,6 +12,16 @@ Similar to the [`<BackgroundImage />`](/en/components/BackgroundImage) component
 
 ## Configuration Options
 
+## Return Value
+
+**Type:** `{ link: string; style: string; htmlElement: string }`
+
+If the [`preload`](#preload) config option is set, then the `link` property will contain the `outerHTML` of the generated `<link />` element to preload the image set of the asked format. Otherwise, `link` will be an empty string.
+
+If the [`placeholder`](#placeholder) config option is not set to `"none"`, then the `style` property will contain the `outerHTML` of the generated `<style />` element to display the placeholder image. Otherwise, `style` will be an empty string.
+
+The `htmlElement` property will contain the `outerHTML` of the generated `HTMLElement` to apply the background image sets to. It's the primary return value of the `renderPicture` API.
+
 Below is the list of configuration options supported by the `renderBackgroundImage` API. Only the `src` config is required.
 
 <ConfigOptions api="renderBackgroundImage" />
