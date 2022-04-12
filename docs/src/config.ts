@@ -1,5 +1,5 @@
 export const SITE = {
-  title: "Astro ImageTools Docs",
+  title: "Astro ImageTools Documentation",
   description: "Documentation for the Astro ImageTools project",
   defaultLanguage: "en_US",
 };
