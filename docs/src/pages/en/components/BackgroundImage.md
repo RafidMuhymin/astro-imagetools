@@ -12,7 +12,7 @@ As the component is using the `background-image` property, it lacks the features
 
 The browesrs don't offer any native CSS API or feature to detect support for a specific source format and provide multiple source formats. So the `<BackgroundImage />` component depends on JavaScript to detect the support of the `webp` and `avif` formats.
 
-To make the `<BackgroundImage />` component work, you need to import the [`<ImageSupportDetection />`](/components-and-apis#imagesupportdetection) component in the `<head>` of your **Layout** component. This component adds **655 bytes** to the generated pages.
+To make the `<BackgroundImage />` component work, you need to import the [`<ImageSupportDetection />`](/en/components-and-apis#imagesupportdetection) component in the `<head>` of your **Layout** component. This component adds **655 bytes** to the generated pages.
 
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundImage />` component.
 
