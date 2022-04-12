@@ -1,6 +1,6 @@
 ---
 title: <Img />
-description: Components and APIs provided by Astro ImageTools
+description: The <Img /> component Documentaion
 layout: ../../../layouts/MainLayout.astro
 setup: |
   import ConfigOptions from "../../../components/ConfigOptions.astro";
