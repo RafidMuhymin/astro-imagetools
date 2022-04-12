@@ -49,5 +49,6 @@ export const SIDEBAR = {
     { text: "API", header: true },
     { text: "renderImg", link: "en/api/renderImg" },
     { text: "renderPicture", link: "en/api/renderPicture" },
+    { text: "renderBackgroundImage", link: "en/api/renderBackgroundImage" },
   ],
 };
