@@ -1,0 +1,22 @@
+<!-- prettier-ignore -->
+<Markdown>
+  #### `content`
+
+ **Type:** `string`
+
+  **Default:** `undefined`
+
+  The content of the html element to apply the generated background image to.
+
+  **Code Example:**
+</Markdown>
+
+<CodeExample
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/1024/768",
+      content: [`await fetch(import.meta.env.CONTENT_URL).then(r => r.text())`],
+    },
+  ]}
+/>
