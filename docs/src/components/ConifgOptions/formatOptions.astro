@@ -10,11 +10,17 @@ const dynamicText = component
 <Markdown>
   ### `formatOptions`
 
-  **Type:** `Record<format, ImageToolsConfigs> & { tracedSVG?: PotraceOptions }`
+  <p><strong style="font-size: large;">Type</strong></p>
+
+  *`formatOptions` is an object that takes config options for all the supported formats: `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif`, and `tracedSVG`.*
+
+  *The supported config options of all the formats except `tracedSVG` are: [`flip`](#flop), [`flop`](#flip), [`invert`](#invert), [`flatten`](#flatten), [`normalize`](#normalize), [`grayscale`](#grayscale), [`hue`](#hue), [`saturation`](#saturation), [`brightness`](#brightness), [`width`](#width), [`height`](#height), [`aspect`](#aspect), [`background`](#background), [`tint`](#tint), [`blur`](#blur), [`median`](#median), [`rotate`](#rotate), [`quality`](#quality), [`fit`](#fit), [`kernel`](#kernel), [`position`](#position).*
+
+  *The config options supported by the [`tracedSVG`](#tracedSVG) format are listed below.*
 
   **Default:** _The default values for the all the formats except `tracedSVG` are inherited from the direct configs of the {<Fragment set:html={dynamicText} />}. And for more information on the `tracedSVG` property, see the [`PotraceOptions`](#potraceoptions) interface._
 
-  The configuration options for the different formats. The ten supported _keys_ are `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif` and `tracedSVG`. These configuration options will be respected when generating image sets for different formats.
+  The configuration options for the different formats. These configuration options will be respected when generating image sets for different formats.
   
   The `tracedSVG` config object is used only when the `placeholder` prop is set to `"tracedSVG"`.
 
