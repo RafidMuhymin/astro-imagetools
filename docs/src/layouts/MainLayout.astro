@@ -137,5 +137,11 @@ const githubEditUrl =
         <RightSidebar {content} {githubEditUrl} />
       </aside>
     </main>
+
+    <script async is:inline>
+      [...document.querySelectorAll("article :is(h1, h2, h3, h4)")].forEach(
+        (title) => title.id.endsWith("-") && (title.id = title.id.slice(0, -1))
+      );
+    </script>
   </body>
 </html>
