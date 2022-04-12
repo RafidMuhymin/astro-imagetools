@@ -170,7 +170,7 @@ export interface BackgroundImageConfigOptions
       | "fadeInTransition"
     >
   > {
-  Tag?: string;
+  tag?: string;
   content?: string;
   backgroundSize?: string;
   backgroundPosition?: string;
@@ -181,7 +181,7 @@ export interface BackgroundPictureConfigOptions
     PictureConfigOptions,
     Exclude<keyof PictureConfigOptions, "layout">
   > {
-  Tag?: string;
+  tag?: string;
   content?: string;
 }
 

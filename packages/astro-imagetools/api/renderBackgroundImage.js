@@ -7,7 +7,7 @@ import getBackgroundFallbackStyles from "../utils/getBackgroundFallbackStyles.js
 export default async function renderBackgroundImage(props) {
   const {
     src,
-    Tag = "section",
+    tag = "section",
     content,
     sizes = (breakpoints) => {
       const maxWidth = breakpoints.at(-1);
@@ -138,7 +138,7 @@ export default async function renderBackgroundImage(props) {
 
   const style = `<style>${fallbackStyles + styles}</style>`;
 
-  const htmlElement = `<${Tag} class="${className}">${content}</${Tag}>`;
+  const htmlElement = `<${tag} class="${className}">${content}</${tag}>`;
 
   return { link, style, htmlElement };
 }

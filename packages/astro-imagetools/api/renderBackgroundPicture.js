@@ -9,7 +9,7 @@ export default async function renderBackgroundPicture(props) {
   const {
     src,
     alt,
-    Tag = "section",
+    tag = "section",
     content,
     sizes = (breakpoints) => {
       const maxWidth = breakpoints.at(-1);
@@ -101,9 +101,9 @@ export default async function renderBackgroundPicture(props) {
     >${sources.join("\n")}
   </picture>`;
 
-  const htmlElement = `<${Tag} style="position: relative;">${
+  const htmlElement = `<${tag} style="position: relative;">${
     picture + content
-  }</${Tag}>`;
+  }</${tag}>`;
 
   return { link, style, htmlElement };
 }
