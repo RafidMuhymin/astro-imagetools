@@ -12,7 +12,7 @@ const headers = content.astro.headers;
     <h1 class="content-title" id="overview">{title}</h1>
 
     <nav class="block sm-hidden">
-      <TableOfContents client:media="(max-width: 50em)" {headers} />
+      <TableOfContents client:media="(max-width: 72em)" {headers} />
     </nav>
 
     <slot />
@@ -41,7 +41,7 @@ const headers = content.astro.headers;
     display: block;
   }
 
-  @media (min-width: 50em) {
+  @media (min-width: 72em) {
     .sm-hidden {
       display: none;
     }
