@@ -1,10 +1,14 @@
 ---
 title: Acknowledgements
 description: Acknowledgements
-layout: ../../../layouts/MainLayout.astro
-setup: |
-  import ConfigOptions from "../../../components/ConfigOptions.astro";
+layout: ../../layouts/MainLayout.astro
 ---
+
+<style is:inline>
+  h2 {
+    font-size: 2rem;
+  }
+</style>
 
 ## The people for whom this project has become possible
 
