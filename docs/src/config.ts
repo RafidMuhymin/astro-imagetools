@@ -39,8 +39,6 @@ export const SIDEBAR = {
     { text: "Usage", link: "en/usage" },
     { text: "Components and APIs", link: "en/components-and-apis" },
     { text: "Markdown Images", link: "en/markdown-images" },
-    { text: "Deprecations", link: "en/deprecations" },
-    { text: "Acknowledgements", link: "en/acknowledgements" },
 
     { text: "Components", header: true },
     { text: "<Img />", link: "en/components/Img" },
@@ -53,5 +51,9 @@ export const SIDEBAR = {
     { text: "renderPicture", link: "en/api/renderPicture" },
     { text: "renderBackgroundImage", link: "en/api/renderBackgroundImage" },
     { text: "renderBackgroundPicture", link: "en/api/renderBackgroundPicture" },
+
+    { text: "Miscellaneous", header: true },
+    { text: "Deprecations", link: "en/deprecations" },
+    { text: "Acknowledgements", link: "en/acknowledgements" },
   ],
 };
