@@ -1,6 +1,6 @@
 ---
 title: <Picture />
-description: The <Img /> Component Documentation
+description: The <Picture /> Component Documentation
 layout: ../../../layouts/MainLayout.astro
 setup: |
   import ConfigOptions from "../../../components/ConfigOptions.astro";
