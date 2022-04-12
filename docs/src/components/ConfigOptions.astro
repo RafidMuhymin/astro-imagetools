@@ -7,7 +7,7 @@ import Sizes from "@config/sizes.astro";
 import Preload from "@config/preload.astro";
 import Loading from "@config/loading.astro";
 import Decoding from "@config/decoding.astro";
-import LayoutProp from "@config/layout.astro";
+import Layout from "@config/layout.astro";
 import Placeholder from "@config/placeholder.astro";
 import BreakPoints from "@config/breakpoints.astro";
 import ObjectFit from "@config/objectFit.astro";
@@ -61,7 +61,7 @@ const isNotImg = (component || api) !== "Img";
 <Preload {...props} />
 {!isBackgroundImage && <Loading {...props} />}
 {!isBackgroundImage && <Decoding {...props} />}
-{!isBackground && <LayoutProp {...props} />}
+{!isBackground && <Layout {...props} />}
 <Placeholder {...props} />
 <BreakPoints {...props} />
 {!isBackgroundImage && <ObjectFit {...props} />}
@@ -72,7 +72,7 @@ const isNotImg = (component || api) !== "Img";
 {isNotImg && <FallbackFormat {...props} />}
 {isNotImg && <IncludeSourceFormat {...props} />}
 <FormatOptions {...props} />
-{isNotImg && <FadeInTransition {...props} />}
+{isNotImg && !isBackgroundImage && <FadeInTransition {...props} />}
 {isNotImg && <ArtDirectives {...props} />}
 <Flip {...props} />
 <Flop {...props} />
