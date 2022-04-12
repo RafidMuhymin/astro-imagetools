@@ -26,7 +26,7 @@ To know more about the `<Img />` component and the available configuration optio
 
 ### `<Picture />`
 
-The `<Picture />` component is an Astro component that renders an optimized and responsive `<picture />` element. This component supports all the features that **Astro ImageTools** has to offer for regular images. It's perfect for advanced use cases where you need to offer **multiple source formats**, need **Art Direction**, and the **onload fade-in transition**. It's the component that you may want to use most of the times.
+The `<Picture />` component is an Astro component that renders an optimized and responsive `<picture />` element. This component supports all the features that **Astro ImageTools** has to offer for regular images. It's for advanced use cases where you need to offer **multiple source formats**, need **Art Direction**, and the **onload fade-in transition**. It's the component that you may want to use most of the times.
 
 #### Example Usage of `<Picture />`
 
