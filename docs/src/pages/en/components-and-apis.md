@@ -22,7 +22,7 @@ import { Img } from "astro-imagetools/components";
 <Img src="https://picsum.photos/200/300" alt="A random image" />
 ```
 
-To know more about the `<Img />` component and the available configuration options, please check out the [`<Img />`](/en/components/img) documentation.
+To know more about the `<Img />` component and the available configuration options, please check out the [`<Img />`](/en/components/Img) documentation.
 
 ### `<Picture />`
 
@@ -47,7 +47,7 @@ import { Picture } from "astro-imagetools/components";
 />
 ```
 
-To know more about the `<Picture />` component and the available configuration options, please check out the [`<Picture />`](/en/components/picture) documentation.
+To know more about the `<Picture />` component and the available configuration options, please check out the [`<Picture />`](/en/components/Picture) documentation.
 
 ### `<BackgroundImage />`
 
@@ -90,7 +90,7 @@ import {
 </html>
 ```
 
-To know more about the `<BackgroundImage />` component and the available configuration options, please check out the [`<BackgroundImage />`](/en/components/backgroundimage) documentation.
+To know more about the `<BackgroundImage />` component and the available configuration options, please check out the [`<BackgroundImage />`](/en/components/BackgroundImage) documentation.
 
 ### `<BackgroundPicture />`
 
@@ -119,7 +119,7 @@ import { BackgroundPicture } from "astro-imagetools/components";
 />
 ```
 
-To know more about the `<BackgroundPicture />` component and the available configuration options, please check out the [`<BackgroundPicture />`](/en/components/backgroundpicture) documentation.
+To know more about the `<BackgroundPicture />` component and the available configuration options, please check out the [`<BackgroundPicture />`](/en/components/BackgroundPicture) documentation.
 
 ### `<ImageSupportDetection />`
 

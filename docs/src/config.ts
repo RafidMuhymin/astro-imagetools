@@ -41,9 +41,9 @@ export const SIDEBAR = {
     { text: "Markdown Images", link: "en/markdown-images" },
 
     { text: "Components", header: true },
-    { text: "<Img />", link: "en/components/img" },
-    { text: "<Picture />", link: "en/components/picture" },
-    { text: "<BackgroundImage />", link: "en/components/backgroundimage" },
-    { text: "<BackgroundPicture />", link: "en/components/backgroundpicture" },
+    { text: "<Img />", link: "en/components/Img" },
+    { text: "<Picture />", link: "en/components/Picture" },
+    { text: "<BackgroundImage />", link: "en/components/BackgroundImage" },
+    { text: "<BackgroundPicture />", link: "en/components/BackgroundPicture" },
   ],
 };
