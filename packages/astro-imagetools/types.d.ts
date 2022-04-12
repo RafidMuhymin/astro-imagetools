@@ -172,8 +172,8 @@ export interface BackgroundImageConfigOptions
   > {
   tag?: string;
   content?: string;
-  backgroundSize?: string;
   backgroundPosition?: string;
+  backgroundSize?: "fill" | "contain" | "cover" | "none" | "scale-down";
 }
 
 export interface BackgroundPictureConfigOptions
