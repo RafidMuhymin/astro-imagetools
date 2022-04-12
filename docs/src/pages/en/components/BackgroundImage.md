@@ -16,6 +16,22 @@ To make the `<BackgroundImage />` component work, you need to import the [`<Imag
 
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundImage />` component.
 
+## Slot
+
+The `<BackgroundImage />` component accepts content via slot. The slot content is used as the value of the `content` configuration option of the [`renderBackgroundImage`](/en/api/renderBackgroundImage) API.
+
+```astro
+---
+import { BackgroundImage } from "astro-imagetools/components";
+
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
+---
+
+<BackgroundImage src="https://picsum.photos/1920/1080">
+  <Fragment set:html={content} />
+</BackgroundImage>
+```
+
 ## Component Props
 
 Below is the list of props that the `<BackgroundImage />` component accepts. Only the `src` prop is required.

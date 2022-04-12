@@ -12,6 +12,22 @@ Unlike the `<BackgroundImage />` component, the `<BackgroundPicture />` supports
 
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundPicture />` component.
 
+## Slot
+
+The `<BackgroundPicture />` component accepts content via slot. The slot content is used as the value of the `content` configuration option of the [`renderBackgroundPicture`](/en/api/renderBackgroundPicture) API.
+
+```astro
+---
+import { BackgroundPicture } from "astro-imagetools/components";
+
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
+---
+
+<BackgroundPicture src="https://picsum.photos/1920/1080">
+  <Fragment set:html={content} />
+</BackgroundPicture>
+```
+
 ## Component Props
 
 Below is the list of props that the `<BackgroundPicture />` component accepts. Only the `src` prop is required.

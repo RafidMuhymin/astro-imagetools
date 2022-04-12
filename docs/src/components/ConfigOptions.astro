@@ -58,7 +58,7 @@ const isNotImg = component !== "Img" && api !== "renderImg";
 <Src {...props} />
 <Alt {...props} />
 {isBackground && <Tag {...props} />}
-{isBackground && <Content {...props} />}
+{api && isBackground && <Content {...props} />}
 {!isBackgroundImage && <Sizes {...props} />}
 <Preload {...props} />
 {!isBackgroundImage && <Loading {...props} />}
