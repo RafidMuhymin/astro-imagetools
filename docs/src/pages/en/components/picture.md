@@ -1,0 +1,15 @@
+---
+title: <Picture />
+description: The <Img /> Component Documentation
+layout: ../../../layouts/MainLayout.astro
+setup: |
+  import ConfigOptions from "../../../components/ConfigOptions.astro";
+---
+
+The `<Picture />` component is an Astro component that renders an optimized and responsive `<picture />` element. This component supports all the features that **Astro ImageTools** has to offer for regular images. It's perfect for advanced use cases where you need to offer **multiple source formats**, need **Art Direction**, and the **onload fade-in transition**. It's the component that you may want to use most of the times.
+
+## Component Props
+
+Below is the list of props that the `<Picture />` component accepts. Only the `src` and `alt` props are required.
+
+<ConfigOptions component="Picture" />
