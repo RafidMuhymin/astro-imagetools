@@ -46,11 +46,13 @@ const { props } = Astro;
 
 const { api, component } = props;
 
-const isBackground = (component || api).startsWith("Background");
+const isBackground =
+  component?.startsWith("Background") || api?.startsWith("renderBackground");
 
-const isBackgroundImage = (component || api) === "BackgroundImage";
+const isBackgroundImage =
+  component === "BackgroundImage" || api === "renderBackgroundImage";
 
-const isNotImg = (component || api) !== "Img";
+const isNotImg = component !== "Img" && api !== "renderImg";
 ---
 
 <Src {...props} />
