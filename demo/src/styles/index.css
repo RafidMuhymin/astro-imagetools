@@ -1,0 +1,19 @@
+main {
+  padding: 1.5rem;
+  background-color: black;
+  color: white;
+}
+
+code::before {
+  content: "`";
+}
+
+code::after {
+  content: "`";
+}
+
+.view-source {
+  position: fixed;
+  top: 0;
+  right: 0;
+}

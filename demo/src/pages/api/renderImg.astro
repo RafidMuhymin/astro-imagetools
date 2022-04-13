@@ -1,0 +1,17 @@
+---
+import { renderImg } from "astro-imagetools/api";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+const { link, style, img } = await renderImg({
+  src: "https://picsum.photos/1024/768/",
+  alt: "A random image",
+});
+---
+
+<MainLayout importMetaUrl={import.meta.url}>
+  <h1>Astro ImageTools <code>{"renderImg"}</code> API Example</h1>
+
+  <br />
+
+  <Fragment set:html={link + style + img} />
+</MainLayout>

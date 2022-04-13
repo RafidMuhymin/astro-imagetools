@@ -1,0 +1,12 @@
+---
+import { Img } from "astro-imagetools/components";
+import MainLayout from "../../layouts/MainLayout.astro";
+---
+
+<MainLayout importMetaUrl={import.meta.url}>
+  <h1>Astro ImageTools <code>{"<Img />"}</code> Component Example</h1>
+
+  <br>
+
+  <Img src="https://picsum.photos/1024/768/" alt="A random image" />
+</MainLayout>

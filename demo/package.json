@@ -1,7 +1,4 @@
 {
-  "name": "@example/starter",
-  "version": "0.0.1",
-  "private": true,
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -9,6 +6,14 @@
     "preview": "astro preview"
   },
   "devDependencies": {
-    "astro": "^1.0.0-beta.5"
+    "astro": "^1.0.0-beta.9",
+    "astro-imagetools": "workspace:^",
+    "@astrojs/react": "^0.0.2",
+    "react-dom": "^17.0.2",
+    "@astrojs/lit": "^0.0.2",
+    "@astrojs/preact": "^0.0.2",
+    "@astrojs/solid-js": "^0.0.3",
+    "@astrojs/svelte": "^0.0.2",
+    "@astrojs/vue": "^0.0.2"
   }
 }

@@ -1,0 +1,18 @@
+---
+import { Picture } from "astro-imagetools/components";
+import MainLayout from "./MainLayout.astro";
+
+const { placeholder, importMetaUrl } = Astro.props;
+---
+
+<MainLayout {importMetaUrl}>
+  <h1><code>{placeholder}</code> Placeholder Example</h1>
+
+  <br />
+
+  <Picture
+    src="https://picsum.photos/1024/768/"
+    alt="A random image"
+    {placeholder}
+  />
+</MainLayout>

@@ -1,0 +1,14 @@
+---
+import { Picture } from "astro-imagetools/components";
+import MainLayout from "./MainLayout.astro";
+
+const { layout, importMetaUrl } = Astro.props;
+---
+
+<MainLayout {importMetaUrl}>
+  <h1><code>{layout}</code> Layout Example</h1>
+
+  <br />
+
+  <Picture src="https://picsum.photos/1024/768/" alt="A random image" {layout} />
+</MainLayout>

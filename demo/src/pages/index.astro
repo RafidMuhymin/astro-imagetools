@@ -1,60 +1,81 @@
 ---
-// Style Imports
-import '../styles/global.css';
-import '../styles/home.css';
-// Component Imports
-import Tour from '../components/Tour.astro';
-// You can import components from any supported Framework here!
-
-
-// Component Script:
-// You can write any JavaScript/TypeScript that you'd like here.
-// It will run during the build, but never in the browser.
-// All variables are available to use in the HTML template below.
-let title = 'My Astro Site';
-
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
+import { Markdown } from "astro/components";
+import { Picture } from "astro-imagetools/components";
+import MainLayout from "../layouts/MainLayout.astro";
 ---
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width">
-	<title>{title}</title>
 
-	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<MainLayout importMetaUrl={import.meta.url}>
+<Markdown is:raw >
+  # Image Optimization in Astro with Astro ImageTools
 
-	<style>
-		header {
-			display: flex;
-			flex-direction: column;
-			gap: 1em;
-			max-width: min(100%, 68ch);
-		}
-	</style>
-</head>
-<body>
-	<main>
-		<header>
-			<div>
-				<img width="60" height="80" src="/assets/logo.svg" alt="Astro logo">
-				<h1>Welcome to <a href="https://astro.build/">Astro</a></h1>
-			</div>
-		</header>
+  This page demonstrates the usage of the [astro-imagetools](https://www.npmjs.com/package/astro-imagetools) library with live examples.
 
-		<Tour />
+  <hr />
 
-		<!--
+  ## Components
 
-		You can also use imported framework components directly in your markup!
-		
-		Note: by default, these components are NOT interactive on the client.
-		The `:visible` directive tells Astro to make it interactive.
-		
-		See https://docs.astro.build/core-concepts/component-hydration/ 
+  - [`<Img />` Component](/components/Img)
+  - [`<Picture />` Component](/components/Picture)
+  - [`<BackgroundImage />` Component](/components/BackgroundImage)
+  - [`<BackgroundPicture />` Component](/components/BackgroundPicture)
 
-		-->
+  ## APIs
 
-	</main>
-</body>
-</html>
+  - [`renderImg` API](/api/renderImg)
+  - [`renderPicture` API](/api/renderPicture)
+  - [`renderBackgroundImage` API](/api/renderBackgroundImage)
+  - [`renderBackgroundPicture` API](/api/renderBackgroundPicture)
+
+  ## Layout
+
+  The `layout` property tells the image to respond differently depending on the device size or the container size.
+
+  Select a layout below and try resizing the window or rotating your device to see how the image reacts.
+
+  - [Constrained Layout](/layouts/constrained)
+  - [Fixed Layout](/layouts/fixed)
+  - [Full Width Layout](/layouts/fullWidth)
+  - [Fill Layout](/layouts/fill)
+
+  <hr />
+
+  ## Placeholder
+
+  The `placeholder` property tells the image what to show while loading.
+
+  - [Blurred Placeholder](/placeholders/blurred)
+  - [Dominant Color Placeholder](/placeholders/dominantColor)
+  - [Traced SVG Placeholder](/placeholders/tracedSVG)
+
+  <hr />
+
+  ## Internal Image
+
+  The following is an example of a reference to an internal image.
+</Markdown>
+
+<Picture
+  src="/src/images/elva-800w.jpg"
+  alt="A father holding his beloved daughter in his arms"
+/>
+
+<Markdown>
+  <hr />
+
+  ## External Image
+
+  The following is an example of a reference to an external image.
+</Markdown>
+
+<Picture src="https://picsum.photos/1024/768" alt="A random image" />
+
+<Markdown>
+  <hr />
+
+  ## Learn More
+
+  You can optionally configure many more things!
+
+  Checkout the [Astro ImageTools](https://astro-imagetools-docs.netlify.app/) documentation to learn more.
+</Markdown>
+</MainLayout>
