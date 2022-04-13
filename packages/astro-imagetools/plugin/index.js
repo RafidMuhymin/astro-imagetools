@@ -174,23 +174,25 @@ export default {
 
         const uuid = crypto.randomBytes(4).toString("hex");
 
-        const Image = "Image" + uuid;
+        const Picture = "Picture" + uuid;
 
         const renderComponent = "renderComponent" + uuid;
 
-        s.append(
-          `import ${Image} from "astro-imagetools";\nimport { renderComponent as ${renderComponent} } from "${
+        s.prepend(
+          `import { Picture as ${Picture} } from "astro-imagetools/components";\nimport { renderComponent as ${renderComponent} } from "${
             cwd + "/node_modules/astro/dist/runtime/server/index.js"
-          }"`
+          }"\n;`
         );
 
         for (const match of matches) {
-          const src = path.resolve(path.dirname(id), match[1]).replace(cwd, "");
+          const [matchedText, rawSrc, alt] = match;
+
+          const src = path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
 
           s.overwrite(
             match.index,
-            match.index + match[0].length,
-            `\${${renderComponent}($$result, "${Image}", ${Image}, { "src": "${src}", "alt": "${match[2]}" })}`
+            match.index + matchedText.length,
+            `\${${renderComponent}($$result, "${Picture}", ${Picture}, { "src": "${src}", "alt": "${alt}" })}`
           );
         }
 
