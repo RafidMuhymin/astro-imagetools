@@ -187,7 +187,9 @@ export default {
         for (const match of matches) {
           const [matchedText, rawSrc, alt] = match;
 
-          const src = path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
+          const src = rawSrc.match("(http://|https://|data:image/).*")
+            ? rawSrc
+            : path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
 
           s.overwrite(
             match.index,
