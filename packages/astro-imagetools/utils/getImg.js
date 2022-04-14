@@ -21,7 +21,7 @@ export default function getImg(
     height="${sizes.height}"
     ${loading ? `loading="${loading}"` : ""}
     ${decoding ? `decoding="${decoding}"` : ""}
-    class="${imgClassName}"
+    class="${("astro-imagetools-img " + imgClassName).trim()}"
     style="display: inline-block; overflow: hidden;${
       isBackgroundImage
         ? "width: 100%; height: 100%;"
