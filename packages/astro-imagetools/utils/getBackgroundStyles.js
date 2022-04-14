@@ -5,7 +5,8 @@ export default function getBackgroundStyles(
   className,
   objectFit,
   objectPosition,
-  fadeInTransition
+  fadeInTransition,
+  { isBackgroundPicture = false } = {}
 ) {
   const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
@@ -14,9 +15,18 @@ export default function getBackgroundStyles(
   const staticStyles = !fadeInTransition
     ? ""
     : `
+    ${
+      isBackgroundPicture &&
+      `
+        .astro-imagetools-background-picture * {
+          z-index: 1;
+          position: relative;
+        }
+      `
+    }
+
     .${className} {
       --opacity: 1;
-      --z-index: auto;
     }
 
     .${className}::after {
@@ -39,7 +49,7 @@ export default function getBackgroundStyles(
             })()
       };
       opacity: var(--opacity);
-      z-index: var(--z-index);
+      z-index: 1;
     }
   `;
 

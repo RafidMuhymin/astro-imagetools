@@ -11,7 +11,7 @@ export default function getImg(
   imagesizes,
   fadeInTransition,
   layoutStyle,
-  { imgClassName = "", isBackgroundImage = false }
+  { imgClassName = "", isBackgroundPicture = false } = {}
 ) {
   return `<img
     src="${src}"
@@ -26,9 +26,11 @@ export default function getImg(
     style="display: inline-block; overflow: hidden;${layoutStyle}"
     ${
       !imgClassName && style
-        ? `onerror="parentElement.style.setProperty('--z-index', ${
-            isBackgroundImage ? "-2" : "-1"
-          })"
+        ? `${
+            !isBackgroundPicture
+              ? `onerror="parentElement.style.setProperty('--z-index', -1)"`
+              : ""
+          }
           onload="${
             fadeInTransition
               ? `parentElement.style.setProperty('--opacity', 0)`

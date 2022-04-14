@@ -63,7 +63,8 @@ export default async function renderBackgroundPicture(props) {
     className,
     objectFit,
     objectPosition,
-    fadeInTransition
+    fadeInTransition,
+    { isBackgroundPicture: true }
   );
 
   const link = getLink(images, preload, imagesizes);
@@ -84,7 +85,7 @@ export default async function renderBackgroundPicture(props) {
             imagesizes,
             fadeInTransition,
             layoutStyle,
-            { isBackgroundImage: true }
+            { isBackgroundPicture: true }
           )
         : `<source
             srcset="${srcset}"
@@ -99,11 +100,11 @@ export default async function renderBackgroundPicture(props) {
 
   const picture = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
-    style="z-index: -1; position: absolute; width: 100%; height: 100%; display: inline-block;${layoutStyle}"
+    style="z-index: 0; position: absolute; width: 100%; height: 100%; display: inline-block;${layoutStyle}"
     >${sources.join("\n")}
   </picture>`;
 
-  const htmlElement = `<${tag} style="position: relative;">${
+  const htmlElement = `<${tag} class="astro-imagetools-background-picture" style="position: relative;">${
     picture + content
   }</${tag}>`;
 
