@@ -2,9 +2,9 @@
 import renderPicture from "../api/renderPicture.js";
 import type { PictureConfigOptions } from "../types.d";
 
-const { link, style, picture } = await renderPicture(
-  Astro.props as PictureConfigOptions
-);
+declare interface Props extends PictureConfigOptions {}
+
+const { link, style, picture } = await renderPicture(Astro.props as Props);
 ---
 
 <Fragment set:html={link + style + picture} />
