@@ -16,7 +16,7 @@ export default function getBackgroundStyles(
     : `
     .${className} {
       --opacity: 1;
-      --z-index: 0;
+      --z-index: auto;
     }
 
     .${className}::after {
