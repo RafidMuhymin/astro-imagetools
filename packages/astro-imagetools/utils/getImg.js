@@ -15,7 +15,7 @@ export default function getImg(
 ) {
   return `<img
     src="${src}"
-    alt="${alt}"
+    ${alt ? `alt="${alt}"` : ""}
     srcset="${srcset}"
     sizes="${imagesizes}"
     width="${sizes.width}"

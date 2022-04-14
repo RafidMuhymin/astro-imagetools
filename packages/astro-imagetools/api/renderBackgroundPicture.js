@@ -9,7 +9,6 @@ import getLayoutStyle from "../utils/getLayoutStyle.js";
 export default async function renderBackgroundPicture(props) {
   const {
     src,
-    alt,
     tag = "section",
     content = "",
     sizes = (breakpoints) => {
@@ -70,6 +69,9 @@ export default async function renderBackgroundPicture(props) {
   const link = getLink(images, preload, imagesizes);
 
   const layoutStyle = getLayoutStyle({ isBackgroundImage: true });
+
+  // Background Images shouldn't convey important information
+  const alt = "";
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>

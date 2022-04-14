@@ -179,7 +179,7 @@ export interface BackgroundImageConfigOptions
 export interface BackgroundPictureConfigOptions
   extends Pick<
     PictureConfigOptions,
-    Exclude<keyof PictureConfigOptions, "layout">
+    Exclude<keyof PictureConfigOptions, "alt" | "layout">
   > {
   tag?: string;
   content?: string;
