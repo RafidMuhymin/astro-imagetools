@@ -10,7 +10,7 @@ export default async function renderBackgroundPicture(props) {
     src,
     alt,
     tag = "section",
-    content,
+    content = "",
     sizes = (breakpoints) => {
       const maxWidth = breakpoints.at(-1);
       return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
