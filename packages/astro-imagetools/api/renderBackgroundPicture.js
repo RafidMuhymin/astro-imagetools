@@ -4,6 +4,7 @@ import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
 import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
+import getLayoutStyle from "../utils/getLayoutStyle.js";
 
 export default async function renderBackgroundPicture(props) {
   const {
@@ -67,6 +68,8 @@ export default async function renderBackgroundPicture(props) {
 
   const link = getLink(images, preload, imagesizes);
 
+  const layoutStyle = getLayoutStyle({ isBackgroundImage: true });
+
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>
       src
@@ -80,6 +83,7 @@ export default async function renderBackgroundPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
+            layoutStyle,
             { isBackgroundImage: true }
           )
         : `<source
@@ -95,9 +99,7 @@ export default async function renderBackgroundPicture(props) {
 
   const picture = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
-    style="z-index: -1; position: absolute; width: 100%; height: 100%;${
-      style ? "display: inline-block" : ""
-    }"
+    style="z-index: -1; position: absolute; width: 100%; height: 100%; display: inline-block;${layoutStyle}"
     >${sources.join("\n")}
   </picture>`;
 

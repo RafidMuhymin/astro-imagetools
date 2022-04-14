@@ -10,7 +10,8 @@ export default function getImg(
   decoding,
   imagesizes,
   fadeInTransition,
-  { imgClassName = "", layout = "constrained", isBackgroundImage = false }
+  layoutStyle,
+  { imgClassName = "", isBackgroundImage = false }
 ) {
   return `<img
     src="${src}"
@@ -22,17 +23,7 @@ export default function getImg(
     ${loading ? `loading="${loading}"` : ""}
     ${decoding ? `decoding="${decoding}"` : ""}
     class="${("astro-imagetools-img " + imgClassName).trim()}"
-    style="display: inline-block; overflow: hidden;${
-      isBackgroundImage
-        ? "width: 100%; height: 100%;"
-        : layout === "fill"
-        ? `width: 100%; height: 100%;`
-        : layout === "fullWidth"
-        ? `width: 100%; height: auto;`
-        : layout === "constrained"
-        ? "max-width: 100%; height: auto;"
-        : ""
-    }"
+    style="display: inline-block; overflow: hidden;${layoutStyle}"
     ${
       !imgClassName && style
         ? `onerror="parentElement.style.setProperty('--z-index', ${
