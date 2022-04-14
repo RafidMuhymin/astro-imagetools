@@ -4,7 +4,7 @@ import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 import getImg from "../utils/getImg.js";
 import getLink from "../utils/getLink.js";
-import getLayoutStyle from "../utils/getLayoutStyle.js";
+import getLayoutStyles from "../utils/getLayoutStyles.js";
 
 export default async function renderImg(props) {
   const {
@@ -68,7 +68,7 @@ export default async function renderImg(props) {
 
   const link = getLink(images, preload, imagesizes);
 
-  const layoutStyle = getLayoutStyle({ layout });
+  const layoutStyles = getLayoutStyles({ layout });
 
   const sources = images.flatMap(({ sources, sizes, imagesizes }) =>
     sources.map(({ src, srcset }) =>
@@ -82,7 +82,7 @@ export default async function renderImg(props) {
         decoding,
         imagesizes,
         fadeInTransition,
-        layoutStyle,
+        layoutStyles,
         { imgClassName: className }
       )
     )

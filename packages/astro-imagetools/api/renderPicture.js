@@ -4,7 +4,7 @@ import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
 import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
-import getLayoutStyle from "../utils/getLayoutStyle.js";
+import getLayoutStyles from "../utils/getLayoutStyles.js";
 
 export default async function renderPicture(props) {
   const {
@@ -67,7 +67,7 @@ export default async function renderPicture(props) {
 
   const link = getLink(images, preload, imagesizes);
 
-  const layoutStyle = getLayoutStyle({ layout });
+  const layoutStyles = getLayoutStyles({ layout });
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>
@@ -82,7 +82,7 @@ export default async function renderPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyle,
+            layoutStyles,
           )
         : `<source
             srcset="${srcset}"
@@ -97,7 +97,7 @@ export default async function renderPicture(props) {
 
   const picture = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
-    style="position: relative; display: inline-block;${layoutStyle}"
+    style="position: relative; display: inline-block;${layoutStyles}"
     >${sources.join("\n")}
   </picture>`;
 

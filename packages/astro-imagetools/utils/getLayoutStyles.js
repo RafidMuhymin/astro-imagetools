@@ -1,5 +1,5 @@
 // @ts-check
-export default function getLayoutStyle({
+export default function getLayoutStyles({
   layout = null,
   isBackgroundImage = false,
 }) {

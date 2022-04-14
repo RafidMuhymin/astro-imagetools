@@ -4,7 +4,7 @@ import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
 import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
-import getLayoutStyle from "../utils/getLayoutStyle.js";
+import getLayoutStyles from "../utils/getLayoutStyles.js";
 
 export default async function renderBackgroundPicture(props) {
   const {
@@ -68,7 +68,7 @@ export default async function renderBackgroundPicture(props) {
 
   const link = getLink(images, preload, imagesizes);
 
-  const layoutStyle = getLayoutStyle({ isBackgroundImage: true });
+  const layoutStyles = getLayoutStyles({ isBackgroundImage: true });
 
   // Background Images shouldn't convey important information
   const alt = "";
@@ -86,7 +86,7 @@ export default async function renderBackgroundPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyle,
+            layoutStyles,
             { isBackgroundPicture: true }
           )
         : `<source
@@ -102,7 +102,7 @@ export default async function renderBackgroundPicture(props) {
 
   const picture = `<picture
     class="astro-imagetools-picture ${style ? className : ""}"
-    style="z-index: 0; position: absolute; width: 100%; height: 100%; display: inline-block;${layoutStyle}"
+    style="z-index: 0; position: absolute; width: 100%; height: 100%; display: inline-block;${layoutStyles}"
     >${sources.join("\n")}
   </picture>`;
 
