@@ -2,7 +2,7 @@
 
 To all who come to this happy place: welcome.
 
-This is the repo for [https://astro-imagetools-docs.netlify.app/](https://astro-imagetools-docs.netlify.app/).
+This is the repo for [https://astro-imagetools-docs.vercel.app/](https://astro-imagetools-docs.vercel.app/).
 This repo contains all the source code to build the docs site.
 
 ## We are Astro
@@ -32,7 +32,7 @@ Before you share, please [see if your issue has already been reported](https://g
 
 ## Edit a Page
 
-Every page on [https://astro-imagetools-docs.netlify.app/](https://astro-imagetools-docs.netlify.app/) has an **Edit this page** button in the sidebar.
+Every page on [https://astro-imagetools-docs.vercel.app/](https://astro-imagetools-docs.vercel.app/) has an **Edit this page** button in the sidebar.
 You can click that button to edit the source code for that page in **GitHub**.
 
 After you make your changes, click **Commit changes**.
@@ -91,7 +91,7 @@ The docs site will be automatically updated whenever pull requests are merged.
 
 ## Next Steps
 
-- [Read the docs](https://astro-imagetools-docs.netlify.app/)
+- [Read the docs](https://astro-imagetools-docs.vercel.app/)
 - [Fork the project](https://github.com/RafidMuhymin/astro-imagetools/fork)
 - [Raise an issue](https://github.com/RafidMuhymin/astro-imagetools/issues/new)
 - [Discuss the docs](https://discord.gg/cZDZU3hJHc)
