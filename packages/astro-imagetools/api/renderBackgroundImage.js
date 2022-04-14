@@ -51,7 +51,7 @@ export default async function renderBackgroundImage(props) {
 
   console.log(`Image at ${src} optimized in ${end - start}ms`);
 
-  const className = `astro-imagetools-background-${uuid}`;
+  const className = `astro-imagetools-background-image-${uuid}`;
 
   const { imagesizes } = images.at(-1);
 
@@ -138,7 +138,7 @@ export default async function renderBackgroundImage(props) {
 
   const style = `<style>${fallbackStyles + styles}</style>`;
 
-  const htmlElement = `<${tag} class="${className}">${content}</${tag}>`;
+  const htmlElement = `<${tag} class="astro-imagetools-background-image ${className}">${content}</${tag}>`;
 
   return { link, style, htmlElement };
 }
