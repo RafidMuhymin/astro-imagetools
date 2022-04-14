@@ -46,7 +46,7 @@ const isImg =
     {
       src: "https://picsum.photos/1024/768",
       alt: "A random image",
-      format: `["avif", "webp"]`,
+      format: isImg ? "webp" : `["avif", "webp"]`,
     },
   ]}
 />
