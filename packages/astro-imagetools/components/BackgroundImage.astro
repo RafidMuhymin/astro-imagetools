@@ -1,11 +1,18 @@
 ---
 import renderBackgroundImage from "../api/renderBackgroundImage.js";
+import type { BackgroundImageConfigOptions } from "../types.d";
 
 const content = await Astro.slots.render("default");
 
+declare interface Props
+  extends Pick<
+    BackgroundImageConfigOptions,
+    Exclude<keyof BackgroundImageConfigOptions, "content">
+  > {}
+
 const { link, style, htmlElement } = await renderBackgroundImage({
   content,
-  ...Astro.props,
+  ...(Astro.props as Props),
 });
 ---
 

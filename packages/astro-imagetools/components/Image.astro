@@ -1,9 +1,9 @@
 ---
 import renderImage from "../api/renderImage.js";
-import type { PictureConfigOptions, ImageHTMLData } from "../types.d";
+import type { PictureConfigOptions as ImageConfigOptions } from "../types.d";
 
-const { link, style, image }: ImageHTMLData = await renderImage(
-  Astro.props as PictureConfigOptions
+const { link, style, image } = await renderImage(
+  Astro.props as ImageConfigOptions
 );
 ---
 

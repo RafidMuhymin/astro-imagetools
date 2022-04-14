@@ -1,10 +1,8 @@
 ---
 import renderImg from "../api/renderImg.js";
-import type { ImgConfigOptions, ImgHTMLData } from "../types.d";
+import type { ImgConfigOptions } from "../types.d";
 
-const { link, style, img }: ImgHTMLData = await renderImg(
-  Astro.props as ImgConfigOptions
-);
+const { link, style, img } = await renderImg(Astro.props as ImgConfigOptions);
 ---
 
 <Fragment set:html={link + style + img} />
