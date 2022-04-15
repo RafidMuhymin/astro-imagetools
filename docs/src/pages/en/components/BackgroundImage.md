@@ -51,11 +51,6 @@ const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 </html>
 ```
 
-<BackgroundImage src="https://picsum.photos/1024/768">
-  <Fragment set:html={content} />
-</BackgroundImage>
-```
-
 ## Component Props
 
 Below is the list of props that the `<BackgroundImage />` component accepts. Only the `src` prop is required.
