@@ -5,31 +5,24 @@ export default function getBreakpoints(breakpoints, imageWidth) {
     return breakpoints.sort((a, b) => a - b);
   }
 
-  const { count, minWidth, maxWidth } = breakpoints || {};
+  const { count, minWidth = 320, maxWidth = imageWidth } = breakpoints || {};
 
-  let current = minWidth || 320;
-  const max = maxWidth || imageWidth;
-  let n = count || (max < 400 ? 1 : max < 640 ? 2 : 3);
+  const breakPoints = [],
+    diff = maxWidth - minWidth,
+    steps = count || (maxWidth < 400 ? 1 : maxWidth < 640 ? 2 : 3),
+    pixelsPerStep = diff / steps;
 
-  const diff = max - current;
-  const breakPoints = [];
-  let steps = 0;
+  let currentWidth = minWidth;
 
-  for (let i = 1; i < n; i++) {
-    steps += i;
-  }
+  steps > 1 && breakPoints.push(currentWidth);
 
-  const pixelsPerStep = diff / steps;
-
-  n > 1 && breakPoints.push(current);
-
-  for (let i = 1; i < n - 1; i++) {
-    const next = pixelsPerStep * (n - i) + current;
+  for (let i = 1; i < steps - 1; i++) {
+    const next = pixelsPerStep * (steps - i) + currentWidth;
     breakPoints.push(Math.round(next));
-    current = next;
+    currentWidth = next;
   }
 
-  breakPoints.push(max);
+  breakPoints.push(maxWidth);
 
   return [...new Set(breakPoints)];
 }
