@@ -59,6 +59,8 @@ The browesrs don't offer any native CSS API or feature to detect support for a s
 
 To make the `<BackgroundImage />` component work, you need to import the [`<ImageSupportDetection />`](#imagesupportdetection) component in the `<head>` of your **Layout** component. This component adds **655 bytes** to the generated pages.
 
+The body of the `<BackgroundImage />` component will be used as the content of the container element.
+
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundImage />` component.
 
 #### Example Usage of `<BackgroundImage />`
@@ -69,23 +71,27 @@ import {
   BackgroundImage,
   ImageSupportDetection,
 } from "astro-imagetools/components";
+
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 ---
 
 <html>
   <head>
     <ImageSupportDetection />
   </head>
+
   <body>
     <BackgroundImage
       src="/src/images/landscape.jpg"
-      alt="A landscape image"
       artDirectives={[
         {
           src: "/src/images/portrait.jpg",
           media: "(orientation: potrait)",
         },
       ]}
-    />
+    >
+      <Fragment set:html={content} />
+    </BackgroundImage>
   </body>
 </html>
 ```
@@ -98,6 +104,8 @@ Similar to the [`<BackgroundImage />`](#backgroundimage) component, the `<Backgr
 
 Unlike the `<BackgroundImage />` component, the `<BackgroundPicture />` supports **Lazy Loading**, **Asynchronous Decoding**, the `sizes` attribute, and the **onload fade-in transition**. It doesn't need any JavaScript too.
 
+The body of the `<BackgroundPicture />` component will be used as the content of the container element.
+
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundPicture />` component.
 
 #### Example Usage of `<BackgroundPicture />`
@@ -105,18 +113,21 @@ Unlike the `<BackgroundImage />` component, the `<BackgroundPicture />` supports
 ```astro
 ---
 import { BackgroundPicture } from "astro-imagetools/components";
+
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 ---
 
 <BackgroundPicture
   src="/src/images/landscape.jpg"
-  alt="A landscape image"
   artDirectives={[
     {
       src: "/src/images/portrait.jpg",
       media: "(orientation: potrait)",
     },
   ]}
-/>
+>
+  <Fragment set:html={content} />
+</BackgroundPicture>
 ```
 
 To know more about the `<BackgroundPicture />` component and the available configuration options, please check out the [`<BackgroundPicture />`](/en/components/BackgroundPicture) documentation.
@@ -186,9 +197,11 @@ Similar to the [`<BackgroundImage />`](#backgroundimage) component, the `renderB
 import { renderBackgroundImage } from "astro-imagetools/api";
 import { ImageSupportDetection } from "astro-imagetools/components";
 
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
+
 const { link, style, htmlElement } = renderBackgroundImage({
   src: "https://picsum.photos/1024/768",
-  alt: "A random image",
+  content,
   artDirectives: [
     {
       src: "https://picsum.photos/1024/768?image=1",
@@ -222,9 +235,10 @@ Unlike the [`renderBackgroundImage`](#renderbackgroundimage) API, the `renderBac
 ```js
 import { renderBackgroundPicture } from "astro-imagetools/api";
 
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
+
 const { link, style, htmlElement } = renderBackgroundPicture({
   src: "https://picsum.photos/1024/768",
-  alt: "A random image",
   artDirectives: [
     {
       src: "https://picsum.photos/1024/768?image=1",
