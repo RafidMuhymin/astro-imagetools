@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "fs";
 import crypto from "crypto";
-import { join, extname, relative } from "path";
+import { join, basename, extname, relative } from "path";
 import { sharp, fsCachePath, supportedImageTypes } from "../runtimeChecks.js";
 
 // @ts-ignore
@@ -33,9 +33,11 @@ export default async (src, configOptions, globalConfigOptions) => {
   const paramOptions = Object.fromEntries(searchParams);
 
   if (src.match("(http://|https://|data:image/).*")) {
+    const filename = src.startsWith("data:") ? "" : basename(src);
+
     const hash = crypto.createHash("md5").update(src).digest("hex");
 
-    let filepath = fsCachePath + hash;
+    let filepath = `${fsCachePath}${filename}.${hash}`;
 
     const fileExists = (() => {
       for (const type of supportedImageTypes) {
