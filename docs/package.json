@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "build:hack": "sed -i -z 's/---/---\\ndraft: true/' src/pages/en/api/* && pnpm build && mv dist dist_copy && sed -i -z 's/---\\ndraft: true/---/' src/pages/en/api/* && sed -i -z 's/---/---\\ndraft: true/' src/pages/en/components/* && pnpm build && mv dist_copy/en/components dist/en/components && sed -i -z 's/---\\ndraft: true/---/' src/pages/en/components/* && rm -rf dist_copy"
   },
   "dependencies": {
     "@algolia/client-search": "^4.13.0",
