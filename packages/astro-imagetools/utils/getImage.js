@@ -1,5 +1,6 @@
 // @ts-check
 import crypto from "crypto";
+import { basename } from "path";
 import objectHash from "object-hash";
 import getImageSources from "./getImageSources.js";
 import getProcessedImage from "./getProcessedImage.js";
@@ -9,6 +10,7 @@ const imagesData = new Map();
 
 export default async function (
   src,
+  type,
   imagesizes,
   format,
   breakpoints,
@@ -23,6 +25,8 @@ export default async function (
   const hash = objectHash(Array.from(arguments));
 
   if (imagesData.has(hash)) return imagesData.get(hash);
+
+  const start = performance.now();
 
   const { path, rest, image, imageWidth, imageHeight, imageFormat } =
     await getProcessedImage(src, configOptions, globalConfigOptions);
@@ -73,6 +77,14 @@ export default async function (
   };
 
   imagesData.set(hash, returnObject);
+
+  const end = performance.now();
+
+  console.log(
+    `Responsive Image sets generated for ${type} ${
+      src.startsWith("/node_modules/") ? basename(src) : `at ${src}`
+    } in ${end - start}ms`
+  );
 
   return returnObject;
 }

@@ -35,9 +35,11 @@ export default async function renderBackgroundPicture(props) {
     ...configOptions
   } = props;
 
-  const start = performance.now();
+  const type = "BackgroundPicture";
+
   const { uuid, images } = await getImage(
     src,
+    type,
     sizes,
     format,
     breakpoints,
@@ -49,9 +51,6 @@ export default async function renderBackgroundPicture(props) {
     configOptions,
     globalConfigOptions
   );
-  const end = performance.now();
-
-  console.log(`Image at ${src} optimized in ${end - start}ms`);
 
   const className = `astro-imagetools-picture-${uuid}`;
 

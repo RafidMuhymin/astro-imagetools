@@ -36,9 +36,11 @@ export default async function renderImg(props) {
     fadeInTransition = false,
     includeSourceFormat = false;
 
-  const start = performance.now();
+    const type = "Img";
+
   const { uuid, images } = await getImage(
     src,
+    type,
     sizes,
     format,
     breakpoints,
@@ -50,9 +52,6 @@ export default async function renderImg(props) {
     restConfigOptions,
     globalConfigOptions
   );
-  const end = performance.now();
-
-  console.log(`Image at ${src} optimized in ${end - start}ms`);
 
   const className = `astro-imagetools-img-${uuid}`;
 
