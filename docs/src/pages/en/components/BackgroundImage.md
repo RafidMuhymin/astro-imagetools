@@ -14,18 +14,42 @@ The browesrs don't offer any native CSS API or feature to detect support for a s
 
 To make the `<BackgroundImage />` component work, you need to import the [`<ImageSupportDetection />`](/en/components-and-apis#imagesupportdetection) component in the `<head>` of your **Layout** component. This component adds **655 bytes** to the generated pages.
 
+The body of the `<BackgroundImage />` component will be used as the content of the container element.
+
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundImage />` component.
 
-## Slot
-
-The `<BackgroundImage />` component accepts content via slot. The slot content is used as the value of the `content` configuration option of the [`renderBackgroundImage`](/en/api/renderBackgroundImage) API.
+## Code Example
 
 ```astro
 ---
-import { BackgroundImage } from "astro-imagetools/components";
+import {
+  BackgroundImage,
+  ImageSupportDetection,
+} from "astro-imagetools/components";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 ---
+
+<html>
+  <head>
+    <ImageSupportDetection />
+  </head>
+
+  <body>
+    <BackgroundImage
+      src="/src/images/landscape.jpg"
+      artDirectives={[
+        {
+          src: "/src/images/portrait.jpg",
+          media: "(orientation: potrait)",
+        },
+      ]}
+    >
+      <Fragment set:html={content} />
+    </BackgroundImage>
+  </body>
+</html>
+```
 
 <BackgroundImage src="https://picsum.photos/1024/768">
   <Fragment set:html={content} />

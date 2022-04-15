@@ -8,6 +8,17 @@ setup: |
 
 The `renderImg` API is a function for rendering optimized and responsive images. The generated images will use the `<img />` element. Similar to the [`<Img />`](/en/components/Img) component, it's for simple use cases where you don't need advanced features like **Art Direction**, **multiple source formats**, or the **onload fade-in transition**.
 
+## Code Example
+
+```js
+import { renderImg } from "astro-imagetools/api";
+
+const { link, style, img } = renderImg({
+  src: "https://picsum.photos/1024/768",
+  alt: "A random image",
+});
+```
+
 ## Return Value
 
 **Type:** `{ link: string; style: string; img: string }`

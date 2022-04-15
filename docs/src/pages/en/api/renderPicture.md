@@ -8,6 +8,23 @@ setup: |
 
 The `renderPicture` API is a function for rendering an optimized and responsive images. The generated images will use the `<picture />` element. Similar to the [`<Picture />`](/en/components/Picture) component, it's for advanced use cases where you need to offer **multiple source formats**, **Art Direction**, and the **onload fade-in transition**.
 
+## Code Example
+
+```js
+import { renderPicture } from "astro-imagetools/api";
+
+const { link, style, picture } = renderPicture({
+  src: "https://picsum.photos/1024/768",
+  alt: "A random image",
+  artDirectives: [
+    {
+      src: "https://picsum.photos/1024/768?image=1",
+      media: "(orientation: potrait)",
+    },
+  ],
+});
+```
+
 ## Return Value
 
 **Type:** `{ link: string; style: string; picture: string }`

@@ -10,6 +10,24 @@ The `renderBackgroundPicture` API is a function for rendering an optimized and r
 
 Unlike the [`renderBackgroundImage`](/en/api/renderBackgroundImage) API, the `renderBackgroundPicture` API supports **Lazy Loading**, **Asynchronous Decoding**, the `sizes` attribute, and the **onload fade-in transition**. It doesn't need any JavaScript too.
 
+## Code Example
+
+```js
+import { renderBackgroundPicture } from "astro-imagetools/api";
+
+const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
+
+const { link, style, htmlElement } = renderBackgroundPicture({
+  src: "https://picsum.photos/1024/768",
+  artDirectives: [
+    {
+      src: "https://picsum.photos/1024/768?image=1",
+      media: "(orientation: potrait)",
+    },
+  ],
+});
+```
+
 ## Return Value
 
 **Type:** `{ link: string; style: string; htmlElement: string }`

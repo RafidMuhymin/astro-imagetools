@@ -10,22 +10,41 @@ Similar to the [`<BackgroundImage />`](/en/components/BackgroundImage) component
 
 Unlike the `<BackgroundImage />` component, the `<BackgroundPicture />` supports **Lazy Loading**, **Asynchronous Decoding**, the `sizes` attribute, and the **onload fade-in transition**. It doesn't need any JavaScript too.
 
+The body of the `<BackgroundPicture />` component will be used as the content of the container element.
+
 > **Note:** Layouts don't make sense for background images. So, they aren't supported by the `<BackgroundPicture />` component.
 
-## Slot
-
-The `<BackgroundPicture />` component accepts content via slot. The slot content is used as the value of the `content` configuration option of the [`renderBackgroundPicture`](/en/api/renderBackgroundPicture) API.
+## Code Example
 
 ```astro
 ---
-import { BackgroundPicture } from "astro-imagetools/components";
+import {
+  BackgroundImage,
+  ImageSupportDetection,
+} from "astro-imagetools/components";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 ---
 
-<BackgroundPicture src="https://picsum.photos/1024/768">
-  <Fragment set:html={content} />
-</BackgroundPicture>
+<html>
+  <head>
+    <ImageSupportDetection />
+  </head>
+
+  <body>
+    <BackgroundImage
+      src="/src/images/landscape.jpg"
+      artDirectives={[
+        {
+          src: "/src/images/portrait.jpg",
+          media: "(orientation: potrait)",
+        },
+      ]}
+    >
+      <Fragment set:html={content} />
+    </BackgroundImage>
+  </body>
+</html>
 ```
 
 ## Component Props
