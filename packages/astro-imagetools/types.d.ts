@@ -155,40 +155,49 @@ export interface PictureConfigOptions
 
 export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
 
-export interface BackgroundImageConfigOptions
-  extends Pick<
-    PictureConfigOptions,
-    Exclude<
-      keyof PictureConfigOptions,
-      | "alt"
-      | "sizes"
-      | "loading"
-      | "decoding"
-      | "layout"
-      | "objectFit"
-      | "objectPosition"
-      | "fadeInTransition"
-    >
-  > {
+declare interface BackgroundProps {
   tag?: string;
   content?: string;
+}
+
+declare interface BackgroundStyles {
   backgroundPosition?: string;
   backgroundSize?: "fill" | "contain" | "cover" | "none" | "scale-down";
 }
 
+export interface BackgroundImageConfigOptions
+  extends BackgroundProps,
+    BackgroundStyles,
+    Pick<
+      PictureConfigOptions,
+      Exclude<
+        keyof PictureConfigOptions,
+        | "alt"
+        | "sizes"
+        | "loading"
+        | "decoding"
+        | "layout"
+        | "objectFit"
+        | "objectPosition"
+        | "fadeInTransition"
+      >
+    > {}
+
 export interface BackgroundPictureConfigOptions
-  extends Pick<
-    PictureConfigOptions,
-    Exclude<keyof PictureConfigOptions, "alt" | "layout">
-  > {
-  tag?: string;
+  extends BackgroundProps,
+    Pick<
+      PictureConfigOptions,
+      Exclude<keyof PictureConfigOptions, "alt" | "layout">
+    > {}
+
+export interface GlobalConfigOptions
+  extends BackgroundStyles,
+    Pick<
+      PictureConfigOptions,
+      Exclude<keyof PictureConfigOptions, "src" | "alt" | "artDirectives">
+    > {
   content?: string;
 }
-
-export type GlobalConfigOptions = Pick<
-  PictureConfigOptions,
-  Exclude<keyof PictureConfigOptions, "src" | "alt" | "artDirectives">
->;
 
 declare interface HTMLData {
   link: string;
