@@ -196,7 +196,7 @@ export interface GlobalConfigOptions
       PictureConfigOptions,
       Exclude<keyof PictureConfigOptions, "src" | "alt" | "artDirectives">
     > {
-  content?: string;
+  tag?: string;
 }
 
 declare interface HTMLData {
