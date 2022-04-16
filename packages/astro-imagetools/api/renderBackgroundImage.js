@@ -15,6 +15,8 @@ export default async function renderBackgroundImage(props) {
     },
     preload,
     breakpoints,
+    backgroundSize = "cover",
+    backgroundPosition = "50% 50%",
     placeholder = "blurred",
     artDirectives,
     format = ["avif", "webp"],
@@ -26,12 +28,8 @@ export default async function renderBackgroundImage(props) {
     fallbackFormat,
     includeSourceFormat = true,
     fadeInTransition = true,
-    backgroundStyles = {},
     ...configOptions
   } = props;
-
-  const { backgroundSize = "cover", backgroundPosition = "50% 50%" } =
-    backgroundStyles;
 
   const type = "BackgroundImage";
 
