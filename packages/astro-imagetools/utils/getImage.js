@@ -4,23 +4,23 @@ import objectHash from "object-hash";
 import getImageSources from "./getImageSources.js";
 import getProcessedImage from "./getProcessedImage.js";
 import getArtDirectedImages from "./getArtDirectedImages.js";
+import { GlobalConfigOptions } from "../runtimeChecks.js";
 
 const imagesData = new Map();
 
-export default async function (
+export default async function ({
   src,
   type,
-  imagesizes,
+  sizes: imagesizes,
   format,
   breakpoints,
   placeholder,
-  artDirectives,
   fallbackFormat,
   includeSourceFormat,
   formatOptions,
-  configOptions,
-  globalConfigOptions
-) {
+  artDirectives,
+  transformConfigs,
+}) {
   const args = Array.from(arguments);
 
   const hash = objectHash(args);
@@ -30,7 +30,7 @@ export default async function (
   const start = performance.now();
 
   const { path, rest, image, imageWidth, imageHeight, imageFormat } =
-    await getProcessedImage(src, configOptions, globalConfigOptions);
+    await getProcessedImage(src, transformConfigs, GlobalConfigOptions);
 
   src = path;
 
@@ -82,7 +82,7 @@ export default async function (
   const end = performance.now();
 
   console.log(
-    `Responsive Image sets generated for ${type} at ${args[0]} in ${
+    `Responsive Image sets generated for ${type} at ${args[0].src} in ${
       end - start
     }ms`
   );

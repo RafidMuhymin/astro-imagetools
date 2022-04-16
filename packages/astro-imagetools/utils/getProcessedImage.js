@@ -23,7 +23,7 @@ const throwErrorIfUnsupported = (src, ext) => {
   }
 };
 
-export default async (src, configOptions, globalConfigOptions) => {
+export default async (src, configOptions, GlobalConfigOptions) => {
   const { search, searchParams } = new URL(src, "file://");
 
   src = src.replace(search, "");
@@ -66,7 +66,7 @@ export default async (src, configOptions, globalConfigOptions) => {
     src = join("/", relative(process.cwd(), filepath));
   }
 
-  configOptions = { ...globalConfigOptions, ...paramOptions, ...configOptions };
+  configOptions = { ...GlobalConfigOptions, ...paramOptions, ...configOptions };
 
   const {
     w,

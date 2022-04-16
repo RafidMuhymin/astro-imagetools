@@ -2,42 +2,36 @@
 import getImg from "../utils/getImg.js";
 import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
-import { globalConfigOptions } from "../runtimeChecks.js";
-import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
+import getFilteredProps from "../utils/getFilteredProps.js";
+import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 
 export default async function renderBackgroundPicture(props) {
-  const {
-    src,
-    tag = "section",
-    content = "",
-    sizes = (breakpoints) => {
-      const maxWidth = breakpoints.at(-1);
-      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-    },
-    preload,
-    loading = preload ? "eager" : "lazy",
-    decoding = "async",
-    breakpoints,
-    objectFit = "cover",
-    objectPosition = "50% 50%",
-    placeholder = "blurred",
-    artDirectives,
-    format = ["avif", "webp"],
-    formatOptions = {
-      tracedSVG: {
-        function: "trace",
-      },
-    },
-    fadeInTransition = true,
-    fallbackFormat,
-    includeSourceFormat = true,
-    ...configOptions
-  } = props;
-
   const type = "BackgroundPicture";
 
-  const { uuid, images } = await getImage(
+  const { filteredProps, transformConfigs } = getFilteredProps(type, props);
+
+  const {
+    src,
+    tag,
+    content,
+    sizes,
+    preload,
+    loading,
+    decoding,
+    placeholder,
+    breakpoints,
+    objectFit,
+    objectPosition,
+    format,
+    fallbackFormat,
+    includeSourceFormat,
+    formatOptions,
+    fadeInTransition,
+    artDirectives,
+  } = filteredProps;
+
+  const { uuid, images } = await getImage({
     src,
     type,
     sizes,
@@ -48,9 +42,8 @@ export default async function renderBackgroundPicture(props) {
     fallbackFormat,
     includeSourceFormat,
     formatOptions,
-    configOptions,
-    globalConfigOptions
-  );
+    transformConfigs,
+  });
 
   const className = `astro-imagetools-picture-${uuid}`;
 

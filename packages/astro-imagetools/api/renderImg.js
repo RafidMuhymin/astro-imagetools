@@ -1,44 +1,38 @@
 // @ts-check
-import getImage from "../utils/getImage.js";
-import { globalConfigOptions } from "../runtimeChecks.js";
-import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 import getImg from "../utils/getImg.js";
 import getLink from "../utils/getLink.js";
+import getImage from "../utils/getImage.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
+import getFilteredProps from "../utils/getFilteredProps.js";
+import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 
 export default async function renderImg(props) {
+  const type = "Img";
+
+  const { filteredProps, transformConfigs } = getFilteredProps(type, props);
+
   const {
     src,
     alt,
-    sizes = (breakpoints) => {
-      const maxWidth = breakpoints.at(-1);
-      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-    },
+    sizes,
     preload,
-    loading = preload ? "eager" : "lazy",
-    decoding = "async",
+    loading,
+    decoding,
+    layout,
     breakpoints,
-    objectFit = "cover",
-    objectPosition = "50% 50%",
-    layout = "constrained",
-    placeholder = "blurred",
+    placeholder,
+    objectFit,
+    objectPosition,
     format,
-    formatOptions = {
-      tracedSVG: {
-        function: "trace",
-      },
-    },
-    ...restConfigOptions
-  } = props;
+    formatOptions,
+  } = filteredProps;
 
   const artDirectives = [],
     fallbackFormat = format,
     fadeInTransition = false,
     includeSourceFormat = false;
 
-    const type = "Img";
-
-  const { uuid, images } = await getImage(
+  const { uuid, images } = await getImage({
     src,
     type,
     sizes,
@@ -49,9 +43,8 @@ export default async function renderImg(props) {
     fallbackFormat,
     includeSourceFormat,
     formatOptions,
-    restConfigOptions,
-    globalConfigOptions
-  );
+    transformConfigs,
+  });
 
   const className = `astro-imagetools-img-${uuid}`;
 

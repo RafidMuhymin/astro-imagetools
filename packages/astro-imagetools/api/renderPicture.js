@@ -2,55 +2,48 @@
 import getImg from "../utils/getImg.js";
 import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
-import { globalConfigOptions } from "../runtimeChecks.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
+import getFilteredProps from "../utils/getFilteredProps.js";
 
 export default async function renderPicture(props) {
+  const type = "Picture";
+
+  const { filteredProps, transformConfigs } = getFilteredProps(type, props);
+
   const {
     src,
     alt,
-    sizes = (breakpoints) => {
-      const maxWidth = breakpoints.at(-1);
-      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-    },
+    sizes,
     preload,
-    loading = preload ? "eager" : "lazy",
-    decoding = "async",
+    loading,
+    decoding,
+    layout,
+    placeholder,
     breakpoints,
-    objectFit = "cover",
-    objectPosition = "50% 50%",
-    layout = "constrained",
-    placeholder = "blurred",
-    artDirectives,
-    format = ["avif", "webp"],
-    formatOptions = {
-      tracedSVG: {
-        function: "trace",
-      },
-    },
-    fadeInTransition = true,
+    objectFit,
+    objectPosition,
+    format,
     fallbackFormat,
-    includeSourceFormat = true,
-    ...configOptions
-  } = props;
+    includeSourceFormat,
+    formatOptions,
+    fadeInTransition,
+    artDirectives,
+  } = filteredProps;
 
-  const type = "Picture";
-
-  const { uuid, images } = await getImage(
+  const { uuid, images } = await getImage({
     src,
     type,
     sizes,
     format,
     breakpoints,
     placeholder,
-    artDirectives,
     fallbackFormat,
     includeSourceFormat,
     formatOptions,
-    configOptions,
-    globalConfigOptions
-  );
+    artDirectives,
+    transformConfigs,
+  });
 
   const className = `astro-imagetools-picture-${uuid}`;
 
@@ -81,7 +74,7 @@ export default async function renderPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyles,
+            layoutStyles
           )
         : `<source
             srcset="${srcset}"

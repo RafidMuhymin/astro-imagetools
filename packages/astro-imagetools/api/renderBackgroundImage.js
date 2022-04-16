@@ -1,39 +1,33 @@
 // @ts-check
 import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
-import { globalConfigOptions } from "../runtimeChecks.js";
+import getFilteredProps from "../utils/getFilteredProps.js";
 import getBackgroundFallbackStyles from "../utils/getBackgroundFallbackStyles.js";
 
 export default async function renderBackgroundImage(props) {
-  const {
-    src,
-    tag = "section",
-    content = "",
-    sizes = (breakpoints) => {
-      const maxWidth = breakpoints.at(-1);
-      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-    },
-    preload,
-    breakpoints,
-    backgroundSize = "cover",
-    backgroundPosition = "50% 50%",
-    placeholder = "blurred",
-    artDirectives,
-    format = ["avif", "webp"],
-    formatOptions = {
-      tracedSVG: {
-        function: "trace",
-      },
-    },
-    fallbackFormat,
-    includeSourceFormat = true,
-    fadeInTransition = true,
-    ...configOptions
-  } = props;
-
   const type = "BackgroundImage";
 
-  const { uuid, images } = await getImage(
+  const { filteredProps, transformConfigs } = getFilteredProps(type, props);
+
+  const {
+    src,
+    tag,
+    content,
+    preload,
+    placeholder,
+    breakpoints,
+    backgroundSize,
+    backgroundPosition,
+    format,
+    fallbackFormat,
+    includeSourceFormat,
+    formatOptions,
+    artDirectives,
+  } = filteredProps;
+
+  const sizes = "";
+
+  const { uuid, images } = await getImage({
     src,
     type,
     sizes,
@@ -44,9 +38,8 @@ export default async function renderBackgroundImage(props) {
     fallbackFormat,
     includeSourceFormat,
     formatOptions,
-    configOptions,
-    globalConfigOptions
-  );
+    transformConfigs,
+  });
 
   const className = `astro-imagetools-background-image-${uuid}`;
 
@@ -57,7 +50,7 @@ export default async function renderBackgroundImage(props) {
     className,
     backgroundSize,
     backgroundPosition,
-    fadeInTransition
+    true
   );
 
   const link = getLink(images, preload, imagesizes);
