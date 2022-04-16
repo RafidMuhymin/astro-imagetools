@@ -1,6 +1,5 @@
 // @ts-check
 import crypto from "crypto";
-import { basename } from "path";
 import objectHash from "object-hash";
 import getImageSources from "./getImageSources.js";
 import getProcessedImage from "./getProcessedImage.js";
@@ -22,7 +21,9 @@ export default async function (
   configOptions,
   globalConfigOptions
 ) {
-  const hash = objectHash(Array.from(arguments));
+  const args = Array.from(arguments);
+
+  const hash = objectHash(args);
 
   if (imagesData.has(hash)) return imagesData.get(hash);
 
@@ -81,9 +82,9 @@ export default async function (
   const end = performance.now();
 
   console.log(
-    `Responsive Image sets generated for ${type} ${
-      src.startsWith("/node_modules/") ? basename(src) : `at ${src}`
-    } in ${end - start}ms`
+    `Responsive Image sets generated for ${type} at ${args[0]} in ${
+      end - start
+    }ms`
   );
 
   return returnObject;
