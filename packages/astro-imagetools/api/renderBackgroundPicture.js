@@ -35,7 +35,7 @@ export default async function renderBackgroundPicture(props) {
     ...configOptions
   } = props;
 
-  const type = "Background Picture";
+  const type = "BackgroundPicture";
 
   const { uuid, images } = await getImage(
     src,

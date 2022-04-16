@@ -33,7 +33,7 @@ export default async function renderBackgroundImage(props) {
   const { backgroundSize = "cover", backgroundPosition = "50% 50%" } =
     backgroundStyles;
 
-  const type = "Background Image";
+  const type = "BackgroundImage";
 
   const { uuid, images } = await getImage(
     src,
