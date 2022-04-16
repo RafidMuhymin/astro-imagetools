@@ -48,7 +48,7 @@ const SupportedProperties = {
 
 export default function getFilteredProps(type, props) {
   const filteredGlobalConfigs = filterConfigs(
-    type,
+    "Global",
     GlobalConfigOptions,
     SupportedProperties[type],
     { warn: false }
