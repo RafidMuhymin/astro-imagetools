@@ -59,7 +59,7 @@ The following is an example of a reference to an internal image.
 
 The following is an example of a reference to an external image.
 
-![A random image](https://picsum.photos/3072/2304)
+![A random image](https://picsum.photos/1024/768)
 
 <hr />
 
