@@ -17,7 +17,7 @@ import { renderBackgroundPicture } from "astro-imagetools/api";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 
-const { link, style, htmlElement } = renderBackgroundPicture({
+const { link, style, htmlElement } = await renderBackgroundPicture({
   src: "https://picsum.photos/1024/768",
   artDirectives: [
     {

@@ -19,7 +19,7 @@ import { ImageSupportDetection } from "astro-imagetools/components";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 
-const { link, style, htmlElement } = renderBackgroundImage({
+const { link, style, htmlElement } = await renderBackgroundImage({
   src: "https://picsum.photos/1024/768",
   content,
   artDirectives: [

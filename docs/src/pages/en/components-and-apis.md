@@ -153,7 +153,7 @@ The `renderImg` API is a function for rendering optimized and responsive images.
 ```js
 import { renderImg } from "astro-imagetools/api";
 
-const { link, style, img } = renderImg({
+const { link, style, img } = await renderImg({
   src: "https://picsum.photos/1024/768",
   alt: "A random image",
 });
@@ -170,7 +170,7 @@ The `renderPicture` API is a function for rendering an optimized and responsive 
 ```js
 import { renderPicture } from "astro-imagetools/api";
 
-const { link, style, picture } = renderPicture({
+const { link, style, picture } = await renderPicture({
   src: "https://picsum.photos/1024/768",
   alt: "A random image",
   artDirectives: [
@@ -199,7 +199,7 @@ import { ImageSupportDetection } from "astro-imagetools/components";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 
-const { link, style, htmlElement } = renderBackgroundImage({
+const { link, style, htmlElement } = await renderBackgroundImage({
   src: "https://picsum.photos/1024/768",
   content,
   artDirectives: [
@@ -237,7 +237,7 @@ import { renderBackgroundPicture } from "astro-imagetools/api";
 
 const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
 
-const { link, style, htmlElement } = renderBackgroundPicture({
+const { link, style, htmlElement } = await renderBackgroundPicture({
   src: "https://picsum.photos/1024/768",
   artDirectives: [
     {

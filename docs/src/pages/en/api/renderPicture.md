@@ -13,7 +13,7 @@ The `renderPicture` API is a function for rendering an optimized and responsive 
 ```js
 import { renderPicture } from "astro-imagetools/api";
 
-const { link, style, picture } = renderPicture({
+const { link, style, picture } = await renderPicture({
   src: "https://picsum.photos/1024/768",
   alt: "A random image",
   artDirectives: [

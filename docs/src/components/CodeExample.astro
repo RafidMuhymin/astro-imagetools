@@ -46,7 +46,7 @@ function code(props, { api, component }) {
     .join(`${isJS ? "," : ""}\n  `);
 
   return (
-    `${isJS ? `const renderedHTML = ${api}({` : `<${component}`}
+    `${isJS ? `const renderedHTML = await ${api}({` : `<${component}`}
   ${builtProps}
 ${isJS ? `});` : `/>`}` + "\n"
   );

@@ -13,7 +13,7 @@ The `renderImg` API is a function for rendering optimized and responsive images.
 ```js
 import { renderImg } from "astro-imagetools/api";
 
-const { link, style, img } = renderImg({
+const { link, style, img } = await renderImg({
   src: "https://picsum.photos/1024/768",
   alt: "A random image",
 });
