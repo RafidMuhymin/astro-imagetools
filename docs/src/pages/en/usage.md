@@ -79,7 +79,7 @@ All the APIs, `renderImg`, `renderPicture`, `renderBackgroundImage`, and `render
 
 ```astro
 ---
-import { renderImg } from "astro-imagetools/api";
+import { renderPicture } from "astro-imagetools/api";
 ---
 ```
 
@@ -87,9 +87,9 @@ All the APIs support a single config object as the only argument. You can pass c
 
 ```astro
 ---
-import { renderImg } from "astro-imagetools/api";
+import { renderPicture } from "astro-imagetools/api";
 
-const { link, style, img } = await renderImg({
+const { link, style, picture } = await renderPicture({
   src: "https://picsum.photos/1024/768",
   alt: "A random image",
 });
