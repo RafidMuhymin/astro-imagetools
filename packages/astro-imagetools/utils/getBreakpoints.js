@@ -24,10 +24,35 @@ export default function getBreakpoints(breakpoints, imageWidth) {
     return imageWidth;
   })();
 
-  const breakPoints = [],
-    diff = maxWidth - minWidth,
-    steps = count || (maxWidth < 400 ? 1 : maxWidth < 640 ? 2 : 3),
-    pixelsPerStep = diff / steps;
+  const breakPoints = [];
+
+  const diff = maxWidth - minWidth;
+
+  const steps =
+    count ||
+    (maxWidth <= 400
+      ? 1
+      : maxWidth <= 640
+      ? 2
+      : maxWidth <= 800
+      ? 3
+      : maxWidth <= 1024
+      ? 4
+      : maxWidth <= 1280
+      ? 5
+      : maxWidth <= 1440
+      ? 6
+      : maxWidth <= 1920
+      ? 7
+      : maxWidth <= 2560
+      ? 8
+      : maxWidth <= 2880
+      ? 9
+      : maxWidth <= 3840
+      ? 10
+      : 11);
+
+  const pixelsPerStep = diff / steps;
 
   let currentWidth = minWidth;
 
