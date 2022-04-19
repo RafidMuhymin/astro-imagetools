@@ -38,7 +38,7 @@ declare interface PosterizeOptions {
 }
 
 declare interface FormatOptions {
-  formatOptions?: Record<format, ImageToolsConfigs> & {
+  formatOptions?: Partial<Record<format, ImageToolsConfigs>> & {
     tracedSVG?: PotraceOptions;
   };
 }
