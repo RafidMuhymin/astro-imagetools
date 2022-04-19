@@ -1,6 +1,10 @@
 // @ts-check
-import { supportedConfigs, GlobalConfigOptions } from "../runtimeChecks";
-import filterConfigs from "./filterConfigs";
+import {
+  supportedConfigs,
+  GlobalConfigOptions,
+  ImageToolsDirectives,
+} from "../runtimeChecks.js";
+import filterConfigs from "./filterConfigs.js";
 
 const NonProperties = {
   Img: [
@@ -90,9 +94,16 @@ export default function getFilteredProps(type, props) {
     ...transformConfigs
   } = props;
 
+  const globalTransformConfigs = filterConfigs(
+    "Global",
+    filteredGlobalConfigs,
+    ImageToolsDirectives
+  );
+
   // prettier-ignore
   const resolvedProps = {
-    src, alt, tag, content, sizes, preload, loading, decoding, layout, placeholder, breakpoints, objectFit, objectPosition, backgroundSize, backgroundPosition, format, fallbackFormat, includeSourceFormat, formatOptions, fadeInTransition, artDirectives, ...transformConfigs,
+    src, alt, tag, content, sizes, preload, loading, decoding, layout, placeholder, breakpoints, objectFit, objectPosition, backgroundSize, backgroundPosition, format, fallbackFormat, includeSourceFormat, formatOptions, fadeInTransition, artDirectives,
+    ...globalTransformConfigs, ...transformConfigs,
   };
 
   filteredProps = filterConfigs(

@@ -42,6 +42,13 @@ export const supportedConfigs = [
   "background", "tint", "blur", "median", "rotate", "quality", "fit", "kernel", "position",
 ];
 
+// prettier-ignore
+export const ImageToolsDirectives = [
+  "flip", "flop", "invert", "flatten", "normalize",  "grayscale", "hue", "saturation",
+  "brightness", "w", "h", "ar", "width", "height", "aspect", "background", "tint", "blur",
+  "median", "rotate", "quality", "fit", "kernel", "position"
+]
+
 const posixPath = process.cwd() + "/astro-imagetools.config";
 
 const win32Path =
