@@ -11,14 +11,14 @@ export default function getBreakpoints(breakpoints, imageWidth) {
   const maxWidth = (() => {
     if (breakpoints?.maxWidth) return breakpoints.maxWidth;
 
-    if (imageWidth > 2880) {
+    if (imageWidth > 3840) {
       printWarning(
         null,
         null,
-        "The width of the source image is greater than 2880px. The generated breakpoints will be capped at 2880px. If you need breakpoints larger than this, please pass the maxWidth option to the breakpoints property."
+        "The width of the source image is greater than 3840px. The generated breakpoints will be capped at 3840px. If you need breakpoints larger than this, please pass the maxWidth option to the breakpoints property."
       );
 
-      return 2880;
+      return 3840;
     }
 
     return imageWidth;
