@@ -1,4 +1,5 @@
 // @ts-check
+import printWarning from "./printWarning.js";
 
 export default function getBreakpoints(breakpoints, imageWidth) {
   if (Array.isArray(breakpoints)) {
@@ -11,11 +12,10 @@ export default function getBreakpoints(breakpoints, imageWidth) {
     if (breakpoints?.maxWidth) return breakpoints.maxWidth;
 
     if (imageWidth > 2880) {
-      console.log(
-        "\x1b[48m%s\x1b[0m",
-        " warning ",
-        "\x1b[33mThe width of the source image is greater than 2880px. The generated breakpoints will be capped at 2880px. If you need breakpoints larger than this, please pass the maxWidth option to the breakpoints property.\x1b[0m",
-        `\x1b[2m${Error().stack.slice(5)}\x1b[0m`
+      printWarning(
+        null,
+        null,
+        "The width of the source image is greater than 2880px. The generated breakpoints will be capped at 2880px. If you need breakpoints larger than this, please pass the maxWidth option to the breakpoints property."
       );
 
       return 2880;
