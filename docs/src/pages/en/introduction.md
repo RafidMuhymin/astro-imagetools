@@ -38,6 +38,8 @@ To get started with **Astro ImageTools**, first check out the [Installation](/en
 
 If you are looking for the available components and APIs, please check out the [Components and APIs](/en/components-and-apis) documentation.
 
+If you want to view live examples of the components, APIs, layouts, and placeholder images, check out the [Astro ImageTools Demo](https://astro-imagetools-demo.vercel.app/) website.
+
 If you want to report any issues or have found a missing feature, please report it on [GitHub](https://github.com/RafidMuhymin/astro-imagetools/)!
 
 Good luck out there, Astronaut. 🧑‍🚀
