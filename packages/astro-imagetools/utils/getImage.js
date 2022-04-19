@@ -4,7 +4,6 @@ import objectHash from "object-hash";
 import getImageSources from "./getImageSources.js";
 import getProcessedImage from "./getProcessedImage.js";
 import getArtDirectedImages from "./getArtDirectedImages.js";
-import { GlobalConfigOptions } from "../runtimeChecks.js";
 
 const imagesData = new Map();
 
@@ -30,7 +29,7 @@ export default async function ({
   const start = performance.now();
 
   const { path, rest, image, imageWidth, imageHeight, imageFormat } =
-    await getProcessedImage(src, transformConfigs, GlobalConfigOptions);
+    await getProcessedImage(src, transformConfigs);
 
   src = path;
 

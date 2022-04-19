@@ -2,7 +2,6 @@
 import {
   supportedConfigs,
   GlobalConfigOptions,
-  ImageToolsDirectives,
 } from "../runtimeChecks.js";
 import filterConfigs from "./filterConfigs.js";
 
@@ -58,57 +57,68 @@ export default function getFilteredProps(type, props) {
     { warn: false }
   );
 
-  let filteredProps = filterConfigs(type, props, SupportedProperties[type]);
+  const { search, searchParams } = new URL(props.src, "file://");
+
+  props.src = props.src.replace(search, "");
+
+  const paramOptions = Object.fromEntries(searchParams);
+
+  const filteredLocalProps = filterConfigs(
+    type,
+    {
+      ...paramOptions,
+      ...props,
+    },
+    SupportedProperties[type]
+  );
+
+  const resolvedProps = {
+    ...filteredLocalProps,
+    ...filteredGlobalConfigs,
+  };
 
   const {
     src,
     alt,
-    tag = filteredGlobalConfigs.section || "section",
+    tag = "section",
     content = "",
-    sizes = filteredGlobalConfigs.sizes ||
-      function (breakpoints) {
-        const maxWidth = breakpoints.at(-1);
-        return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
-      },
-    preload = filteredGlobalConfigs.preload,
-    loading = filteredGlobalConfigs.loading || preload ? "eager" : "lazy",
-    decoding = filteredGlobalConfigs.decoding || "async",
-    layout = filteredGlobalConfigs.layout || "constrained",
-    placeholder = filteredGlobalConfigs.placeholder || "blurred",
-    breakpoints = filteredGlobalConfigs.breakpoints,
-    objectFit = filteredGlobalConfigs.objectFit || "cover",
-    objectPosition = filteredGlobalConfigs.objectPosition || "50% 50%",
-    backgroundSize = filteredGlobalConfigs.backgroundSize || "cover",
-    backgroundPosition = filteredGlobalConfigs.backgroundPosition || "50% 50%",
-    format = filteredGlobalConfigs.format ||
-      (type === "Picture" ? ["avif", "webp"] : undefined),
-    fallbackFormat = filteredGlobalConfigs.fallbackFormat,
-    includeSourceFormat = filteredGlobalConfigs.includeSourceFormat || true,
-    formatOptions = filteredGlobalConfigs.formatOptions || {
+    sizes = function (breakpoints) {
+      const maxWidth = breakpoints.at(-1);
+      return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
+    },
+    preload,
+    loading = preload ? "eager" : "lazy",
+    decoding = "async",
+    layout = "constrained",
+    placeholder = "blurred",
+    breakpoints,
+    objectFit = "cover",
+    objectPosition = "50% 50%",
+    backgroundSize = "cover",
+    backgroundPosition = "50% 50%",
+    format = type === "Picture" ? ["avif", "webp"] : undefined,
+    fallbackFormat,
+    includeSourceFormat = true,
+    formatOptions = {
       tracedSVG: {
         function: "trace",
       },
     },
-    fadeInTransition = filteredGlobalConfigs.fadeInTransition || true,
-    artDirectives = filteredGlobalConfigs.artDirectives,
+    fadeInTransition = true,
+    artDirectives,
     ...transformConfigs
-  } = props;
-
-  const globalTransformConfigs = filterConfigs(
-    "Global",
-    filteredGlobalConfigs,
-    ImageToolsDirectives
-  );
+  } = resolvedProps;
 
   // prettier-ignore
-  const resolvedProps = {
-    src, alt, tag, content, sizes, preload, loading, decoding, layout, placeholder, breakpoints, objectFit, objectPosition, backgroundSize, backgroundPosition, format, fallbackFormat, includeSourceFormat, formatOptions, fadeInTransition, artDirectives,
-    ...globalTransformConfigs, ...transformConfigs,
+  const allProps = {
+    src, alt, tag, content, sizes, preload, loading, decoding, layout, placeholder, breakpoints,
+    objectFit, objectPosition, backgroundSize, backgroundPosition, format, fallbackFormat,
+    includeSourceFormat, formatOptions, fadeInTransition, artDirectives, ...transformConfigs,
   };
 
-  filteredProps = filterConfigs(
+  const filteredProps = filterConfigs(
     type,
-    resolvedProps,
+    allProps,
     SupportedProperties[type],
     { warn: false }
   );

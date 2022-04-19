@@ -4,12 +4,12 @@ import crypto from "crypto";
 import { join, basename, extname, relative } from "path";
 import { sharp, fsCachePath, supportedImageTypes } from "../runtimeChecks.js";
 
-// @ts-ignore
-const { fileTypeFromBuffer } = await import("file-type");
-
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
   : import("./codecs.js"));
+
+// @ts-ignore
+const { fileTypeFromBuffer } = await import("file-type");
 
 const throwErrorIfUnsupported = (src, ext) => {
   if (!ext && typeof ext !== "string") {
@@ -23,14 +23,8 @@ const throwErrorIfUnsupported = (src, ext) => {
   }
 };
 
-export default async (src, configOptions, GlobalConfigOptions) => {
-  const { search, searchParams } = new URL(src, "file://");
-
-  src = src.replace(search, "");
-
+export default async (src, transformConfigs) => {
   throwErrorIfUnsupported(src, extname(src).slice(1));
-
-  const paramOptions = Object.fromEntries(searchParams);
 
   if (src.match("(http://|https://|data:image/).*")) {
     const filename = src.startsWith("data:") ? "" : basename(src);
@@ -66,8 +60,6 @@ export default async (src, configOptions, GlobalConfigOptions) => {
     src = join("/", relative(process.cwd(), filepath));
   }
 
-  configOptions = { ...GlobalConfigOptions, ...paramOptions, ...configOptions };
-
   const {
     w,
     h,
@@ -76,7 +68,7 @@ export default async (src, configOptions, GlobalConfigOptions) => {
     height = h,
     aspect = ar,
     ...rest
-  } = configOptions;
+  } = transformConfigs;
 
   const path = src.replace(/\\/g, `/`);
 
