@@ -1,4 +1,5 @@
 ---
+import { Spa } from "astro-spa";
 import "../styles/index.css";
 
 const { importMetaUrl } = Astro.props as { importMetaUrl: string };
@@ -43,5 +44,7 @@ const GitHubURL = `https://github.com/RafidMuhymin/astro-imagetools/tree/main/de
 
       <slot />
     </main>
+
+    <Spa />
   </body>
 </html>

@@ -6,6 +6,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "astro-spa": "^1.3.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
@@ -16,7 +17,7 @@
     "@astrojs/solid-js": "^0.0.3",
     "@astrojs/svelte": "^0.0.2",
     "@astrojs/vue": "^0.0.2",
-    "astro": "^1.0.0-beta.9",
-    "astro-imagetools": "workspace:^"
+    "astro": "^1.0.0-beta.12",
+    "astro-imagetools": "workspace:^0.5.4"
   }
 }
