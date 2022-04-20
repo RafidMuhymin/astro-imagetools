@@ -1,6 +1,6 @@
 // @ts-check
 import crypto from "crypto";
-import getLink from "../utils/getLink.js";
+import getLinkElement from "../utils/getLinkElement.js";
 import getImage from "../utils/getImage.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
 
@@ -45,7 +45,7 @@ export default async function renderBackgroundImage(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const link = getLink(images, preload, imagesizes);
+  const link = getLinkElement(images, preload, imagesizes);
 
   const backgroundImageStyles = images.map(({ media, sources }) => {
     const uuid = crypto.randomBytes(4).toString("hex").toUpperCase();
