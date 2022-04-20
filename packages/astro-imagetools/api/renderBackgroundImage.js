@@ -1,8 +1,8 @@
 // @ts-check
+import crypto from "crypto";
 import getLink from "../utils/getLink.js";
 import getImage from "../utils/getImage.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
-import getBackgroundFallbackStyles from "../utils/getBackgroundFallbackStyles.js";
 
 export default async function renderBackgroundImage(props) {
   const type = "BackgroundImage";
@@ -45,88 +45,100 @@ export default async function renderBackgroundImage(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const fallbackStyles = getBackgroundFallbackStyles(
-    images,
-    className,
-    backgroundSize,
-    backgroundPosition,
-    true
-  );
+  const fallbackStyles = "";
 
   const link = getLink(images, preload, imagesizes);
 
-  const styles =
-    `
-      .${className} {
-        position: relative;
-      }
-    ` +
-    images
-      .map(({ media, sources }) => {
-        const newSources = {};
+  const backgroundImageStyles = images.map(({ media, sources, fallback }) => {
+    const uuid = crypto.randomBytes(4).toString("hex").toUpperCase();
 
-        sources.forEach(({ src, format, srcset }) => {
-          const sources = srcset
-            .split(", ")
-            .map((source) => [
-              source.slice(0, source.lastIndexOf(" ")),
-              source.slice(source.lastIndexOf(" ") + 1, -1),
-            ]);
+    const fallbackUrlCustomVariable = `--astro-imagetools-background-image-${uuid}-fallback-url`;
 
-          sources.forEach(([path, width]) => {
-            if (!newSources[width]) {
-              newSources[width] = [];
-            }
+    const newSources = {};
 
-            newSources[width].push({ src, format, path });
-          });
-        });
+    sources.forEach(({ src, format, srcset }) => {
+      const sources = srcset
+        .split(", ")
+        .map((source) => [
+          source.slice(0, source.lastIndexOf(" ")),
+          source.slice(source.lastIndexOf(" ") + 1, -1),
+        ]);
 
-        const widths = Object.keys(newSources)
-          .map((width) => parseInt(width))
-          .reverse();
+      sources.forEach(([path, width]) => {
+        if (!newSources[width]) {
+          newSources[width] = [];
+        }
 
-        const maxWidth = Math.max(...widths);
+        newSources[width].push({ src, format, path });
+      });
+    });
 
-        const styles = widths
-          .map((width) => {
-            const sources = newSources[width];
+    const widths = Object.keys(newSources)
+      .map((width) => parseInt(width))
+      .reverse();
 
-            const styles = sources
-              .map(
-                ({ format, path }) => `
-                  .${format} .${className} {
-                    background-repeat: no-repeat;
-                    background-image: url(${path});
-                    background-size: ${backgroundSize};
-                    background-position: ${backgroundPosition};
-                  }
-                `
-              )
-              .reverse()
-              .join("");
+    const maxWidth = Math.max(...widths);
 
-            return width === maxWidth
-              ? styles
-              : `
-                  @media screen and (max-width: ${width}px) {
-                    ${styles}
-                  }
-                `;
-          })
+    const styles = widths
+      .map((width) => {
+        const sources = newSources[width];
+
+        const styles = sources
+          .map(
+            ({ format, path }) => `
+              .${format} .${className} {
+                background-repeat: no-repeat;
+                background-image: url(${path}), var(${fallbackUrlCustomVariable});
+                background-size: ${backgroundSize};
+                background-position: ${backgroundPosition};
+              }
+            `
+          )
+          .reverse()
           .join("");
 
-        return media
-          ? `
+        return width === maxWidth
+          ? styles
+          : `
+              @media screen and (max-width: ${width}px) {
+                ${styles}
+              }
+            `;
+      })
+      .join("");
+
+    return {
+      fallbackUrlCustomVariable,
+      styles: media
+        ? `
               @media ${media} {
                 ${styles}
               }
             `
-          : styles;
-      })
-      .join("");
+        : styles,
+    };
+  });
 
-  const style = `<style>${fallbackStyles + styles}</style>`;
+  const containerStyles = `
+    .${className} {
+      position: relative;
+      ${images
+        .map(({ fallback }, i) => {
+          const fallbackUrlCustomVariable =
+            backgroundImageStyles[i].fallbackUrlCustomVariable;
+
+          return `${fallbackUrlCustomVariable}: url("${encodeURI(
+            fallback
+          )}");`;
+        })
+        .join("\n")}
+    }
+  `;
+
+  const style = `<style>${
+    backgroundImageStyles.map(({ styles }) => styles).join("\n") +
+    containerStyles
+  }</style>`;
 
   const htmlElement = `<${tag} class="astro-imagetools-background-image ${className}">${content}</${tag}>`;
 
