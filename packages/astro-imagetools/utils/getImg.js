@@ -11,7 +11,7 @@ export default function getImg(
   imagesizes,
   fadeInTransition,
   layoutStyle,
-  { imgClassName = "", isBackgroundPicture = false } = {}
+  { imgClassName = "" } = {}
 ) {
   return `<img
     src="${src}"

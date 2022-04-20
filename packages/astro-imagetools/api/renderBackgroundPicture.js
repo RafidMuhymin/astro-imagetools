@@ -78,8 +78,7 @@ export default async function renderBackgroundPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyles,
-            { isBackgroundPicture: true }
+            layoutStyles
           )
         : `<source
             srcset="${srcset}"
