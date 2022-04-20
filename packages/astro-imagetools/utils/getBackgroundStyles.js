@@ -58,13 +58,16 @@ export default function getBackgroundStyles(
 
   const dynamicStyles = images
     .map(({ media, fallback, object }) => {
+      const elementSelector = className + (fadeInTransition ? " img" : ""),
+        backgroundElementSelector = className + (fadeInTransition ? "::after" : "");
+
       const style = `
-        .${className + (fadeInTransition ? " img" : "")} {
+        .${elementSelector} {
           object-fit: ${object?.fit || objectFit};
           object-position: ${object?.position || objectPosition};
         }
 
-        .${className + (fadeInTransition ? "::after" : "")} {
+        .${backgroundElementSelector} {
           background-size: ${object?.fit || objectFit};
           background-image: url("${encodeURI(fallback)}");
           background-position: ${object?.position || objectPosition};
