@@ -1,8 +1,5 @@
 // @ts-check
-import {
-  supportedConfigs,
-  GlobalConfigOptions,
-} from "../runtimeChecks.js";
+import { supportedConfigs, GlobalConfigOptions } from "../runtimeChecks.js";
 import filterConfigs from "./filterConfigs.js";
 
 const NonProperties = {
@@ -96,7 +93,7 @@ export default function getFilteredProps(type, props) {
     objectPosition = "50% 50%",
     backgroundSize = "cover",
     backgroundPosition = "50% 50%",
-    format = type === "Picture" ? ["avif", "webp"] : undefined,
+    format = type === "Img" ? undefined : ["avif", "webp"],
     fallbackFormat,
     includeSourceFormat = true,
     formatOptions = {
