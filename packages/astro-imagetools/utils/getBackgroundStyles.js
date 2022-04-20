@@ -28,6 +28,8 @@ export default function getBackgroundStyles(
 
     .${className} {
       --opacity: 1;
+      --z-index: auto;
+
     }
 
     .${className}::after {
@@ -50,7 +52,7 @@ export default function getBackgroundStyles(
             })()
       };
       opacity: var(--opacity);
-      z-index: 1;
+      z-index: var(--z-index);
     }
   `;
 
