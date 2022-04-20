@@ -83,14 +83,16 @@ export default async function renderBackgroundImage(props) {
 
         const styles = sources
           .map(
-            ({ format, path }) => `
-              .${format} .${className} {
-                background-repeat: no-repeat;
-                background-image: url(${path}), var(${fallbackUrlCustomVariable});
-                background-size: ${backgroundSize};
-                background-position: ${backgroundPosition};
-              }
-            `
+            ({ format, path }, i) =>
+              `
+                ${i !== sources.length - 1 ? `.${format} ` : ""}.${className} {
+                  background-repeat: no-repeat;
+                  background-image: url(${path}),
+                    var(${fallbackUrlCustomVariable});
+                  background-size: ${backgroundSize};
+                  background-position: ${backgroundPosition};
+                }
+              `
           )
           .reverse()
           .join("");
