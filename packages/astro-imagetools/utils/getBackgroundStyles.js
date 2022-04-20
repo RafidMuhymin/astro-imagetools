@@ -16,13 +16,14 @@ export default function getBackgroundStyles(
     ? ""
     : `
     ${
-      isBackgroundPicture &&
-      `
+      isBackgroundPicture
+        ? `
         .astro-imagetools-background-picture * {
           z-index: 1;
           position: relative;
         }
       `
+        : ""
     }
 
     .${className} {
