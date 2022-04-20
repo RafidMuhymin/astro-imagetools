@@ -101,8 +101,27 @@ declare interface ImageToolsConfigs {
     | "attention";
 }
 
+declare interface ObjectStyles {
+  objectPosition?: string;
+  objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down";
+}
+
+declare interface BackgroundStyles {
+  backgroundPosition?: string;
+  backgroundSize?: "fill" | "contain" | "cover" | "none" | "scale-down";
+}
+
 declare interface ArtDirective
   extends PrimaryProps,
+    ObjectStyles,
+    PictureFormatOptions,
+    ImageToolsConfigs {
+  media: string;
+}
+
+declare interface BackgroundImageArtDirective
+  extends PrimaryProps,
+    BackgroundStyles,
     PictureFormatOptions,
     ImageToolsConfigs {
   media: string;
@@ -119,8 +138,6 @@ declare type breakpointsFunction = {
 declare interface PrimaryProps {
   src: string;
   sizes?: string | sizesFunction;
-  objectPosition?: string;
-  objectFit?: "fill" | "contain" | "cover" | "none" | "scale-down";
   placeholder?: "dominantColor" | "blurred" | "tracedSVG" | "none";
   breakpoints?:
     | number[]
@@ -142,6 +159,7 @@ declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
 
 export interface PictureConfigOptions
   extends ConfigOptions,
+    ObjectStyles,
     PictureFormatOptions {
   artDirectives?: ArtDirective[];
   fadeInTransition?:
@@ -153,16 +171,14 @@ export interface PictureConfigOptions
       };
 }
 
-export interface ImgConfigOptions extends ConfigOptions, ImgFormatOptions {}
+export interface ImgConfigOptions
+  extends ConfigOptions,
+    ObjectStyles,
+    ImgFormatOptions {}
 
 declare interface BackgroundProps {
   tag?: string;
   content?: string;
-}
-
-declare interface BackgroundStyles {
-  backgroundPosition?: string;
-  backgroundSize?: "fill" | "contain" | "cover" | "none" | "scale-down";
 }
 
 export interface BackgroundImageConfigOptions
@@ -179,9 +195,12 @@ export interface BackgroundImageConfigOptions
         | "layout"
         | "objectFit"
         | "objectPosition"
+        | "artDirective"
         | "fadeInTransition"
       >
-    > {}
+    > {
+  artDirectives?: BackgroundImageArtDirective[];
+}
 
 export interface BackgroundPictureConfigOptions
   extends BackgroundProps,
