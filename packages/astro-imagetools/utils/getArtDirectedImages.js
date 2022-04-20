@@ -25,6 +25,8 @@ export default async function getArtDirectedImages(
         breakpoints: directiveBreakpoints,
         objectFit,
         objectPosition,
+        backgroundSize,
+        backgroundPosition,
         format: directiveFormat,
         fallbackFormat: directiveFallbackFormat,
         includeSourceFormat: directiveIncludeSourceFormat,
@@ -84,6 +86,11 @@ export default async function getArtDirectedImages(
           position: objectPosition,
         };
 
+        const background = {
+          size: backgroundSize,
+          position: backgroundPosition,
+        };
+
         const fallback = await getFallbackImage(
           path,
           directivePlaceholder || placeholder,
@@ -92,6 +99,20 @@ export default async function getArtDirectedImages(
           { ...formatOptions, ...directiveFormatOptions },
           { ...rest, ...rest2 }
         );
+
+        const returnValue = {
+          media,
+          sources,
+          sizes,
+          fallback,
+          imagesizes,
+        };
+
+        const isBackgroundImage = !!backgroundSize || !!backgroundPosition;
+
+        isBackgroundImage
+          ? (returnValue.background = background)
+          : (returnValue.object = object);
 
         return {
           media,
