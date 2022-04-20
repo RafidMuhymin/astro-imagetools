@@ -28,7 +28,18 @@ export default function getBackgroundStyles(
 
     .${className} {
       --opacity: 1;
-      --z-index: 1;
+      --z-index: ${isBackgroundPicture ? 1 : 0};
+    }
+
+    ${
+      !isBackgroundPicture
+        ? `
+            .${className} img {
+              z-index: 1;
+              position: relative;
+            }
+          `
+        : ""
     }
 
     .${className}::after {
@@ -58,7 +69,8 @@ export default function getBackgroundStyles(
   const dynamicStyles = images
     .map(({ media, fallback, object }) => {
       const elementSelector = className + (fadeInTransition ? " img" : ""),
-        backgroundElementSelector = className + (fadeInTransition ? "::after" : "");
+        backgroundElementSelector =
+          className + (fadeInTransition ? "::after" : "");
 
       const style = `
         .${elementSelector} {

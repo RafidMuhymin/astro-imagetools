@@ -26,14 +26,13 @@ export default function getImg(
     style="display: inline-block; overflow: hidden;${layoutStyle}"
     ${
       !imgClassName && style
-        ? `${
-            !isBackgroundPicture
-              ? `onerror="parentElement.style.setProperty('--z-index', -1)"`
-              : ""
-          }
-          onload="${
+        ? `onload="${
             fadeInTransition
-              ? `parentElement.style.setProperty('--opacity', 0)`
+              ? `${
+                  !isBackgroundPicture
+                    ? "parentElement.style.setProperty('--z-index', 1);"
+                    : ""
+                }parentElement.style.setProperty('--opacity', 0);`
               : ""
           }"
           `
