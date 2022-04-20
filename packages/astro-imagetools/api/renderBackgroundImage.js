@@ -45,14 +45,12 @@ export default async function renderBackgroundImage(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const fallbackStyles = "";
-
   const link = getLink(images, preload, imagesizes);
 
-  const backgroundImageStyles = images.map(({ media, sources, fallback }) => {
+  const backgroundImageStyles = images.map(({ media, sources }) => {
     const uuid = crypto.randomBytes(4).toString("hex").toUpperCase();
 
-    const fallbackUrlCustomVariable = `--astro-imagetools-background-image-${uuid}-fallback-url`;
+    const fallbackUrlCustomVariable = `--astro-imagetools-background-image-fallback-url${uuid}`;
 
     const newSources = {};
 
@@ -127,9 +125,7 @@ export default async function renderBackgroundImage(props) {
           const fallbackUrlCustomVariable =
             backgroundImageStyles[i].fallbackUrlCustomVariable;
 
-          return `${fallbackUrlCustomVariable}: url("${encodeURI(
-            fallback
-          )}");`;
+          return `${fallbackUrlCustomVariable}: url("${encodeURI(fallback)}");`;
         })
         .join("\n")}
     }
