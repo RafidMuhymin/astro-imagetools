@@ -18,17 +18,17 @@ export default function getBackgroundStyles(
     ${
       isBackgroundPicture
         ? `
-        .astro-imagetools-background-picture * {
-          z-index: 1;
-          position: relative;
-        }
-      `
+            .astro-imagetools-background-picture * {
+              z-index: 1;
+              position: relative;
+            }
+          `
         : ""
     }
 
     .${className} {
       --opacity: 1;
-      --z-index: ${isBackgroundPicture ? 1 : 0};
+      --z-index: 0;
     }
 
     ${

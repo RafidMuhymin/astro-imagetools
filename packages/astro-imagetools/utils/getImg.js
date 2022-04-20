@@ -28,11 +28,7 @@ export default function getImg(
       !imgClassName && style
         ? `onload="${
             fadeInTransition
-              ? `${
-                  !isBackgroundPicture
-                    ? "parentElement.style.setProperty('--z-index', 1);"
-                    : ""
-                }parentElement.style.setProperty('--opacity', 0);`
+              ? `parentElement.style.setProperty('--z-index', 1);parentElement.style.setProperty('--opacity', 0);`
               : ""
           }"
           `
