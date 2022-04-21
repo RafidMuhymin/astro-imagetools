@@ -86,6 +86,7 @@ export default function getFilteredProps(type, props) {
     preload,
     loading = preload ? "eager" : "lazy",
     decoding = "async",
+    attributes = {},
     layout = "constrained",
     placeholder = "blurred",
     breakpoints,
@@ -108,9 +109,10 @@ export default function getFilteredProps(type, props) {
 
   // prettier-ignore
   const allProps = {
-    src, alt, tag, content, sizes, preload, loading, decoding, layout, placeholder, breakpoints,
-    objectFit, objectPosition, backgroundSize, backgroundPosition, format, fallbackFormat,
-    includeSourceFormat, formatOptions, fadeInTransition, artDirectives, ...transformConfigs,
+    src, alt, tag, content, sizes, preload, loading, decoding, attributes, layout, placeholder,
+    breakpoints, objectFit, objectPosition, backgroundSize, backgroundPosition, format,
+    fallbackFormat, includeSourceFormat, formatOptions, fadeInTransition, artDirectives,
+    ...transformConfigs,
   };
 
   const filteredProps = filterConfigs(

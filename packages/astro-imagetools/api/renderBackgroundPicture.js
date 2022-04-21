@@ -1,10 +1,12 @@
 // @ts-check
-import getImg from "../utils/getImg.js";
+import getImgElement from "../utils/getImgElement.js";
 import getLinkElement from "../utils/getLinkElement.js";
 import getImage from "../utils/getImage.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
+import getStyleElement from "../utils/getStyleElement.js";
+import getContainerElement from "../utils/getContainerElement.js";
 
 export default async function renderBackgroundPicture(props) {
   const type = "BackgroundPicture";
@@ -19,6 +21,7 @@ export default async function renderBackgroundPicture(props) {
     preload,
     loading,
     decoding,
+    attributes,
     placeholder,
     breakpoints,
     objectFit,
@@ -30,6 +33,14 @@ export default async function renderBackgroundPicture(props) {
     fadeInTransition,
     artDirectives,
   } = filteredProps;
+
+  const {
+    img: imgAttributes = {},
+    link: linkAttributes = {},
+    style: styleAttributes = {},
+    picture: pictureAttributes = {},
+    container: containerAttributes = {},
+  } = attributes;
 
   const { uuid, images } = await getImage({
     src,
@@ -49,7 +60,7 @@ export default async function renderBackgroundPicture(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const style = getBackgroundStyles(
+  const backgroundStyles = getBackgroundStyles(
     images,
     className,
     objectFit,
@@ -58,7 +69,9 @@ export default async function renderBackgroundPicture(props) {
     { isBackgroundPicture: true }
   );
 
-  const link = getLinkElement(images, preload, imagesizes);
+  const style = getStyleElement({ styleAttributes, backgroundStyles });
+
+  const link = getLinkElement({ images, preload, imagesizes, linkAttributes });
 
   const layoutStyles = getLayoutStyles({ isBackgroundImage: true });
 
@@ -68,7 +81,7 @@ export default async function renderBackgroundPicture(props) {
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>
       src
-        ? getImg(
+        ? getImgElement({
             src,
             alt,
             sizes,
@@ -78,8 +91,9 @@ export default async function renderBackgroundPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyles
-          )
+            layoutStyles,
+            imgAttributes,
+          })
         : `<source
             srcset="${srcset}"
             sizes="${imagesizes}"
@@ -97,9 +111,12 @@ export default async function renderBackgroundPicture(props) {
     >${sources.join("\n")}
   </picture>`;
 
-  const htmlElement = `<${tag} class="astro-imagetools-background-picture" style="position: relative;">${
-    picture + content
-  }</${tag}>`;
+  const htmlElement = getContainerElement({
+    tag,
+    content: picture + content,
+    containerAttributes,
+    isBackgroundPicture: true,
+  });
 
   return { link, style, htmlElement };
 }
