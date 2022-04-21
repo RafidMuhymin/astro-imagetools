@@ -1,11 +1,44 @@
+---
+import { Markdown } from "astro/components";
+import CodeExample from "../CodeExample.astro";
+
+const { api, component } = Astro.props;
+
+const dynamicText = component
+  ? `${"`"}<${component} />${"`"} component`
+  : `${"`"}render${api}${"`"} API`;
+
+const isPicture =
+  Astro.props.component === "Picture" || Astro.props.api === "renderPicture";
+
+const isBackgroundImage =
+  Astro.props.component === "BackgroundImage" ||
+  Astro.props.api === "renderBackgroundImage";
+---
+
 <!-- prettier-ignore -->
 <Markdown>
   ### `artDirectives`
 
   **Type:** `ArtDirective[]`
+</Markdown>
 
-  *An `ArtDirective` object can take all the props supported by the `<Picture />` component except `alt`, `preload`, `loading`, `decoding`, `layout`, and `fadeInTransition`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+<!-- prettier-ignore -->
+{isPicture ? (
+  <Markdown>
+    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `alt`, `preload`, `loading`, `decoding`, `attributes`, `layout`, and `fadeInTransition`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  </Markdown>
+) : isBackgroundImage ? (
+  <Markdown>
+    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `attributes`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  </Markdown>
+) : (
+  <Markdown>
+    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `preload`, `loading`, `decoding`, `attributes`, and `fadeInTransition`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  </Markdown>
+)}
 
+<Markdown>
   **Default:** `undefined`
 
   The list of art directions to be applied to the generated picture.
