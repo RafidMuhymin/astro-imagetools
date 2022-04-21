@@ -12,8 +12,15 @@ const NonProperties = {
     "includeSourceFormat",
     "fadeInTransition",
     "artDirectives",
+    "cacheDir",
   ],
-  Picture: ["tag", "content", "backgroundSize", "backgroundPosition"],
+  Picture: [
+    "tag",
+    "content",
+    "backgroundSize",
+    "backgroundPosition",
+    "cacheDir",
+  ],
   BackgroundImage: [
     "alt",
     "loading",
@@ -22,8 +29,14 @@ const NonProperties = {
     "objectFit",
     "objectPosition",
     "fadeInTransition",
+    "cacheDir",
   ],
-  BackgroundPicture: ["alt", "backgroundSize", "backgroundPosition"],
+  BackgroundPicture: [
+    "alt",
+    "backgroundSize",
+    "backgroundPosition",
+    "cacheDir",
+  ],
 };
 
 const ImgProperties = supportedConfigs.filter(

@@ -1,16 +1,8 @@
 // @ts-check
+import fs from "fs";
 import path from "path";
 import findCacheDir from "find-cache-dir";
 import filterConfigs from "./utils/filterConfigs.js";
-
-// CWD
-export const cwd = process.cwd().split(path.sep).join(path.posix.sep);
-
-// FS Cache related checks
-export const fsCachePath = findCacheDir({
-  name: "astro-imagetools/",
-  create: true,
-});
 
 // Sharp related checks
 export const sharp = await (async () => {
@@ -40,6 +32,7 @@ export const supportedConfigs = [
   "fadeInTransition", "artDirectives", "flip", "flop", "invert", "flatten", "normalize",
   "grayscale", "hue", "saturation", "brightness", "w", "h", "ar", "width", "height", "aspect",
   "background", "tint", "blur", "median", "rotate", "quality", "fit", "kernel", "position",
+  "cacheDir"
 ];
 
 const posixPath = process.cwd() + "/astro-imagetools.config";
@@ -71,3 +64,20 @@ const GlobalConfigOptions = filterConfigs(
 );
 
 export { GlobalConfigOptions };
+
+// CWD
+export const cwd = process.cwd().split(path.sep).join(path.posix.sep);
+
+const { cacheDir } = GlobalConfigOptions;
+
+// FS Cache related checks
+const fsCachePath =
+  (cacheDir
+    ? cwd + cacheDir
+    : findCacheDir({
+        name: "astro-imagetools",
+      })) + "/";
+
+fs.existsSync(fsCachePath) || fs.mkdirSync(fsCachePath, { recursive: true });
+
+export { fsCachePath };
