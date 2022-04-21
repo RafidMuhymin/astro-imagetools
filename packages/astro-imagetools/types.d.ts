@@ -1,9 +1,9 @@
 import {
+  HTMLAttributes,
+  AllHTMLAttributes,
   ImgHTMLAttributes,
   LinkHTMLAttributes,
   StyleHTMLAttributes,
-  HTMLAttributes,
-  AllHTMLAttributes,
 } from "babel-plugin-react-html-attrs";
 
 declare type format =

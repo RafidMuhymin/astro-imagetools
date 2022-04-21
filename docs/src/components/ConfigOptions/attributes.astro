@@ -1,0 +1,158 @@
+---
+import { Markdown } from "astro/components";
+import CodeExample from "../CodeExample.astro";
+
+const isImg =
+  Astro.props.component === "Img" || Astro.props.api === "renderImg";
+
+const isPicture =
+  Astro.props.component === "Picture" || Astro.props.api === "renderPicture";
+
+const isBackgroundImage =
+  Astro.props.component === "BackgroundImage" ||
+  Astro.props.api === "renderBackgroundImage";
+---
+
+<Markdown>
+  ### `attributes`
+
+  **Type:**
+</Markdown>
+
+<!-- prettier-ignore -->
+{isImg ? (
+<Markdown>
+  ```ts
+  import {
+    ImgHTMLAttributes,
+    LinkHTMLAttributes,
+    StyleHTMLAttributes,
+  } from "babel-plugin-react-html-attrs";
+
+  declare interface Attributes {
+    style?: StyleHTMLAttributes<HTMLStyleElement>;
+    link?: Omit<
+      LinkHTMLAttributes<HTMLLinkElement>,
+      "as" | "rel" | "imagesizes" | "imagesrcset"
+    >;
+    img?: Omit<
+      ImgHTMLAttributes<HTMLImageElement>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+) : isPicture ? (
+<Markdown>
+  ```ts
+  import {
+    HTMLAttributes,
+    ImgHTMLAttributes,
+    LinkHTMLAttributes,
+    StyleHTMLAttributes,
+  } from "babel-plugin-react-html-attrs";
+
+  declare interface Attributes {
+    picture?: HTMLAttributes<HTMLPictureElement>;
+    style?: StyleHTMLAttributes<HTMLStyleElement>;
+    link?: Omit<
+      LinkHTMLAttributes<HTMLLinkElement>,
+      "as" | "rel" | "imagesizes" | "imagesrcset"
+    >;
+    img?: Omit<
+      ImgHTMLAttributes<HTMLImageElement>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+) : isBackgroundImage ? (
+<Markdown>
+  ```ts
+  import {
+    AllHTMLAttributes,
+    LinkHTMLAttributes,
+    StyleHTMLAttributes,
+  } from "babel-plugin-react-html-attrs";
+
+  declare interface Attributes {
+    container?: AllHTMLAttributes<HTMLElement>;
+    style?: StyleHTMLAttributes<HTMLStyleElement>;
+    link?: Omit<
+      LinkHTMLAttributes<HTMLLinkElement>,
+      "as" | "rel" | "imagesizes" | "imagesrcset"
+    >;
+  }
+  ```
+</Markdown>
+) : (
+<Markdown>
+  ```ts
+  import {
+    HTMLAttributes,
+    AllHTMLAttributes,
+    ImgHTMLAttributes,
+    LinkHTMLAttributes,
+    StyleHTMLAttributes,
+  } from "babel-plugin-react-html-attrs";
+  
+  declare interface Attributes {
+    container?: AllHTMLAttributes<HTMLElement>;
+    picture?: HTMLAttributes<HTMLPictureElement>;
+    style?: StyleHTMLAttributes<HTMLStyleElement>;
+    link?: Omit<
+      LinkHTMLAttributes<HTMLLinkElement>,
+      "as" | "rel" | "imagesizes" | "imagesrcset"
+    >;
+    img?: Omit<
+      ImgHTMLAttributes<HTMLImageElement>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+)}
+
+<Markdown>
+  **Default:** `{}`
+
+  The HTML attributes to add to the generate elements. If the `class`, `style`, and `onload` attributes are present, the values passed via this config will be merged.
+
+  **Code Example:**
+</Markdown>
+
+<CodeExample
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/1024/768",
+      alt: "A random image",
+      attributes: `{
+    style: {
+      media: "all"
+    }
+  }`,
+    },
+  ]}
+/>

@@ -7,6 +7,7 @@ import Sizes from "@config/sizes.astro";
 import Preload from "@config/preload.astro";
 import Loading from "@config/loading.astro";
 import Decoding from "@config/decoding.astro";
+import Attributes from "@config/attributes.astro";
 import Layout from "@config/layout.astro";
 import Placeholder from "@config/placeholder.astro";
 import BreakPoints from "@config/breakpoints.astro";
@@ -63,6 +64,7 @@ const isNotImg = component !== "Img" && api !== "renderImg";
 <Preload {...props} />
 {!isBackgroundImage && <Loading {...props} />}
 {!isBackgroundImage && <Decoding {...props} />}
+<Attributes {...props} />
 {!isBackground && <Layout {...props} />}
 <Placeholder {...props} />
 <BreakPoints {...props} />
