@@ -1,35 +1,70 @@
 // @ts-check
+import printWarning from "./printWarning.js";
 
 export default function getBreakpoints(breakpoints, imageWidth) {
   if (Array.isArray(breakpoints)) {
     return breakpoints.sort((a, b) => a - b);
   }
 
-  const { count, minWidth, maxWidth } = breakpoints || {};
+  const { count, minWidth = 320 } = breakpoints || {};
 
-  let current = minWidth || 320;
-  const max = maxWidth || imageWidth;
-  let n = count || (max < 400 ? 1 : max < 640 ? 2 : 3);
+  const maxWidth = (() => {
+    if (breakpoints?.maxWidth) return breakpoints.maxWidth;
 
-  const diff = max - current;
+    if (imageWidth > 3840) {
+      printWarning(
+        null,
+        null,
+        "The width of the source image is greater than 3840px. The generated breakpoints will be capped at 3840px. If you need breakpoints larger than this, please pass the maxWidth option to the breakpoints property."
+      );
+
+      return 3840;
+    }
+
+    return imageWidth;
+  })();
+
   const breakPoints = [];
-  let steps = 0;
 
-  for (let i = 1; i < n; i++) {
-    steps += i;
-  }
+  const diff = maxWidth - minWidth;
+
+  const steps =
+    count ||
+    (maxWidth <= 400
+      ? 1
+      : maxWidth <= 640
+      ? 2
+      : maxWidth <= 800
+      ? 3
+      : maxWidth <= 1024
+      ? 4
+      : maxWidth <= 1280
+      ? 5
+      : maxWidth <= 1440
+      ? 6
+      : maxWidth <= 1920
+      ? 7
+      : maxWidth <= 2560
+      ? 8
+      : maxWidth <= 2880
+      ? 9
+      : maxWidth <= 3840
+      ? 10
+      : 11);
 
   const pixelsPerStep = diff / steps;
 
-  n > 1 && breakPoints.push(current);
+  let currentWidth = minWidth;
 
-  for (let i = 1; i < n - 1; i++) {
-    const next = pixelsPerStep * (n - i) + current;
+  steps > 1 && breakPoints.push(currentWidth);
+
+  for (let i = 1; i < steps - 1; i++) {
+    const next = pixelsPerStep * (steps - i) + currentWidth;
     breakPoints.push(Math.round(next));
-    current = next;
+    currentWidth = next;
   }
 
-  breakPoints.push(max);
+  breakPoints.push(maxWidth);
 
   return [...new Set(breakPoints)];
 }
