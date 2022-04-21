@@ -1,6 +1,5 @@
 // @ts-check
-
-import getAttributesString from "./getAttributes";
+import getAttributesString from "./getAttributesString.js";
 
 export default function getPictureElement({
   sources,
