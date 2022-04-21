@@ -32,10 +32,15 @@ const colours = {
   },
 };
 
-export default function printWarning(key, type) {
+export default function printWarning(key, type, message) {
   console.log(
-    colours.bright + colours.fg.cyan + "[astro-imagetools]" + colours.reset,
-    colours.bg.yellow + ` ${key} ` + colours.reset,
-    colours.fg.yellow + `is not a valid ${type} Config Option` + colours.reset
+    colours.bright +
+      colours.fg.cyan +
+      "[astro-imagetools]" +
+      colours.reset +
+      (message ? "" : " " + colours.bg.yellow + ` ${key} ` + colours.reset),
+    colours.fg.yellow +
+      (message || `is not a valid ${type} Config Option`) +
+      colours.reset
   );
 }
