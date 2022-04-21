@@ -1,10 +1,11 @@
 // @ts-check
-import getImg from "../utils/getImg.js";
+import getImgElement from "../utils/getImgElement.js";
 import getLinkElement from "../utils/getLinkElement.js";
 import getImage from "../utils/getImage.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
+import getStyleElement from "../utils/getStyleElement.js";
 
 export default async function renderImg(props) {
   const type = "Img";
@@ -18,6 +19,7 @@ export default async function renderImg(props) {
     preload,
     loading,
     decoding,
+    attributes,
     layout,
     breakpoints,
     placeholder,
@@ -31,6 +33,12 @@ export default async function renderImg(props) {
     fallbackFormat = format,
     fadeInTransition = false,
     includeSourceFormat = false;
+
+  const {
+    img: imgAttributes = {},
+    link: linkAttributes = {},
+    style: styleAttributes = {},
+  } = attributes;
 
   const { uuid, images } = await getImage({
     src,
@@ -50,7 +58,7 @@ export default async function renderImg(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const style = getBackgroundStyles(
+  const backgroundStyles = getBackgroundStyles(
     images,
     className,
     objectFit,
@@ -58,13 +66,15 @@ export default async function renderImg(props) {
     fadeInTransition
   );
 
-  const link = getLinkElement(images, preload, imagesizes);
+  const style = getStyleElement({ styleAttributes, backgroundStyles });
+
+  const link = getLinkElement({ images, preload, imagesizes, linkAttributes });
 
   const layoutStyles = getLayoutStyles({ layout });
 
   const sources = images.flatMap(({ sources, sizes, imagesizes }) =>
     sources.map(({ src, srcset }) =>
-      getImg(
+      getImgElement({
         src,
         alt,
         sizes,
@@ -75,8 +85,9 @@ export default async function renderImg(props) {
         imagesizes,
         fadeInTransition,
         layoutStyles,
-        { imgClassName: className }
-      )
+        imgAttributes,
+        imgClassName: className,
+      })
     )
   );
 

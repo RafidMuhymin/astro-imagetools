@@ -3,6 +3,8 @@ import crypto from "crypto";
 import getLinkElement from "../utils/getLinkElement.js";
 import getImage from "../utils/getImage.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
+import getStyleElement from "../utils/getStyleElement.js";
+import getContainerElement from "../utils/getContainerElement.js";
 
 export default async function renderBackgroundImage(props) {
   const type = "BackgroundImage";
@@ -14,6 +16,7 @@ export default async function renderBackgroundImage(props) {
     tag,
     content,
     preload,
+    attributes,
     placeholder,
     breakpoints,
     backgroundSize,
@@ -24,6 +27,12 @@ export default async function renderBackgroundImage(props) {
     formatOptions,
     artDirectives,
   } = filteredProps;
+
+  const {
+    link: linkAttributes = {},
+    style: styleAttributes = {},
+    container: containerAttributes = {},
+  } = attributes;
 
   const sizes = "";
 
@@ -45,9 +54,9 @@ export default async function renderBackgroundImage(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const link = getLinkElement(images, preload, imagesizes);
+  const link = getLinkElement({ images, preload, imagesizes, linkAttributes });
 
-  const backgroundImageStyles = images.map(({ media, sources }) => {
+  const backgroundImageStylesArray = images.map(({ media, sources }) => {
     const uuid = crypto.randomBytes(4).toString("hex").toUpperCase();
 
     const fallbackUrlCustomVariable = `--astro-imagetools-background-image-fallback-url${uuid}`;
@@ -125,7 +134,7 @@ export default async function renderBackgroundImage(props) {
       ${images
         .map(({ fallback }, i) => {
           const fallbackUrlCustomVariable =
-            backgroundImageStyles[i].fallbackUrlCustomVariable;
+            backgroundImageStylesArray[i].fallbackUrlCustomVariable;
 
           return `${fallbackUrlCustomVariable}: url("${encodeURI(fallback)}");`;
         })
@@ -133,12 +142,18 @@ export default async function renderBackgroundImage(props) {
     }
   `;
 
-  const style = `<style>${
-    backgroundImageStyles.map(({ styles }) => styles).join("\n") +
-    containerStyles
-  }</style>`;
+  const backgroundStyles =
+    backgroundImageStylesArray.map(({ styles }) => styles).join("\n") +
+    containerStyles;
 
-  const htmlElement = `<${tag} class="astro-imagetools-background-image ${className}">${content}</${tag}>`;
+  const style = getStyleElement({ styleAttributes, backgroundStyles });
+
+  const htmlElement = getContainerElement({
+    tag,
+    content,
+    className,
+    containerAttributes,
+  });
 
   return { link, style, htmlElement };
 }
