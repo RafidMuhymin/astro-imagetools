@@ -32,15 +32,26 @@ const colours = {
   },
 };
 
-export default function printWarning(key, type, message) {
-  console.log(
-    colours.bright +
-      colours.fg.cyan +
-      "[astro-imagetools]" +
-      colours.reset +
-      (message ? "" : " " + colours.bg.yellow + ` ${key} ` + colours.reset),
+export default function printWarning({
+  key = "",
+  type = "",
+  message = "",
+  element = "",
+}) {
+  const flag =
+    colours.bright + colours.fg.cyan + "[astro-imagetools]" + colours.reset;
+
+  const keyLog = key
+    ? " " + colours.bg.yellow + ` ${key} ` + colours.reset
+    : "";
+
+  const messageLog =
     colours.fg.yellow +
-      (message || `is not a valid ${type} Config Option`) +
-      colours.reset
-  );
+    (message ||
+      (!element
+        ? `is not a valid ${type} Config Option`
+        : `can't be defined inside attributes.${element}`)) +
+    colours.reset;
+
+  console.log(flag + keyLog, messageLog);
 }

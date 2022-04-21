@@ -14,7 +14,9 @@ export default function getContainerElement({
     ...restContainerAttributes
   } = containerAttributes;
 
-  const attributesString = getAttributesString(restContainerAttributes);
+  const attributesString = getAttributesString({
+    attributes: restContainerAttributes,
+  });
 
   const classAttribute = [
     isBackgroundPicture

@@ -15,7 +15,9 @@ export default function getPictureElement({
     ...restPictureAttributes
   } = pictureAttributes;
 
-  const attributesString = getAttributesString(restPictureAttributes);
+  const attributesString = getAttributesString({
+    attributes: restPictureAttributes,
+  });
 
   const classAttribute = ["astro-imagetools-picture", className, customClasses]
     .join(" ")

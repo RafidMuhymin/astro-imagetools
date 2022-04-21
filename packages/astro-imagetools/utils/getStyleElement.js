@@ -5,7 +5,9 @@ export default function getStyleElement({
   styleAttributes,
   backgroundStyles = "",
 }) {
-  const attributesString = getAttributesString(styleAttributes);
+  const attributesString = getAttributesString({
+    attributes: styleAttributes,
+  });
 
   const styleElement = `<style ${attributesString}>${backgroundStyles}</style>`;
 

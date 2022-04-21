@@ -11,12 +11,11 @@ export default function getLinkElement({
     preload &&
     images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
-  const attributesString = getAttributesString(linkAttributes, [
-    "as",
-    "rel",
-    "imagesizes",
-    "imagesrcset",
-  ]);
+  const attributesString = getAttributesString({
+    element: "link",
+    attributes: linkAttributes,
+    excludeArray: ["as", "rel", "imagesizes", "imagesrcset"],
+  });
 
   const linkElement = preload
     ? `<link

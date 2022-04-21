@@ -23,16 +23,20 @@ export default function getImgElement({
     ...restImgAttributes
   } = imgAttributes;
 
-  const attributesString = getAttributesString(restImgAttributes, [
-    "src",
-    "alt",
-    "srcset",
-    "sizes",
-    "width",
-    "height",
-    "loading",
-    "decoding",
-  ]);
+  const attributesString = getAttributesString({
+    attributes: restImgAttributes,
+    element: "img",
+    excludeArray: [
+      "src",
+      "alt",
+      "srcset",
+      "sizes",
+      "width",
+      "height",
+      "loading",
+      "decoding",
+    ],
+  });
 
   const classAttribute = ["astro-imagetools-img", imgClassName, customClasses]
     .join(" ")
@@ -47,13 +51,8 @@ export default function getImgElement({
     .trim();
 
   const onloadAttribute = [
-    !imgClassName && style
-      ? `onload="${
-          fadeInTransition
-            ? `parentElement.style.setProperty('--z-index', 1);parentElement.style.setProperty('--opacity', 0);`
-            : ""
-        }"
-          `
+    !imgClassName && style && fadeInTransition
+      ? `parentElement.style.setProperty('--z-index', 1);parentElement.style.setProperty('--opacity', 0);`
       : "",
     customOnload,
   ]
@@ -72,7 +71,7 @@ export default function getImgElement({
     ${decoding ? `decoding="${decoding}"` : ""}
     class="${classAttribute}"
     style="${styleAttribute}"
-    onload=${onloadAttribute}
+    onload="${onloadAttribute}"
   />`;
 
   return imgElement;
