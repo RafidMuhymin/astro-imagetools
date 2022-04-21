@@ -41,6 +41,7 @@
   "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
+    "@types/babel-plugin-react-html-attrs": "^3.0.4",
     "file-type": "17.1.1",
     "find-cache-dir": "3.3.2",
     "object-hash": "3.0.0",
