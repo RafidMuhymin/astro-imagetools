@@ -1,11 +1,3 @@
-import {
-  HTMLAttributes,
-  AllHTMLAttributes,
-  ImgHTMLAttributes,
-  LinkHTMLAttributes,
-  StyleHTMLAttributes,
-} from "babel-plugin-react-html-attrs";
-
 declare type format =
   | "heic"
   | "heif"
@@ -166,15 +158,12 @@ declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
 }
 
 declare interface Attributes {
-  container?: AllHTMLAttributes<HTMLElement>;
-  picture?: HTMLAttributes<HTMLPictureElement>;
-  style?: StyleHTMLAttributes<HTMLStyleElement>;
-  link?: Omit<
-    LinkHTMLAttributes<HTMLLinkElement>,
-    "as" | "rel" | "imagesizes" | "imagesrcset"
-  >;
+  container?: Record<any, string>;
+  picture?: Record<any, string>;
+  style?: Record<any, string>;
+  link?: Omit<Record<any, string>, "as" | "rel" | "imagesizes" | "imagesrcset">;
   img?: Omit<
-    ImgHTMLAttributes<HTMLImageElement>,
+    Record<any, string>,
     | "src"
     | "alt"
     | "srcset"
