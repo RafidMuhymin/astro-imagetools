@@ -23,20 +23,11 @@ const isBackgroundImage =
 {isImg ? (
 <Markdown>
   ```ts
-  import {
-    ImgHTMLAttributes,
-    LinkHTMLAttributes,
-    StyleHTMLAttributes,
-  } from "babel-plugin-react-html-attrs";
-
   declare interface Attributes {
-    style?: StyleHTMLAttributes<HTMLStyleElement>;
-    link?: Omit<
-      LinkHTMLAttributes<HTMLLinkElement>,
-      "as" | "rel" | "imagesizes" | "imagesrcset"
-    >;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
     img?: Omit<
-      ImgHTMLAttributes<HTMLImageElement>,
+      Record<any, any>,
       | "src"
       | "alt"
       | "srcset"
@@ -52,22 +43,12 @@ const isBackgroundImage =
 ) : isPicture ? (
 <Markdown>
   ```ts
-  import {
-    HTMLAttributes,
-    ImgHTMLAttributes,
-    LinkHTMLAttributes,
-    StyleHTMLAttributes,
-  } from "babel-plugin-react-html-attrs";
-
   declare interface Attributes {
-    picture?: HTMLAttributes<HTMLPictureElement>;
-    style?: StyleHTMLAttributes<HTMLStyleElement>;
-    link?: Omit<
-      LinkHTMLAttributes<HTMLLinkElement>,
-      "as" | "rel" | "imagesizes" | "imagesrcset"
-    >;
+    picture?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
     img?: Omit<
-      ImgHTMLAttributes<HTMLImageElement>,
+      Record<any, any>,
       | "src"
       | "alt"
       | "srcset"
@@ -83,43 +64,23 @@ const isBackgroundImage =
 ) : isBackgroundImage ? (
 <Markdown>
   ```ts
-  import {
-    AllHTMLAttributes,
-    LinkHTMLAttributes,
-    StyleHTMLAttributes,
-  } from "babel-plugin-react-html-attrs";
-
   declare interface Attributes {
-    container?: AllHTMLAttributes<HTMLElement>;
-    style?: StyleHTMLAttributes<HTMLStyleElement>;
-    link?: Omit<
-      LinkHTMLAttributes<HTMLLinkElement>,
-      "as" | "rel" | "imagesizes" | "imagesrcset"
-    >;
+    container?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
   }
   ```
 </Markdown>
 ) : (
 <Markdown>
-  ```ts
-  import {
-    HTMLAttributes,
-    AllHTMLAttributes,
-    ImgHTMLAttributes,
-    LinkHTMLAttributes,
-    StyleHTMLAttributes,
-  } from "babel-plugin-react-html-attrs";
-  
+  ```ts  
   declare interface Attributes {
-    container?: AllHTMLAttributes<HTMLElement>;
-    picture?: HTMLAttributes<HTMLPictureElement>;
-    style?: StyleHTMLAttributes<HTMLStyleElement>;
-    link?: Omit<
-      LinkHTMLAttributes<HTMLLinkElement>,
-      "as" | "rel" | "imagesizes" | "imagesrcset"
-    >;
+    container?: Record<any, any>;
+    picture?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
     img?: Omit<
-      ImgHTMLAttributes<HTMLImageElement>,
+      Record<any, any>,
       | "src"
       | "alt"
       | "srcset"
@@ -149,8 +110,8 @@ const isBackgroundImage =
       src: "https://picsum.photos/1024/768",
       alt: "A random image",
       attributes: `{
-    style: {
-      media: "all"
+    link: {
+      fetchpriority: "high"
     }
   }`,
     },
