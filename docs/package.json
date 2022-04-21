@@ -6,22 +6,21 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "build:hack": "sed -i -z 's/---/---\\ndraft: true/' src/pages/en/api/* && pnpm build && mv dist dist_copy && sed -i -z 's/---\\ndraft: true/---/' src/pages/en/api/* && sed -i -z 's/---/---\\ndraft: true/' src/pages/en/components/* && pnpm build && mv dist_copy/en/components dist/en/components && sed -i -z 's/---\\ndraft: true/---/' src/pages/en/components/* && rm -rf dist_copy"
+    "preview": "astro preview"
   },
   "dependencies": {
     "@algolia/client-search": "^4.13.0",
     "@docsearch/css": "^3.0.0",
     "@docsearch/react": "^3.0.0",
-    "@types/react": "^17.0.43",
-    "preact": "^10.7.0",
+    "@types/react": "^17.0.44",
+    "preact": "^10.7.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "unplugin-auto-import": "^0.7.0"
+    "unplugin-auto-import": "^0.7.1"
   },
   "devDependencies": {
     "@astrojs/preact": "^0.0.2",
-    "@astrojs/react": "^0.1.0",
-    "astro": "^1.0.0-beta.5"
+    "@astrojs/react": "^0.1.1",
+    "astro": "^1.0.0-beta.15"
   }
 }
