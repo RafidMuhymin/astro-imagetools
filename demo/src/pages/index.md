@@ -1,5 +1,5 @@
 ---
-path: index.astro
+path: index.md
 layout: ../layouts/MainLayout.astro
 ---
 

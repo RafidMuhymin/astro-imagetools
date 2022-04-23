@@ -5,8 +5,8 @@ import "../styles/index.css";
 const { importMetaUrl } = Astro.props as { importMetaUrl: string };
 
 const path =
-  importMetaUrl?.slice(importMetaUrl.indexOf("/pages/") + 7) ||
-  Astro.props.content.path;
+  Astro.props.content?.path ||
+  importMetaUrl?.slice(importMetaUrl.indexOf("/pages/") + 7);
 
 const GitHubURL = `https://github.com/RafidMuhymin/astro-imagetools/tree/main/demo/src/pages/${path}`;
 ---
