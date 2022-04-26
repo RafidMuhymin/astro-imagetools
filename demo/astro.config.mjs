@@ -18,5 +18,4 @@ export default defineConfig({
     integrations: true,
   },
   integrations: [astroImageToolsIntegration],
-  base: "./",
 });
