@@ -157,11 +157,30 @@ declare interface ConfigOptions extends PrimaryProps, ImageToolsConfigs {
   layout?: "constrained" | "fixed" | "fullWidth" | "fill";
 }
 
+declare interface Attributes {
+  container?: Record<any, string>;
+  picture?: Record<any, string>;
+  style?: Record<any, string>;
+  link?: Omit<Record<any, string>, "as" | "rel" | "imagesizes" | "imagesrcset">;
+  img?: Omit<
+    Record<any, string>,
+    | "src"
+    | "alt"
+    | "srcset"
+    | "sizes"
+    | "width"
+    | "height"
+    | "loading"
+    | "decoding"
+  >;
+}
+
 export interface PictureConfigOptions
   extends ConfigOptions,
     ObjectStyles,
     PictureFormatOptions {
   artDirectives?: ArtDirective[];
+  attributes?: Omit<Attributes, "container">;
   fadeInTransition?:
     | boolean
     | {
@@ -174,7 +193,9 @@ export interface PictureConfigOptions
 export interface ImgConfigOptions
   extends ConfigOptions,
     ObjectStyles,
-    ImgFormatOptions {}
+    ImgFormatOptions {
+  attributes?: Omit<Attributes, "picture" | "container">;
+}
 
 declare interface BackgroundProps {
   tag?: string;
@@ -199,6 +220,7 @@ export interface BackgroundImageConfigOptions
         | "fadeInTransition"
       >
     > {
+  attributes?: Omit<Attributes, "img" | "picture">;
   artDirectives?: BackgroundImageArtDirective[];
 }
 
@@ -207,7 +229,9 @@ export interface BackgroundPictureConfigOptions
     Pick<
       PictureConfigOptions,
       Exclude<keyof PictureConfigOptions, "alt" | "layout">
-    > {}
+    > {
+  attributes?: Attributes;
+}
 
 export interface GlobalConfigOptions
   extends BackgroundStyles,

@@ -23,7 +23,7 @@ export default function filterConfigs(
 
   Object.keys(clonedConfigs).forEach((key) => {
     if (!supportedConfigs.includes(key)) {
-      warn && printWarning(key, type);
+      warn && printWarning({ key, type });
 
       delete clonedConfigs[key];
     }

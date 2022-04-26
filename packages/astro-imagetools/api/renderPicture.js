@@ -1,10 +1,11 @@
 // @ts-check
-import getImg from "../utils/getImg.js";
+import getImgElement from "../utils/getImgElement.js";
 import getLinkElement from "../utils/getLinkElement.js";
 import getImage from "../utils/getImage.js";
 import getBackgroundStyles from "../utils/getBackgroundStyles.js";
 import getLayoutStyles from "../utils/getLayoutStyles.js";
 import getFilteredProps from "../utils/getFilteredProps.js";
+import getStyleElement from "../utils/getStyleElement.js";
 
 export default async function renderPicture(props) {
   const type = "Picture";
@@ -18,6 +19,7 @@ export default async function renderPicture(props) {
     preload,
     loading,
     decoding,
+    attributes,
     layout,
     placeholder,
     breakpoints,
@@ -30,6 +32,13 @@ export default async function renderPicture(props) {
     fadeInTransition,
     artDirectives,
   } = filteredProps;
+
+  const {
+    img: imgAttributes = {},
+    link: linkAttributes = {},
+    style: styleAttributes = {},
+    picture: pictureAttributes = {},
+  } = attributes;
 
   const { uuid, images } = await getImage({
     src,
@@ -49,7 +58,7 @@ export default async function renderPicture(props) {
 
   const { imagesizes } = images.at(-1);
 
-  const style = getBackgroundStyles(
+  const backgroundStyles = getBackgroundStyles(
     images,
     className,
     objectFit,
@@ -57,14 +66,16 @@ export default async function renderPicture(props) {
     fadeInTransition
   );
 
-  const link = getLinkElement(images, preload, imagesizes);
+  const style = getStyleElement({ styleAttributes, backgroundStyles });
+
+  const link = getLinkElement({ images, preload, imagesizes, linkAttributes });
 
   const layoutStyles = getLayoutStyles({ layout });
 
   const sources = images.flatMap(({ media, sources, sizes, imagesizes }) =>
     sources.map(({ format, src, srcset }) =>
       src
-        ? getImg(
+        ? getImgElement({
             src,
             alt,
             sizes,
@@ -74,8 +85,9 @@ export default async function renderPicture(props) {
             decoding,
             imagesizes,
             fadeInTransition,
-            layoutStyles
-          )
+            layoutStyles,
+            imgAttributes,
+          })
         : `<source
             srcset="${srcset}"
             sizes="${imagesizes}"

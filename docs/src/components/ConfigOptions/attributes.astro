@@ -1,0 +1,119 @@
+---
+import { Markdown } from "astro/components";
+import CodeExample from "../CodeExample.astro";
+
+const isImg =
+  Astro.props.component === "Img" || Astro.props.api === "renderImg";
+
+const isPicture =
+  Astro.props.component === "Picture" || Astro.props.api === "renderPicture";
+
+const isBackgroundImage =
+  Astro.props.component === "BackgroundImage" ||
+  Astro.props.api === "renderBackgroundImage";
+---
+
+<Markdown>
+  ### `attributes`
+
+  **Type:**
+</Markdown>
+
+<!-- prettier-ignore -->
+{isImg ? (
+<Markdown>
+  ```ts
+  declare interface Attributes {
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
+    img?: Omit<
+      Record<any, any>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+) : isPicture ? (
+<Markdown>
+  ```ts
+  declare interface Attributes {
+    picture?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
+    img?: Omit<
+      Record<any, any>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+) : isBackgroundImage ? (
+<Markdown>
+  ```ts
+  declare interface Attributes {
+    container?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
+  }
+  ```
+</Markdown>
+) : (
+<Markdown>
+  ```ts  
+  declare interface Attributes {
+    container?: Record<any, any>;
+    picture?: Record<any, any>;
+    style?: Record<any, any>;
+    link?: Omit<Record<any, any>, "as" | "rel" | "imagesizes" | "imagesrcset">;
+    img?: Omit<
+      Record<any, any>,
+      | "src"
+      | "alt"
+      | "srcset"
+      | "sizes"
+      | "width"
+      | "height"
+      | "loading"
+      | "decoding"
+    >;
+  }
+  ```
+</Markdown>
+)}
+
+<Markdown>
+  **Default:** `{}`
+
+  The HTML attributes to add to the generate elements. If the `class`, `style`, and `onload` attributes are present, the values passed via this config will be merged.
+
+  **Code Example:**
+</Markdown>
+
+<CodeExample
+  {...Astro.props}
+  values={[
+    {
+      src: "https://picsum.photos/1024/768",
+      alt: "A random image",
+      attributes: `{
+    link: {
+      fetchpriority: "high"
+    }
+  }`,
+    },
+  ]}
+/>
