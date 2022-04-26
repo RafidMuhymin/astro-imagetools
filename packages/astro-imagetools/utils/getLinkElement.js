@@ -1,12 +1,25 @@
 // @ts-check
+import getAttributesString from "./getAttributesString.js";
 
-export default function getLinkElement(images, preload, imagesizes) {
+export default function getLinkElement({
+  images = [],
+  preload = "",
+  imagesizes = "",
+  linkAttributes,
+}) {
   const imagesrcset =
     preload &&
     images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
-  const link = preload
+  const attributesString = getAttributesString({
+    element: "link",
+    attributes: linkAttributes,
+    excludeArray: ["as", "rel", "imagesizes", "imagesrcset"],
+  });
+
+  const linkElement = preload
     ? `<link
+        ${attributesString}
         as="image"
         rel="preload"
         imagesizes="${imagesizes}"
@@ -14,5 +27,5 @@ export default function getLinkElement(images, preload, imagesizes) {
       />`
     : "";
 
-  return link;
+  return linkElement;
 }

@@ -26,8 +26,8 @@ export const supportedImageTypes = [
 
 // prettier-ignore
 export const supportedConfigs = [
-  "src", "alt", "tag", "content", "sizes", "preload", "loading", "decoding", "layout",
-  "placeholder", "breakpoints", "objectFit", "objectPosition", "backgroundSize",
+  "src", "alt", "tag", "content", "sizes", "preload", "loading", "decoding", "attributes",
+  "layout", "placeholder", "breakpoints", "objectFit", "objectPosition", "backgroundSize",
   "backgroundPosition", "format", "fallbackFormat", "includeSourceFormat", "formatOptions",
   "fadeInTransition", "artDirectives", "flip", "flop", "invert", "flatten", "normalize",
   "grayscale", "hue", "saturation", "brightness", "w", "h", "ar", "width", "height", "aspect",

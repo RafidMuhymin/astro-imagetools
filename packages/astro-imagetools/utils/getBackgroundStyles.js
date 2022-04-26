@@ -89,9 +89,7 @@ export default function getBackgroundStyles(
     })
     .reverse();
 
-  const bgStyles = `<style>
-    ${[staticStyles, ...dynamicStyles].join("")}
-  </style>`;
-
-  return bgStyles;
+  const backgroundStyles = [staticStyles, ...dynamicStyles].join("");
+  
+  return backgroundStyles;
 }
