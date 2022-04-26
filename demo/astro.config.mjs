@@ -1,11 +1,10 @@
 import { defineConfig } from "astro/config";
-import astroImagePlugin from "astro-imagetools/plugin";
+import astroImageToolsIntegration from "astro-imagetools/integration";
 
 // https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [
-      astroImagePlugin,
       {
         name: "import.meta.url-transformer",
         transform: (code, id) => {
@@ -15,4 +14,9 @@ export default defineConfig({
       },
     ],
   },
+  experimental: {
+    integrations: true,
+  },
+  integrations: [astroImageToolsIntegration],
+  base: "./",
 });

@@ -6,7 +6,7 @@
   "types": "./types.d.ts",
   "exports": {
     "./config": "./config.mjs",
-    "./plugin": "./plugin/index.js",
+    "./integration": "./integration/index.js",
     ".": "./components/Image.astro",
     "./renderImage": "./api/renderImage.js",
     "./api": "./api/index.js",

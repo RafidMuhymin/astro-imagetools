@@ -17,7 +17,7 @@ const cwd = process.cwd().split(path.sep).join(path.posix.sep);
 let viteConfig;
 const store = new Map();
 
-let projectBase, outDir, assetsDir, assetFileNames, sourcemap;
+let environment, projectBase, outDir, assetsDir, assetFileNames, sourcemap;
 
 const regexTestPattern =
   /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/;
@@ -25,9 +25,22 @@ const regexTestPattern =
 const regexExecPattern =
   /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
-export default {
+export default function vitePlugin({ config, command }) {
+  projectBase = path.normalize(config.base);
+
+  environment = command;
+
+  if (!projectBase.startsWith("/")) projectBase = "/" + projectBase;
+
+  if (projectBase.endsWith("/")) projectBase = projectBase.slice(0, -1);
+
+  return plugin;
+}
+
+const plugin = {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
+
   config: () => ({
     optimizeDeps: {
       exclude: ["@astropub/codecs", "imagetools-core", "sharp"],
@@ -47,16 +60,14 @@ export default {
   configResolved(config) {
     viteConfig = config;
 
-    ({ base: projectBase } = viteConfig);
-
     ({ outDir, assetsDir, sourcemap } = viteConfig.build);
 
-    assetFileNames =
+    assetFileNames = path.normalize(
       viteConfig.build.rollupOptions.output?.assetFileNames ||
-      `/${assetsDir}/[name].[hash][extname]`;
+        `/${assetsDir}/[name].[hash][extname]`
+    );
 
-    assetFileNames.startsWith(projectBase) ||
-      (assetFileNames = projectBase + assetFileNames);
+    if (!assetFileNames.startsWith("/")) assetFileNames = "/" + assetFileNames;
   },
 
   async load(id) {
@@ -149,16 +160,19 @@ export default {
               store.set(assetPath, imageObject);
             }
 
-            return { width, assetPath };
+            const modulePath =
+              environment === "dev" ? assetPath : projectBase + assetPath;
+
+            return { width, modulePath };
           })
         );
 
         const srcset =
           sources.length > 1
             ? sources
-                .map(({ width, assetPath }) => `${assetPath} ${width}w`)
+                .map(({ width, modulePath }) => `${modulePath} ${width}w`)
                 .join(", ")
-            : sources[0].assetPath;
+            : sources[0].modulePath;
 
         return `export default "${srcset}"`;
       }
@@ -227,22 +241,22 @@ export default {
 
   async closeBundle() {
     if (viteConfig.mode === "production") {
+      const allEntries = [...store.entries()];
+
+      const assetPaths = allEntries.filter(([, { hash = null } = {}]) => hash);
+
       await Promise.all(
-        [...store.entries()]
-          .filter(([assetPath]) =>
-            assetPath.startsWith(projectBase + assetsDir + "/")
-          )
-          .map(
-            async ([assetPath, { hash, image, buffer }]) =>
-              await saveAndCopyAsset(
-                hash,
-                image,
-                buffer,
-                outDir,
-                assetsDir,
-                assetPath
-              )
-          )
+        assetPaths.map(
+          async ([assetPath, { hash, image, buffer }]) =>
+            await saveAndCopyAsset(
+              hash,
+              image,
+              buffer,
+              outDir,
+              assetsDir,
+              assetPath
+            )
+        )
       );
     }
   },
