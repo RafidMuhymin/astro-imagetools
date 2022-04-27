@@ -2,7 +2,7 @@
 import fs from "fs";
 import crypto from "crypto";
 import { join, basename, extname, relative } from "path";
-import { sharp, fsCachePath, supportedImageTypes } from "../runtimeChecks.js";
+import { sharp, fsCachePath, supportedImageTypes } from "./runtimeChecks.js";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")

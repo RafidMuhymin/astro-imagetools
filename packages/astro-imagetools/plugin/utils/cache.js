@@ -1,6 +1,6 @@
 // @ts-check
 import fs from "fs";
-import { fsCachePath } from "../../runtimeChecks.js";
+import { fsCachePath } from "../../utils/runtimeChecks.js";
 
 const copied = [];
 let assetsDirExists;

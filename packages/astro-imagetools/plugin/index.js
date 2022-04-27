@@ -1,6 +1,6 @@
 // @ts-check
 import path from "path";
-import { pwd } from "../runtimeChecks.js";
+import { pwd } from "../utils/runtimeChecks.js";
 import {
   config,
   load,

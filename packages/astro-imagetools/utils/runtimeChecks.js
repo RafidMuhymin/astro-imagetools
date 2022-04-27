@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import findCacheDir from "find-cache-dir";
-import filterConfigs from "./utils/filterConfigs.js";
+import filterConfigs from "./filterConfigs.js";
 
 // Sharp related checks
 export const sharp = await (async () => {

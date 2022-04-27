@@ -3,7 +3,7 @@ import path from "path";
 import objectHash from "object-hash";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
-import { sharp, supportedImageTypes } from "../../runtimeChecks.js";
+import { sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
