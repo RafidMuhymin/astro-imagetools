@@ -26,11 +26,13 @@ export default async function load(
   const ext = path.extname(id).slice(1);
 
   if (supportedImageTypes.includes(ext)) {
+    const config = Object.fromEntries(searchParams);
+
+    if (typeof config.raw === "string") return;
+
     const src = id.startsWith(pwd) ? id : pwd + id;
 
     const base = path.basename(src, path.extname(src));
-
-    const config = Object.fromEntries(searchParams);
 
     const { image: loadedImage, width: imageWidth } =
       store.get(src) || store.set(src, await getLoadedImage(src, ext)).get(src);
@@ -44,7 +46,7 @@ export default async function load(
     if (inline) {
       if (widths.length > 1) {
         throw new Error(
-          `Cannot use base64 or raw or inline with multiple widths`
+          `The base64 or inline parameter can't be used with multiple widths`
         );
       }
 
