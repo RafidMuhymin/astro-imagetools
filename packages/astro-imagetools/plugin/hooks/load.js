@@ -26,22 +26,34 @@ export default async function load(
   const ext = path.extname(id).slice(1);
 
   if (supportedImageTypes.includes(ext)) {
-    const config = Object.fromEntries(searchParams);
-
-    if (typeof config.raw === "string") return;
-
     const src = id.startsWith(pwd) ? id : pwd + id;
+
+    const config = Object.fromEntries(searchParams);
 
     const base = path.basename(src, path.extname(src));
 
     const { image: loadedImage, width: imageWidth } =
       store.get(src) || store.set(src, await getLoadedImage(src, ext)).get(src);
 
-    const { type, widths, options, extension, inline } = getConfigOptions(
+    const { type, widths, options, extension, raw, inline } = getConfigOptions(
       config,
       ext,
       imageWidth
     );
+
+    if (raw) {
+      const testConfig = { ...config };
+
+      delete testConfig.raw;
+      delete testConfig.inline;
+      delete testConfig.base64;
+
+      if (Object.keys(testConfig).length > 0) {
+        throw new Error(
+          "If raw is set, no other options can be set except inline and base64"
+        );
+      }
+    }
 
     if (inline) {
       if (widths.length > 1) {
@@ -59,9 +71,17 @@ export default async function load(
       } else {
         const config = { width, ...options };
 
-        const params = [src, loadedImage, config, type];
-
-        const { image, buffer } = await getTransformedImage(...params);
+        const { image, buffer } = raw
+          ? {
+              image: sharp ? loadedImage : null,
+              buffer: !sharp ? loadedImage.data : null,
+            }
+          : await getTransformedImage({
+              src,
+              image: loadedImage,
+              config,
+              type,
+            });
 
         const dataUri = `data:${type};base64,${(
           buffer || (await getCachedBuffer(hash, image))
@@ -87,9 +107,17 @@ export default async function load(
           if (!store.has(assetPath)) {
             const config = { width, ...options };
 
-            const params = [src, loadedImage, config, type];
-
-            const { image, buffer } = await getTransformedImage(...params);
+            const { image, buffer } = raw
+              ? {
+                  image: sharp && loadedImage,
+                  buffer: !sharp && loadedImage.data,
+                }
+              : await getTransformedImage({
+                  src,
+                  image: loadedImage,
+                  config,
+                  type,
+                });
 
             const imageObject = { hash, type, image, buffer };
 

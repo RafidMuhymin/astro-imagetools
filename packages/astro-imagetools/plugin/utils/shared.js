@@ -22,6 +22,7 @@ export function getConfigOptions(config, ext, imageWidth) {
     widths,
     options,
     extension,
+    raw: typeof raw === "string",
     inline: typeof base64 === "string" || typeof inline === "string",
   };
 }

@@ -14,7 +14,7 @@ export const getLoadedImage = async (src) => {
   return { image, width };
 };
 
-export const getTransformedImage = async (src, image, config, type) => {
+export const getTransformedImage = async ({ image, config }) => {
   const { transforms } = generateTransforms(config, builtins);
 
   const { image: encodedImage } = await applyTransforms(

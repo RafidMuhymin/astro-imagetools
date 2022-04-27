@@ -18,7 +18,7 @@ export const getLoadedImage = async (src, ext) => {
   return { image, width };
 };
 
-export const getTransformedImage = async (src, image, config, type) => {
+export const getTransformedImage = async ({ src, image, config, type }) => {
   const { width, format, quality } = config;
 
   const resizedImageKey = `${src}@${width}`;
