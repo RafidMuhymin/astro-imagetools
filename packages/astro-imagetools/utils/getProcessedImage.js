@@ -57,7 +57,7 @@ export default async (src, transformConfigs) => {
       fs.writeFileSync(filepath, buffer);
     }
 
-    src = join("/", relative(process.cwd(), filepath));
+    src = join("/", relative(process.env.PWD, filepath));
   }
 
   const {

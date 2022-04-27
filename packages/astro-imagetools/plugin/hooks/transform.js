@@ -9,7 +9,7 @@ const regexTestPattern =
 const regexExecPattern =
   /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
-export default function transform(code, id, { cwd, sourcemap }) {
+export default function transform(code, id, { pwd, sourcemap }) {
   if (id.endsWith(".md") && regexTestPattern.test(code)) {
     let matches;
 
@@ -24,7 +24,7 @@ export default function transform(code, id, { cwd, sourcemap }) {
 
       s.prepend(
         `import { Picture as ${Picture} } from "astro-imagetools/components";\nimport { renderComponent as ${renderComponent} } from "${
-          cwd + "/node_modules/astro/dist/runtime/server/index.js"
+          pwd + "/node_modules/astro/dist/runtime/server/index.js"
         }"\n;`
       );
 
@@ -33,7 +33,7 @@ export default function transform(code, id, { cwd, sourcemap }) {
 
         const src = rawSrc.match("(http://|https://|data:image/).*")
           ? rawSrc
-          : path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
+          : path.resolve(path.dirname(id), rawSrc).replace(pwd, "");
 
         s.overwrite(
           match.index,

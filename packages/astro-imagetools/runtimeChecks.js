@@ -35,11 +35,11 @@ export const supportedConfigs = [
   "cacheDir"
 ];
 
-const posixPath = process.cwd() + "/astro-imagetools.config";
+const posixPath = process.env.PWD + "/astro-imagetools.config";
 
 const win32Path =
   "file://" +
-  process.cwd().replace(":\\", ":\\\\") +
+  process.env.PWD.replace(":\\", ":\\\\") +
   path.sep +
   "astro-imagetools.config";
 
@@ -66,14 +66,14 @@ const GlobalConfigOptions = filterConfigs(
 export { GlobalConfigOptions };
 
 // CWD
-export const cwd = process.cwd().split(path.sep).join(path.posix.sep);
+export const pwd = process.env.PWD.split(path.sep).join(path.posix.sep);
 
 const { cacheDir } = GlobalConfigOptions;
 
 // FS Cache related checks
 const fsCachePath =
   (cacheDir
-    ? cwd + cacheDir
+    ? pwd + cacheDir
     : findCacheDir({
         name: "astro-imagetools",
       })) + "/";

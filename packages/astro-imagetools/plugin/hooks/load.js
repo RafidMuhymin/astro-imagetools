@@ -11,7 +11,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
 
 export default async function load(
   id,
-  { cwd, store, environment, projectBase, assetFileNames }
+  { pwd, store, environment, projectBase, assetFileNames }
 ) {
   try {
     var fileURL = new URL(`file://${id}`);
@@ -26,7 +26,7 @@ export default async function load(
   const ext = path.extname(id).slice(1);
 
   if (supportedImageTypes.includes(ext)) {
-    const src = id.startsWith(cwd) ? id : cwd + id;
+    const src = id.startsWith(pwd) ? id : pwd + id;
 
     const base = path.basename(src, path.extname(src));
 
