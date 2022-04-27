@@ -19,6 +19,8 @@ export default function vitePlugin({ config, command }) {
 
   environment = command;
 
+  if (projectBase.startsWith("./")) projectBase = projectBase.slice(1);
+
   if (!projectBase.startsWith("/")) projectBase = "/" + projectBase;
 
   if (projectBase.endsWith("/")) projectBase = projectBase.slice(0, -1);
