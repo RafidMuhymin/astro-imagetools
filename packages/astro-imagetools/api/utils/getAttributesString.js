@@ -1,6 +1,6 @@
 // @ts-check
 
-import printWarning from "./printWarning.js";
+import printWarning from "../../utils/printWarning.js";
 
 export default function getAttributesString({
   attributes,

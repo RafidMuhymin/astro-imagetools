@@ -1,11 +1,11 @@
 // @ts-check
-import getImgElement from "../utils/getImgElement.js";
-import getLinkElement from "../utils/getLinkElement.js";
-import getImage from "../utils/getImage.js";
-import getBackgroundStyles from "../utils/getBackgroundStyles.js";
-import getLayoutStyles from "../utils/getLayoutStyles.js";
-import getFilteredProps from "../utils/getFilteredProps.js";
-import getStyleElement from "../utils/getStyleElement.js";
+import getImage from "./utils/getImage.js";
+import getImgElement from "./utils/getImgElement.js";
+import getLinkElement from "./utils/getLinkElement.js";
+import getStyleElement from "./utils/getStyleElement.js";
+import getLayoutStyles from "./utils/getLayoutStyles.js";
+import getFilteredProps from "./utils/getFilteredProps.js";
+import getBackgroundStyles from "./utils/getBackgroundStyles.js";
 
 export default async function renderPicture(props) {
   const type = "Picture";

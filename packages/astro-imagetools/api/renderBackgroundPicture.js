@@ -1,12 +1,12 @@
 // @ts-check
-import getImgElement from "../utils/getImgElement.js";
-import getLinkElement from "../utils/getLinkElement.js";
-import getImage from "../utils/getImage.js";
-import getLayoutStyles from "../utils/getLayoutStyles.js";
-import getFilteredProps from "../utils/getFilteredProps.js";
-import getBackgroundStyles from "../utils/getBackgroundStyles.js";
-import getStyleElement from "../utils/getStyleElement.js";
-import getContainerElement from "../utils/getContainerElement.js";
+import getImage from "./utils/getImage.js";
+import getImgElement from "./utils/getImgElement.js";
+import getLinkElement from "./utils/getLinkElement.js";
+import getStyleElement from "./utils/getStyleElement.js";
+import getLayoutStyles from "./utils/getLayoutStyles.js";
+import getFilteredProps from "./utils/getFilteredProps.js";
+import getBackgroundStyles from "./utils/getBackgroundStyles.js";
+import getContainerElement from "./utils/getContainerElement.js";
 
 export default async function renderBackgroundPicture(props) {
   const type = "BackgroundPicture";

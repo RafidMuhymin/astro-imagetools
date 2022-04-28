@@ -1,6 +1,9 @@
 // @ts-check
-import filterConfigs from "./filterConfigs.js";
-import { supportedConfigs, GlobalConfigOptions } from "./runtimeChecks.js";
+import filterConfigs from "../../utils/filterConfigs.js";
+import {
+  supportedConfigs,
+  GlobalConfigOptions,
+} from "../../utils/runtimeChecks.js";
 
 const NonProperties = {
   Img: [

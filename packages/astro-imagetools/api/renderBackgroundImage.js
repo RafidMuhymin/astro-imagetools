@@ -1,10 +1,10 @@
 // @ts-check
 import crypto from "crypto";
-import getLinkElement from "../utils/getLinkElement.js";
-import getImage from "../utils/getImage.js";
-import getFilteredProps from "../utils/getFilteredProps.js";
-import getStyleElement from "../utils/getStyleElement.js";
-import getContainerElement from "../utils/getContainerElement.js";
+import getImage from "./utils/getImage.js";
+import getLinkElement from "./utils/getLinkElement.js";
+import getStyleElement from "./utils/getStyleElement.js";
+import getFilteredProps from "./utils/getFilteredProps.js";
+import getContainerElement from "./utils/getContainerElement.js";
 
 export default async function renderBackgroundImage(props) {
   const type = "BackgroundImage";
