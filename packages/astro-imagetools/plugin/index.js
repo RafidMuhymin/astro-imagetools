@@ -1,12 +1,7 @@
 // @ts-check
 import path from "path";
-import {
-  config,
-  load,
-  transform,
-  configureServer,
-  closeBundle,
-} from "./hooks/index.js";
+import { middleware } from "../ssr/index.js";
+import { config, load, transform, closeBundle } from "./hooks/index.js";
 
 export const store = new Map();
 
@@ -68,8 +63,8 @@ const plugin = {
     });
   },
 
-  async configureServer(server) {
-    return await configureServer(server);
+  configureServer(server) {
+    server.middlewares.use(middleware);
   },
 
   async closeBundle() {
