@@ -5,9 +5,9 @@
   "type": "module",
   "types": "./types.d.ts",
   "exports": {
-    "./config": "./config.mjs",
-    "./integration": "./integration/index.js",
+    ".": "./index.js",
     "./api": "./api/index.js",
+    "./config": "./config.mjs",
     "./components": "./components/index.js"
   },
   "scripts": {
