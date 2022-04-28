@@ -7,8 +7,6 @@
   "exports": {
     "./config": "./config.mjs",
     "./integration": "./integration/index.js",
-    ".": "./components/Image.astro",
-    "./renderImage": "./api/renderImage.js",
     "./api": "./api/index.js",
     "./components": "./components/index.js"
   },
