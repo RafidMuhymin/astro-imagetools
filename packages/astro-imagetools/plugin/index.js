@@ -1,6 +1,5 @@
 // @ts-check
 import path from "path";
-import { pwd } from "../utils/runtimeChecks.js";
 import {
   config,
   load,
@@ -9,8 +8,9 @@ import {
   closeBundle,
 } from "./hooks/index.js";
 
+export const store = new Map();
+
 let viteConfig;
-const store = new Map();
 
 let environment, projectBase, outDir, assetsDir, assetFileNames, sourcemap;
 
@@ -56,8 +56,6 @@ const plugin = {
     }
 
     return await load(id, {
-      pwd,
-      store,
       environment,
       projectBase,
       assetFileNames,
@@ -66,18 +64,16 @@ const plugin = {
 
   async transform(code, id) {
     return await transform(code, id, {
-      pwd,
       sourcemap,
     });
   },
 
   async configureServer(server) {
-    return await configureServer(server, { store });
+    return await configureServer(server);
   },
 
   async closeBundle() {
     return await closeBundle({
-      store,
       outDir,
       assetsDir,
       viteConfig,

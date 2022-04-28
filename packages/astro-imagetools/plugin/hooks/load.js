@@ -3,7 +3,8 @@ import path from "path";
 import objectHash from "object-hash";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
-import { sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
+import { pwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
+import { store } from "../index.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
@@ -11,7 +12,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
 
 export default async function load(
   id,
-  { pwd, store, environment, projectBase, assetFileNames }
+  { environment, projectBase, assetFileNames }
 ) {
   try {
     var fileURL = new URL(`file://${id}`);

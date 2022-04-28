@@ -2,6 +2,7 @@
 import path from "path";
 import crypto from "crypto";
 import MagicString from "magic-string";
+import { pwd } from "../../utils/runtimeChecks.js";
 
 const regexTestPattern =
   /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/;
@@ -9,7 +10,7 @@ const regexTestPattern =
 const regexExecPattern =
   /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
-export default function transform(code, id, { pwd, sourcemap }) {
+export default function transform(code, id, { sourcemap }) {
   if (id.endsWith(".md") && regexTestPattern.test(code)) {
     let matches;
 

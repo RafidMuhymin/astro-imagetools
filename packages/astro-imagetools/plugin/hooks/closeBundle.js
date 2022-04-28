@@ -1,12 +1,8 @@
 // @ts-check
+import { store } from "../index.js";
 import { saveAndCopyAsset } from "../utils/cache.js";
 
-export default async function closeBundle({
-  store,
-  outDir,
-  assetsDir,
-  viteConfig,
-}) {
+export default async function closeBundle({ outDir, assetsDir, viteConfig }) {
   if (viteConfig.mode === "production") {
     const allEntries = [...store.entries()];
 

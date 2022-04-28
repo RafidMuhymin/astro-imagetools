@@ -1,8 +1,9 @@
 // @ts-check
 import stream from "stream";
+import { store } from "../index.js";
 import { getCachedBuffer } from "../utils/cache.js";
 
-export default function configureServer(server, { store }) {
+export default function configureServer(server) {
   server.middlewares.use(async (request, response, next) => {
     const imageObject = store.get(request.url);
 
