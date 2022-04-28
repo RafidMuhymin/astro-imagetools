@@ -1,45 +1,54 @@
 // @ts-check
+import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 import { middleware } from "../ssr/index.js";
 import { config, load, transform, closeBundle } from "./hooks/index.js";
 
 export const store = new Map();
 
-let viteConfig;
+const filename = fileURLToPath(import.meta.url);
 
-let environment, projectBase, outDir, assetsDir, assetFileNames, sourcemap;
+const astroViteConfigsPath = path.resolve(
+  filename,
+  "../../astroViteConfigs.json"
+);
 
-export default function vitePlugin({ config, command }) {
-  projectBase = path.normalize(config.base);
-
-  environment = command;
-
-  if (projectBase.startsWith("./")) projectBase = projectBase.slice(1);
-
-  if (!projectBase.startsWith("/")) projectBase = "/" + projectBase;
-
-  if (projectBase.endsWith("/")) projectBase = projectBase.slice(0, -1);
-
-  return plugin;
-}
-
-const plugin = {
+export default {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
 
   config,
 
-  configResolved(config) {
-    viteConfig = config;
+  async configResolved(config) {
+    const { mode } = config;
 
-    ({ outDir, assetsDir, sourcemap } = viteConfig.build);
+    const { outDir, assetsDir, sourcemap } = config.build;
 
-    assetFileNames = path.normalize(
-      viteConfig.build.rollupOptions.output?.assetFileNames ||
+    let assetFileNames = path.normalize(
+      config.build.rollupOptions.output?.assetFileNames ||
         `/${assetsDir}/[name].[hash][extname]`
     );
 
     if (!assetFileNames.startsWith("/")) assetFileNames = "/" + assetFileNames;
+
+    const astroViteConfigs = JSON.parse(
+      await fs.promises.readFile(astroViteConfigsPath, "utf8")
+    );
+
+    const newAstroViteConfigs = {
+      ...astroViteConfigs,
+      mode,
+      outDir,
+      assetsDir,
+      sourcemap,
+      assetFileNames,
+    };
+
+    await fs.promises.writeFile(
+      astroViteConfigsPath,
+      JSON.stringify(newAstroViteConfigs)
+    );
   },
 
   async load(id) {
@@ -50,17 +59,11 @@ const plugin = {
       };
     }
 
-    return await load(id, {
-      environment,
-      projectBase,
-      assetFileNames,
-    });
+    return await load(id);
   },
 
   async transform(code, id) {
-    return await transform(code, id, {
-      sourcemap,
-    });
+    return await transform(code, id);
   },
 
   configureServer(server) {
@@ -68,10 +71,6 @@ const plugin = {
   },
 
   async closeBundle() {
-    return await closeBundle({
-      outDir,
-      assetsDir,
-      viteConfig,
-    });
+    return await closeBundle();
   },
 };

@@ -7,6 +7,10 @@ export default async function getSrcset(src, breakpoints, format, options) {
     ...options,
   };
 
+  if (!process.env.npm_lifecycle_event) {
+    
+  }
+
   // @ts-ignore
   const load = global.vitePluginContext?.load;
 

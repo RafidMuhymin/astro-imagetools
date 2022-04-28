@@ -1,5 +1,6 @@
+import nodejsAdapter from "@astrojs/node";
 import { defineConfig } from "astro/config";
-import astroImageToolsIntegration from "astro-imagetools/integration";
+import { astroImageTools } from "astro-imagetools";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,8 +15,12 @@ export default defineConfig({
       },
     ],
   },
+
   experimental: {
     integrations: true,
   },
-  integrations: [astroImageToolsIntegration],
+
+  integrations: [astroImageTools],
+
+  adapter: nodejsAdapter(),
 });

@@ -5,15 +5,17 @@ import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
 import { pwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
 import { store } from "../index.js";
+import astroViteConfigs from "../../astroViteConfigs.json" assert { type: "json" };
+
+console.log(astroViteConfigs);
+
+const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
 const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
   : import("../utils/codecs.js"));
 
-export default async function load(
-  id,
-  { environment, projectBase, assetFileNames }
-) {
+export default async function load(id) {
   try {
     var fileURL = new URL(`file://${id}`);
   } catch (error) {
