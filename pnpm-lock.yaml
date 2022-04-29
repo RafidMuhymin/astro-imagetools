@@ -2415,6 +2415,15 @@ packages:
     dev: true
     optional: true
 
+  /esbuild-windows-arm64/0.14.37:
+    resolution: {integrity: sha512-wQy+sAKD7/d6vDrgH+i+ZdbRLVHGG5BjBpBRStvGgLiuIo46/QEQCaHbBy2LOtXu/o1JYchxilzeQ+ExZdYkeA==}
+    engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
   /esbuild-windows-arm64/0.14.38:
     resolution: {integrity: sha512-k3FGCNmHBkqdJXuJszdWciAH77PukEyDsdIryEHn9cKLQFxzhT39dSumeTuggaQcXY57UlmLGIkklWZo2qzHpw==}
     engines: {node: '>=12'}

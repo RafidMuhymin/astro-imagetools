@@ -22,5 +22,5 @@ export default defineConfig({
 
   integrations: [astroImageTools],
 
-  adapter: nodejsAdapter(),
+  // adapter: nodejsAdapter(),
 });

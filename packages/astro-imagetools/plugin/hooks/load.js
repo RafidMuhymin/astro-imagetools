@@ -5,11 +5,6 @@ import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
 import { pwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
 import { store } from "../index.js";
-import astroViteConfigs from "../../astroViteConfigs.json" assert { type: "json" };
-
-console.log(astroViteConfigs);
-
-const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
 const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
@@ -29,6 +24,13 @@ export default async function load(id) {
   const ext = path.extname(id).slice(1);
 
   if (supportedImageTypes.includes(ext)) {
+    const { default: astroViteConfigs } = await import(
+      // @ts-ignore
+      "../../astroViteConfigs.js"
+    );
+
+    const { environment, projectBase, assetFileNames } = astroViteConfigs;
+
     const src = id.startsWith(pwd) ? id : pwd + id;
 
     const config = Object.fromEntries(searchParams);

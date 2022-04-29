@@ -11,7 +11,7 @@ const filename = fileURLToPath(import.meta.url);
 
 const astroViteConfigsPath = path.resolve(
   filename,
-  "../../astroViteConfigs.json"
+  "../../astroViteConfigs.js"
 );
 
 export default {
@@ -33,7 +33,7 @@ export default {
     if (!assetFileNames.startsWith("/")) assetFileNames = "/" + assetFileNames;
 
     const astroViteConfigs = JSON.parse(
-      await fs.promises.readFile(astroViteConfigsPath, "utf8")
+      (await fs.promises.readFile(astroViteConfigsPath, "utf8")).slice(15)
     );
 
     const newAstroViteConfigs = {
@@ -47,7 +47,7 @@ export default {
 
     await fs.promises.writeFile(
       astroViteConfigsPath,
-      JSON.stringify(newAstroViteConfigs)
+      `export default ${JSON.stringify(newAstroViteConfigs, null, 2)}`
     );
   },
 

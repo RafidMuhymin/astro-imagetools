@@ -3,11 +3,6 @@ import path from "path";
 import crypto from "crypto";
 import MagicString from "magic-string";
 import { pwd } from "../../utils/runtimeChecks.js";
-import astroViteConfigs from "../../astroViteConfigs.json" assert { type: "json" };
-
-const { sourcemap } = astroViteConfigs;
-
-console.log(astroViteConfigs);
 
 const regexTestPattern =
   /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/;
@@ -15,8 +10,15 @@ const regexTestPattern =
 const regexExecPattern =
   /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
 
-export default function transform(code, id) {
+export default async function transform(code, id) {
   if (id.endsWith(".md") && regexTestPattern.test(code)) {
+    const { default: astroViteConfigs } = await import(
+      // @ts-ignore
+      "../../astroViteConfigs.js"
+    );
+
+    const { sourcemap } = astroViteConfigs;
+
     let matches;
 
     if ((matches = code.matchAll(regexExecPattern)) !== null) {

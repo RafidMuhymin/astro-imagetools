@@ -8,7 +8,7 @@ const filename = fileURLToPath(import.meta.url);
 
 const astroViteConfigsPath = path.resolve(
   filename,
-  "../../astroViteConfigs.json"
+  "../../astroViteConfigs.js"
 );
 
 export default {
@@ -25,12 +25,14 @@ export default {
 
       if (projectBase.endsWith("/")) projectBase = projectBase.slice(0, -1);
 
+      const astroViteConfigs = {
+        environment,
+        projectBase,
+      }
+
       await fs.promises.writeFile(
         astroViteConfigsPath,
-        JSON.stringify({
-          environment,
-          projectBase,
-        })
+        `export default ${JSON.stringify(astroViteConfigs)}`
       );
 
       updateConfig({
