@@ -34,7 +34,7 @@ export async function saveAndCopyAsset(
   if (copied.includes(assetPath)) return;
 
   if (!assetsDirExists) {
-    await fs.promises.mkdir(outDir + assetsDir, { recursive: true });
+    await fs.promises.mkdir(`${outDir}/${assetsDir}`, { recursive: true });
 
     assetsDirExists = true;
   }
