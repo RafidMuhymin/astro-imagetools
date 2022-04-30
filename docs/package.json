@@ -12,15 +12,15 @@
     "@algolia/client-search": "^4.13.0",
     "@docsearch/css": "^3.0.0",
     "@docsearch/react": "^3.0.0",
-    "@types/react": "^17.0.44",
+    "@types/react": "^18.0.8",
     "preact": "^10.7.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
     "unplugin-auto-import": "^0.7.1"
   },
   "devDependencies": {
-    "@astrojs/preact": "^0.0.2",
+    "@astrojs/preact": "^0.1.2",
     "@astrojs/react": "^0.1.1",
-    "astro": "^1.0.0-beta.15"
+    "astro": "^1.0.0-beta.20"
   }
 }
