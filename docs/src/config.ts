@@ -31,16 +31,16 @@ export const ALGOLIA = {
 
 export const SIDEBAR = {
   en: [
-    { text: "Getting Started", header: true },
+    { text: "GETTING_STARTED", header: true },
     { text: "Introduction", link: "en/introduction" },
     { text: "Installation", link: "en/installation" },
     { text: "Usage", link: "en/usage" },
 
-    { text: "Basics", header: true },
+    { text: "BASICS", header: true },
     { text: "Components and APIs", link: "en/components-and-apis" },
     { text: "Markdown Images", link: "en/markdown-images" },
 
-    { text: "Components", header: true },
+    { text: "COMPONENTS", header: true },
     { text: "<Img />", link: "en/components/Img" },
     { text: "<Picture />", link: "en/components/Picture" },
     { text: "<BackgroundImage />", link: "en/components/BackgroundImage" },
@@ -52,7 +52,7 @@ export const SIDEBAR = {
     { text: "renderBackgroundImage", link: "en/api/renderBackgroundImage" },
     { text: "renderBackgroundPicture", link: "en/api/renderBackgroundPicture" },
 
-    { text: "Miscellaneous", header: true },
+    { text: "MISCELLANEOUS", header: true },
     { text: "Deprecations", link: "en/deprecations" },
     { text: "Acknowledgements", link: "en/acknowledgements" },
   ],
