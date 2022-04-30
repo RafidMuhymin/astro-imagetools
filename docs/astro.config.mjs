@@ -5,6 +5,7 @@ import AutoImport from "unplugin-auto-import/vite";
 
 // https://astro.build/config
 export default defineConfig({
+  site: "https://astro-imagetools-docs.vercel.app/",
   integrations: [preact(), react()],
   vite: {
     plugins: [

@@ -22,13 +22,12 @@ export const GITHUB_EDIT_URL = `https://github.com/withastro/astro-imagetools/bl
 
 export const COMMUNITY_INVITE_URL = `https://astro.build/chat`;
 
-// Uncomment this to enable site search.
 // See "Algolia" section of the README for more information.
-// export const ALGOLIA = {
-//   indexName: 'XXXXXXXXXX',
-//   appId: 'XXXXXXXXXX',
-//   apiKey: 'XXXXXXXXXX',
-// }
+export const ALGOLIA = {
+  appId: "SZQLV18K73",
+  indexName: "astro-imagetools",
+  apiKey: "5da19c05f194060063e0e73a50b21b8e",
+};
 
 export const SIDEBAR = {
   en: [

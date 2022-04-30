@@ -6,7 +6,10 @@ import * as CONFIG from "../../config";
 import "@docsearch/css/dist/style.css";
 import "./Search.css";
 
-const { DocSearchModal, useDocSearchKeyboardEvents } = docSearchReact.default;
+// @ts-ignore
+const { DocSearchModal, useDocSearchKeyboardEvents } = import.meta.env.DEV
+  ? docSearchReact
+  : docSearchReact.default;
 
 export default function Search() {
   const [isOpen, setIsOpen] = useState(false);
