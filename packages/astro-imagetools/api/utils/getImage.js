@@ -24,7 +24,9 @@ export default async function ({
 
   const hash = objectHash(args);
 
-  if (imagesData.has(hash)) return imagesData.get(hash);
+  if (imagesData.has(hash)) {
+    return imagesData.get(hash);
+  }
 
   const start = performance.now();
 

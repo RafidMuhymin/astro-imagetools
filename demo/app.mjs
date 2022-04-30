@@ -1,5 +1,6 @@
 import fs from "fs";
 import http from "http";
+import { middleware } from "astro-imagetools/ssr";
 import { handler as ssrHandler } from "./dist/server/entry.mjs";
 
 http
@@ -15,11 +16,17 @@ http
           const buffer = await fs.promises.readFile(assetPath);
 
           res.writeHead(200);
-
           res.end(buffer);
         } else {
-          res.writeHead(404);
-          res.end();
+          const buffer = await middleware(req, res);
+
+          if (buffer) {
+            res.writeHead(200);
+            res.end(buffer);
+          } else {
+            res.writeHead(404);
+            res.end();
+          }
         }
       }
     });

@@ -6,6 +6,7 @@
   "types": "./types.d.ts",
   "exports": {
     ".": "./index.js",
+    "./ssr": "./ssr/index.js",
     "./api": "./api/index.js",
     "./config": "./config.mjs",
     "./components": "./components/index.js"

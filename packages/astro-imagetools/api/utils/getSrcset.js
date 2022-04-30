@@ -7,13 +7,6 @@ export default async function getSrcset(src, breakpoints, format, options) {
     ...options,
   };
 
-  if (!process.env.npm_lifecycle_event) {
-    
-  }
-
-  // @ts-ignore
-  const load = global.vitePluginContext?.load;
-
   const keys = Object.keys(options);
 
   const params = keys.length
@@ -28,9 +21,17 @@ export default async function getSrcset(src, breakpoints, format, options) {
 
   const id = `${src}?${params.slice(1)}`;
 
-  const srcset = load
-    ? (await load({ id })).code.slice(16).slice(0, -1)
-    : (await import(id)).default;
+  if (process.env.npm_lifecycle_event !== "dev") {
+    const fullPath = process.env.PWD + id;
+
+    const { default: load } = await import("../../plugin/hooks/load.js");
+
+    const srcset = (await load(fullPath)).slice(16).slice(0, -1);
+
+    return srcset;
+  }
+
+  const srcset = (await import(id)).default;
 
   return srcset;
 }

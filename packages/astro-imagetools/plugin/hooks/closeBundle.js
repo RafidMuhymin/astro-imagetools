@@ -8,9 +8,7 @@ export default async function closeBundle() {
     "../../astroViteConfigs.js"
   );
 
-  const { mode, outDir, assetsDir } = astroViteConfigs;
-
-  console.log(astroViteConfigs);
+  const { mode, outDir, assetsDir, isSsrBuild } = astroViteConfigs;
 
   if (mode === "production") {
     const allEntries = [...store.entries()];
@@ -26,7 +24,8 @@ export default async function closeBundle() {
             buffer,
             outDir,
             assetsDir,
-            assetPath
+            assetPath,
+            isSsrBuild
           )
       )
     );

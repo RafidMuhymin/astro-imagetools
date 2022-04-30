@@ -3,9 +3,15 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { middleware } from "../ssr/index.js";
-import { config, load, transform, closeBundle } from "./hooks/index.js";
+import load from "./hooks/load.js";
+import config from "./hooks/config.js";
+import transform from "./hooks/transform.js";
+import closeBundle from "./hooks/closeBundle.js";
 
-export const store = new Map();
+if (!globalThis.astroImageToolsStore)
+  globalThis.astroImageToolsStore = new Map();
+
+export const store = globalThis.astroImageToolsStore;
 
 const filename = fileURLToPath(import.meta.url);
 
@@ -14,7 +20,7 @@ const astroViteConfigsPath = path.resolve(
   "../../astroViteConfigs.js"
 );
 
-export default {
+const vitePluginAstroImageTools = {
   name: "vite-plugin-astro-imagetools",
   enforce: "pre",
 
@@ -51,26 +57,15 @@ export default {
     );
   },
 
-  async load(id) {
-    if (this.load) {
-      // @ts-ignore
-      global.vitePluginContext = {
-        load: this.load,
-      };
-    }
+  load,
 
-    return await load(id);
-  },
-
-  async transform(code, id) {
-    return await transform(code, id);
-  },
+  transform,
 
   configureServer(server) {
     server.middlewares.use(middleware);
   },
 
-  async closeBundle() {
-    return await closeBundle();
-  },
+  closeBundle,
 };
+
+export default vitePluginAstroImageTools;

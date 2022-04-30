@@ -12,9 +12,7 @@ export async function middleware(request, response, next) {
     response.setHeader("Content-Type", type);
     response.setHeader("Cache-Control", "no-cache");
 
-    return stream.Readable.from(
-      buffer || (await getCachedBuffer(hash, image))
-    ).pipe(response);
+    return buffer || (await getCachedBuffer(hash, image));
   }
 
   if (!imageObject && next) {

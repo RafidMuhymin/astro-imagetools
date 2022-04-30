@@ -17,6 +17,8 @@ export default {
     "astro:config:setup": async function ({ config, command, updateConfig }) {
       const environment = command;
 
+      const isSsrBuild = command === "build" && !!config.adapter;
+
       let projectBase = path.normalize(config.base);
 
       if (projectBase.startsWith("./")) projectBase = projectBase.slice(1);
@@ -27,8 +29,9 @@ export default {
 
       const astroViteConfigs = {
         environment,
+        isSsrBuild,
         projectBase,
-      }
+      };
 
       await fs.promises.writeFile(
         astroViteConfigsPath,

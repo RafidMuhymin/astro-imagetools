@@ -25,16 +25,19 @@ export async function saveAndCopyAsset(
   buffer,
   outDir,
   assetsDir,
-  assetPath
+  assetPath,
+  isSsrBuild
 ) {
   const src = fsCachePath + hash;
 
-  const dest = `${outDir}${assetPath}`;
+  const dest = `${outDir}/client${assetPath}`;
 
   if (copied.includes(assetPath)) return;
 
   if (!assetsDirExists) {
-    await fs.promises.mkdir(`${outDir}/${assetsDir}`, { recursive: true });
+    await fs.promises.mkdir(`${outDir}/client/${assetsDir}`, {
+      recursive: true,
+    });
 
     assetsDirExists = true;
   }

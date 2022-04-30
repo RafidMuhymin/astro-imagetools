@@ -1,6 +1,9 @@
 ---
 path: index.md
 layout: ../layouts/MainLayout.astro
+setup: |
+  import src from "../images/elva-800w.jpg"
+  import { Picture } from "astro-imagetools/components"
 ---
 
 # Image Optimization in Astro with Astro ImageTools
@@ -51,7 +54,7 @@ The `placeholder` property tells the image what to show while loading.
 
 The following is an example of a reference to an internal image.
 
-![A father holding his beloved daughter in his arms](/src/images/elva-800w.jpg)
+<Picture src={src} alt="picture" />
 
 <hr />
 

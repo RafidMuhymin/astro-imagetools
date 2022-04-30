@@ -1,12 +1,13 @@
 // @ts-check
 import fs from "fs";
 import crypto from "crypto";
-import { join, basename, extname, relative } from "path";
+import { join, basename, extname, relative, resolve } from "path";
 import {
   sharp,
   fsCachePath,
   supportedImageTypes,
 } from "../../utils/runtimeChecks.js";
+import { fileURLToPath } from "url";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
@@ -62,6 +63,24 @@ export default async (src, transformConfigs) => {
     }
 
     src = join("/", relative(process.env.PWD, filepath));
+  } else {
+    const { default: astroViteConfigs } = await import(
+      "../../astroViteConfigs.js"
+    );
+
+    const { isSsrBuild } = astroViteConfigs;
+
+    if (isSsrBuild) {
+      const filename = fileURLToPath(import.meta.url);
+
+      const assetPath = resolve(filename, "../../client") + src;
+
+      src = "/" + relative(process.env.PWD, assetPath);
+
+      console.log({
+        src
+      })
+    }
   }
 
   const {
