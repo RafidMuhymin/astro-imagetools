@@ -21,6 +21,7 @@ import IncludeSourceFormat from "@config/includeSourceFormat.astro";
 import FormatOptions from "@config/formatOptions.astro";
 import FadeInTransition from "@config/fadeInTransition.astro";
 import ArtDirectives from "@config/artDirectives.astro";
+import CacheDir from "@config/cacheDir.astro";
 import Flip from "@config/flip.astro";
 import Flop from "@config/flop.astro";
 import Invert from "@config/invert.astro";
@@ -45,6 +46,8 @@ import Position from "@config/position.astro";
 
 const { props } = Astro;
 
+const isGlobal = props.global;
+
 const { api, component } = props;
 
 const isBackground =
@@ -56,10 +59,10 @@ const isBackgroundImage =
 const isNotImg = component !== "Img" && api !== "renderImg";
 ---
 
-<Src {...props} />
-{!isBackground && <Alt {...props} />}
-{isBackground && <Tag {...props} />}
-{api && isBackground && <Content {...props} />}
+{!isGlobal && <Src {...props} />}
+{!isGlobal && !isBackground && <Alt {...props} />}
+{!isGlobal && isBackground && <Tag {...props} />}
+{!isGlobal && api && isBackground && <Content {...props} />}
 {!isBackgroundImage && <Sizes {...props} />}
 <Preload {...props} />
 {!isBackgroundImage && <Loading {...props} />}
@@ -77,7 +80,8 @@ const isNotImg = component !== "Img" && api !== "renderImg";
 {isNotImg && <IncludeSourceFormat {...props} />}
 <FormatOptions {...props} />
 {isNotImg && !isBackgroundImage && <FadeInTransition {...props} />}
-{isNotImg && <ArtDirectives {...props} />}
+{!isGlobal && isNotImg && <ArtDirectives {...props} />}
+{isGlobal && <CacheDir {...props} />}
 <Flip {...props} />
 <Flop {...props} />
 <Invert {...props} />

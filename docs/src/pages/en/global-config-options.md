@@ -1,0 +1,76 @@
+---
+title: Global Config Options
+description: Astro ImageTools Global Configuration Options
+layout: ../../layouts/MainLayout.astro
+setup: |
+  import ConfigOptions from "../../components/ConfigOptions.astro";
+---
+
+It's possible to set config options globally to provide the default values for the config options across the entire application. If for a config, no value is passed via `formatOptions`, components props or config properties, query parameters, **Astro ImageTools** will resort to global config options.
+
+All the global configs are optional. Any configs supported by any components or APIs can be defined globally except `src`, `alt`, `content`, and `artDirectives`. The only addition is the [`cacheDir`](#cacheDir) config.
+
+To set global config options, create a `astro-imagetools.config.mjs` file inside the project directory and export an object with all the config options defined inside it.
+
+## Config Intellisense
+
+**Astro ImageTools** ships with TypeScript typings so that you can leverage your IDE's intellisense with the `defineConfig` helper:
+
+```js
+import { defineConfig } from "astro-imagetools/config";
+
+export default defineConfig({
+  // ...
+});
+```
+
+Or using JSDoc type hints:
+
+```js
+/**
+ * @type {import('astro-imagetools').GlobalConfigOptions}
+ */
+const config = {
+  // ...
+};
+
+export default config;
+```
+
+## Code Example
+
+```js
+import { defineConfig } from "astro-imagetools/config";
+
+export default defineConfig({
+  placeholder: "tracedSVG",
+  format: ["webp", "jpg"],
+  fallbackFormat: "png",
+  includeSourceFormat: false,
+  formatOptions: {
+    jpg: {
+      quality: 80,
+    },
+    png: {
+      quality: 80,
+    },
+    webp: {
+      quality: 50,
+    },
+    tracedSVG: {
+      options: {
+        background: "#fff",
+        color: "#000",
+        turnPolicy: "black",
+        turdSize: 1,
+        alphaMax: 1,
+        optCurve: true,
+        threshold: 100,
+        blackOnWhite: false,
+      },
+    },
+  },
+});
+```
+
+<ConfigOptions global />

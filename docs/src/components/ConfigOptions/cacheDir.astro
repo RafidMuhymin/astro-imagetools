@@ -1,0 +1,21 @@
+<!-- prettier-ignore -->
+<Markdown>
+  ### `cacheDir`
+
+  **Type:** `string`
+
+  **Default:** `./node_modules/.cache/astro-imagetools` (most of the time)
+  
+  Where the cached images will be saved to. If not passed the default cache directory will be located using the [`find-cache-dir`](https://www.npmjs.com/package/find-cache-dir) library.
+
+  **Code example:**
+</Markdown>
+
+<CodeExample
+  {...Astro.props}
+  values={[
+    {
+      cacheDir: `/.cache`,
+    },
+  ]}
+/>

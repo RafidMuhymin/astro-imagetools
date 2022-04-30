@@ -39,6 +39,7 @@ export const SIDEBAR = {
     { text: "BASICS", header: true },
     { text: "Components and APIs", link: "en/components-and-apis" },
     { text: "Markdown Images", link: "en/markdown-images" },
+    { text: "Global Config Options", link: "en/global-config-options" },
 
     { text: "COMPONENTS", header: true },
     { text: "<Img />", link: "en/components/Img" },

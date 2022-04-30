@@ -1,9 +1,11 @@
 ---
 import { Code } from "astro/components";
 
-const { values, api, component } = Astro.props;
+const { values, global, api, component } = Astro.props;
 
-const isJS = api ? true : false;
+const isJS = component ? false : true;
+
+const isGlobal = global;
 
 const comment = (text) => (isJS ? `// ${text}` : `<!-- ${text} -->`) + "\n";
 
@@ -35,9 +37,14 @@ function formatValue(value) {
 }
 
 function code(props, { api, component }) {
-  const isJS = api ? true : false;
-
   const builtProps = Object.keys(props)
+    .filter((key) =>
+      isGlobal
+        ? ["src", "alt", "tag", "content", "artDirectives"].includes(key)
+          ? false
+          : true
+        : true
+    )
     .map((key) =>
       key === "comment"
         ? `/* ${props[key]} */`
@@ -46,8 +53,14 @@ function code(props, { api, component }) {
     .join(`${isJS ? "," : ""}\n  `);
 
   return (
-    `${isJS ? `const renderedHTML = await ${api}({` : `<${component}`}
-  ${builtProps}
+    `${
+      isJS
+        ? isGlobal
+          ? `export default defineConfig({`
+          : `const renderedHTML = await ${api}({`
+        : `<${component}`
+    }
+  ${builtProps}${isJS ? "," : ""}
 ${isJS ? `});` : `/>`}` + "\n"
   );
 }
@@ -59,7 +72,7 @@ const codeBlock = values
       : typeof value === "string"
       ? comment(value)
       : Array.isArray(value)
-      ? api
+      ? isJS
         ? value.filter((value) => value !== "---").join("\n") + "\n"
         : value.join("\n") + "\n"
       : code(value, { api, component })
