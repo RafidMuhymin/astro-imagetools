@@ -31,7 +31,6 @@ export const ALGOLIA = {
 
 export const SIDEBAR = {
   en: [
-    { text: "", header: true },
     { text: "Getting Started", header: true },
     { text: "Introduction", link: "en/introduction" },
     { text: "Installation", link: "en/installation" },
