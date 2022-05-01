@@ -1,12 +1,13 @@
 // @ts-check
 import fs from "fs";
 import path from "path";
+import stream from "stream";
 import { fileURLToPath } from "url";
-import { middleware } from "../ssr/index.js";
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
 import closeBundle from "./hooks/closeBundle.js";
+import { middleware } from "../ssr/index.js";
 
 if (!globalThis.astroImageToolsStore)
   globalThis.astroImageToolsStore = new Map();
@@ -62,7 +63,15 @@ const vitePluginAstroImageTools = {
   transform,
 
   configureServer(server) {
-    server.middlewares.use(middleware);
+    server.middlewares.use(async (request, response, next) => {
+      const buffer = await middleware(request, response);
+
+      if (buffer) {
+        return stream.Readable.from(buffer).pipe(response);
+      }
+
+      next();
+    });
   },
 
   closeBundle,

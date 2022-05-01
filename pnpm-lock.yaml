@@ -14,7 +14,7 @@ importers:
       '@astrojs/svelte': ^0.1.2
       '@astrojs/vue': ^0.1.3
       astro: ^1.0.0-beta.20
-      astro-imagetools: workspace:^0.5.8
+      astro-imagetools: workspace:^0.6.0
       astro-spa: ^1.3.9
       react: ^18.1.0
       react-dom: ^18.1.0
