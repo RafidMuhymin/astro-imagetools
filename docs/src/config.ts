@@ -18,7 +18,7 @@ export const KNOWN_LANGUAGES = {
   English: "en",
 };
 
-export const GITHUB_EDIT_URL = `https://github.com/withastro/astro-imagetools/blob/main/docs/`;
+export const GITHUB_EDIT_URL = `https://github.com/RafidMuhymin/astro-imagetools/blob/main/docs/`;
 
 export const COMMUNITY_INVITE_URL = `https://astro.build/chat`;
 
