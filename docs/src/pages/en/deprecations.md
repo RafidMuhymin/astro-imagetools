@@ -16,7 +16,7 @@ They will be removed in the upcoming minor releases of **Astro ImageTools**. So,
 
 The `<Image />` component and the `renderImage` API have been removed in the `v0.6.0` release.
 
-And the Vite plugin now can't be registered directly. Instead you have to add the Astro integration provided in the latest release in your `astro.config.mjs` file. The integration will handle registering the plugin and the other things automatically.
+And the Vite plugin now can't be registered directly. Instead, you have to add the Astro integration provided in the latest release in your `astro.config.mjs` file. The integration will handle registering the plugin and the other required things automatically.
 
 ```js
 import { defineConfig } from "astro/config";
