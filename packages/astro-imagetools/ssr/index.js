@@ -1,9 +1,8 @@
 // @ts-check
-import stream from "stream";
 import { store } from "../plugin/index.js";
 import { getCachedBuffer } from "../plugin/utils/cache.js";
 
-export async function middleware(request, response, next) {
+export async function middleware(request, response) {
   const imageObject = store.get(request.url);
 
   if (imageObject) {
@@ -13,9 +12,5 @@ export async function middleware(request, response, next) {
     response.setHeader("Cache-Control", "no-cache");
 
     return buffer || (await getCachedBuffer(hash, image));
-  }
-
-  if (!imageObject && next) {
-    next();
   }
 }
