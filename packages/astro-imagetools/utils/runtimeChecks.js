@@ -35,21 +35,14 @@ export const supportedConfigs = [
   "cacheDir"
 ];
 
-const posixPath = process.env.PWD + "/astro-imagetools.config";
+const configFunction = Object.values(
+  // @ts-ignore
+  import.meta.glob("/astro-imagetools.config.(mjs|js)")
+)[0];
 
-const win32Path =
-  "file://" +
-  process.env.PWD.replace(":\\", ":\\\\") +
-  path.sep +
-  "astro-imagetools.config";
-
-const configPath = process.platform !== "win32" ? posixPath : win32Path;
-
-// Resolve Astro ImageTools Config
-const { default: rawGlobalConfigOptions } = await (async () =>
-  await import(configPath + ".js").catch(() =>
-    import(configPath + ".mjs").catch(() => ({}))
-  ))();
+const rawGlobalConfigOptions = configFunction
+  ? (await configFunction()).default
+  : {};
 
 const NonGlobalConfigOptions = ["src", "alt", "content"];
 
