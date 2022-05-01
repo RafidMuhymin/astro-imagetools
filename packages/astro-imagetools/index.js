@@ -1,1 +1,3 @@
-export { default as astroImageTools } from "./integration/index.js";
+import astroImageTools from "./integration/index.js";
+
+export { astroImageTools };
