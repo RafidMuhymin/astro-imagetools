@@ -35,10 +35,15 @@ export const supportedConfigs = [
   "cacheDir"
 ];
 
-const configFunction = Object.values(
-  // @ts-ignore
-  import.meta.glob("/astro-imagetools.config.(mjs|js)")
-)[0];
+const importMeta = import.meta;
+
+// @ts-ignore
+const configFunction = importMeta.glob
+  ? Object.values(
+      // @ts-ignore
+      importMeta.glob("/astro-imagetools.config.(mjs|js)")
+    )[0]
+  : null;
 
 const rawGlobalConfigOptions = configFunction
   ? (await configFunction()).default
