@@ -16,15 +16,13 @@ yarn add astro-imagetools
 pnpm add astro-imagetools
 ```
 
-Register the Vite plugin provided by **Astro ImageTools** in your `astro.config.js` file:
+Register the _Astro Integration_ provided by **Astro ImageTools** in your `astro.config.mjs` file:
 
 ```js
-import astroImagePlugin from "astro-imagetools/plugin";
+import { astroImageTools } from "astro-imagetools";
 
 export default {
-  vite: {
-    plugins: [astroImagePlugin],
-  },
+  integration: [astroImageTools],
 };
 ```
 
