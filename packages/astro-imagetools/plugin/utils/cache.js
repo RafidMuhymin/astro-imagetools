@@ -32,7 +32,7 @@ export async function saveAndCopyAsset(
 
   const dest = outDir + (isSsrBuild ? "/client" : "") + assetPath;
 
-  assetsDir = outDir + (isSsrBuild ? "/client/" : "") + assetsDir;
+  assetsDir = outDir + (isSsrBuild ? "/client" : "/") + assetsDir;
 
   if (copied.includes(assetPath)) return;
 
