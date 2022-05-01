@@ -6,7 +6,7 @@ layout: ../../layouts/MainLayout.astro
 
 Recently, **Astro** has added experimental support for server-side rendering (SSR). To use **Astro ImageTools** in SSR, you need to have at least `v0.6.0` of the `astro-imagetools` package installed.
 
-## How to use Astro ImageTools in SSR
+## How to use Astro ImageTools in SSR Mode
 
 ### Install the required dependencies
 
@@ -70,9 +70,11 @@ Below is an example of how to do this.
 
 ```astro
 ---
-import src from "../images/image.jpg";
+import src from "../images/image.jpg?raw";
 import { Picture } from "astro-imagetools/components";
 ---
 
 <Picture {src} alt="A local image" />
 ```
+
+> The `raw` query parameter has been used to tell the internal Vite plugin to emit the asset from the source image unchanged.
