@@ -64,7 +64,7 @@ http
 
 The components and APIs provided by **Astro ImageTools** will be executed on the server. So, the path that you have provided via the `src` property won't exist on the server. This limitation applies for local images only.
 
-To use local images with SSR, you have to generate assets for them first and then you have to pass the location of the assets to the `src` property.
+To use local images with SSR, you have to generate assets for them first and then you have to pass the path to the assets to the `src` property.
 
 Below is an example of how to do this.
 

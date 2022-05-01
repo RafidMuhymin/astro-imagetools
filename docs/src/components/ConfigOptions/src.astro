@@ -27,3 +27,23 @@
     },
   ]}
 />
+
+<Markdown>
+  #### SSR Usage
+
+  In `SSR` mode, if you are using local images, you have to generate assets for them first and then you have to pass the path to the assets to the `src` property.
+</Markdown>
+
+<CodeExample
+  {...Astro.props}
+  values={[
+    [
+      // The below hack is used to not break syntax highlighting
+      "--" + "-",
+      `import src from "../path/to/source_image.jpg";`,
+      "--" + "-",
+    ],
+    "",
+    { src: ["src"], alt: "A local image in SSR mode" },
+  ]}
+/>
