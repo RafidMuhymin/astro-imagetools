@@ -76,10 +76,6 @@ export default async (src, transformConfigs) => {
       const assetPath = resolve(filename, "../../client") + src;
 
       src = "/" + relative(process.env.PWD, assetPath);
-
-      console.log({
-        src
-      })
     }
   }
 
