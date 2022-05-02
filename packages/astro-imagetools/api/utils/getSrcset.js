@@ -1,4 +1,5 @@
 // @ts-check
+import { cwd } from "../../utils/runtimeChecks.js";
 
 export default async function getSrcset(src, breakpoints, format, options) {
   options = {
@@ -22,7 +23,7 @@ export default async function getSrcset(src, breakpoints, format, options) {
   const id = `${src}?${params.slice(1)}`;
 
   if (process.env.npm_lifecycle_event !== "dev") {
-    const fullPath = process.env.PWD + id;
+    const fullPath = cwd + id;
 
     const { default: load } = await import("../../plugin/hooks/load.js");
 

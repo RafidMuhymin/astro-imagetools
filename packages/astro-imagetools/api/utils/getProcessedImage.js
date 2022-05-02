@@ -3,6 +3,7 @@ import fs from "fs";
 import crypto from "crypto";
 import { join, basename, extname, relative, resolve } from "path";
 import {
+  cwd,
   sharp,
   fsCachePath,
   supportedImageTypes,
@@ -62,7 +63,7 @@ export default async (src, transformConfigs) => {
       fs.writeFileSync(filepath, buffer);
     }
 
-    src = join("/", relative(process.env.PWD, filepath));
+    src = join("/", relative(cwd, filepath));
   } else {
     const { default: astroViteConfigs } = await import(
       "../../astroViteConfigs.js"
@@ -75,7 +76,7 @@ export default async (src, transformConfigs) => {
 
       const assetPath = resolve(filename, "../../client") + src;
 
-      src = "/" + relative(process.env.PWD, assetPath);
+      src = "/" + relative(cwd, assetPath);
     }
   }
 

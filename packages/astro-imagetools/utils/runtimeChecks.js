@@ -64,14 +64,14 @@ const GlobalConfigOptions = filterConfigs(
 export { GlobalConfigOptions };
 
 // CWD
-export const pwd = process.env.PWD.split(path.sep).join(path.posix.sep);
+export const cwd = process.cwd().split(path.sep).join(path.posix.sep);
 
 const { cacheDir } = GlobalConfigOptions;
 
 // FS Cache related checks
 const fsCachePath =
   (cacheDir
-    ? pwd + cacheDir
+    ? cwd + cacheDir
     : findCacheDir({
         name: "astro-imagetools",
       })) + "/";

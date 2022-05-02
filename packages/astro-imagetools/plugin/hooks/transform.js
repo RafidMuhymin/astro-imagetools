@@ -2,7 +2,7 @@
 import path from "path";
 import crypto from "crypto";
 import MagicString from "magic-string";
-import { pwd } from "../../utils/runtimeChecks.js";
+import { cwd } from "../../utils/runtimeChecks.js";
 
 const regexTestPattern =
   /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/;
@@ -32,7 +32,7 @@ export default async function transform(code, id) {
 
       s.prepend(
         `import { Picture as ${Picture} } from "astro-imagetools/components";\nimport { renderComponent as ${renderComponent} } from "${
-          pwd + "/node_modules/astro/dist/runtime/server/index.js"
+          cwd + "/node_modules/astro/dist/runtime/server/index.js"
         }"\n;`
       );
 
@@ -41,7 +41,7 @@ export default async function transform(code, id) {
 
         const src = rawSrc.match("(http://|https://|data:image/).*")
           ? rawSrc
-          : path.resolve(path.dirname(id), rawSrc).replace(pwd, "");
+          : path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
 
         s.overwrite(
           match.index,

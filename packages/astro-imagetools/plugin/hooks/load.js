@@ -3,7 +3,7 @@ import path from "path";
 import objectHash from "object-hash";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
-import { pwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
+import { cwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
 import { store } from "../index.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
@@ -31,7 +31,7 @@ export default async function load(id) {
 
     const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
-    const src = id.startsWith(pwd) ? id : pwd + id;
+    const src = id.startsWith(cwd) ? id : cwd + id;
 
     const config = Object.fromEntries(searchParams);
 
