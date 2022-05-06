@@ -6,10 +6,12 @@
   "types": "./types.d.ts",
   "exports": {
     ".": "./index.js",
+    "./package.json": "./package.json",
     "./ssr": "./ssr/index.js",
     "./api": "./api/index.js",
     "./config": "./config.mjs",
-    "./components": "./components/index.js"
+    "./components": "./components/index.js",
+    "./plugin": "./plugin/index.js"
   },
   "scripts": {
     "test": "echo \"No test specified\""
