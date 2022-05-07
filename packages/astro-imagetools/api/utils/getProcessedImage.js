@@ -9,6 +9,7 @@ import {
   supportedImageTypes,
 } from "../../utils/runtimeChecks.js";
 import { fileURLToPath } from "node:url";
+import { getSrcPath } from './getSrcPath.js';
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
@@ -93,7 +94,7 @@ export default async (src, transformConfigs) => {
   const path = src.replace(/\\/g, `/`);
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
-    `./${src}`,
+    getSrcPath(src),
     width,
     height,
     aspect
