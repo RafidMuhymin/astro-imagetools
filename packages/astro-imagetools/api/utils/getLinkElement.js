@@ -17,15 +17,16 @@ export default function getLinkElement({
     excludeArray: ["as", "rel", "imagesizes", "imagesrcset"],
   });
 
-  const linkElement = preload && images.length
-    ? `<link
+  const linkElement =
+    preload && images.length
+      ? `<link
         ${attributesString}
         as="image"
         rel="preload"
         imagesizes="${imagesizes}"
         imagesrcset="${imagesrcset}"
       />`
-    : "";
+      : "";
 
   return linkElement;
 }
