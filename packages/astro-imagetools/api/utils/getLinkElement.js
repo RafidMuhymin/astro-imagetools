@@ -9,7 +9,7 @@ export default function getLinkElement({
 }) {
   const imagesrcset =
     preload &&
-    images.at(-1).sources.find(({ format: fmt }) => fmt === preload)?.srcset;
+    images.at(-1)?.sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
   const attributesString = getAttributesString({
     element: "link",
@@ -17,7 +17,7 @@ export default function getLinkElement({
     excludeArray: ["as", "rel", "imagesizes", "imagesrcset"],
   });
 
-  const linkElement = preload
+  const linkElement = preload && images.length
     ? `<link
         ${attributesString}
         as="image"

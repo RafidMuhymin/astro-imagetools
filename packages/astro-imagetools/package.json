@@ -12,7 +12,8 @@
     "./components": "./components/index.js"
   },
   "scripts": {
-    "test": "echo \"No test specified\""
+    "test:watch": "vitest",
+    "test": "vitest run"
   },
   "repository": {
     "type": "git",
@@ -50,5 +51,8 @@
   },
   "peerDependencies": {
     "astro": ">=0.26 || >=1.0.0-beta"
+  },
+  "devDependencies": {
+    "vitest": "^0.12.4"
   }
 }
