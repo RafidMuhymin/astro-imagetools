@@ -1,8 +1,8 @@
 // @ts-check
 import fs from "fs";
-import path from "path";
 import stream from "stream";
 import { fileURLToPath } from "url";
+import { posix as path } from "path";
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
@@ -37,7 +37,8 @@ const vitePluginAstroImageTools = {
         `/${assetsDir}/[name].[hash][extname]`
     );
 
-    if (!assetFileNames.startsWith("/")) assetFileNames = "/" + assetFileNames;
+    if (!assetFileNames.startsWith("/"))
+      assetFileNames = path.join("/", assetFileNames);
 
     const astroViteConfigs = JSON.parse(
       (await fs.promises.readFile(astroViteConfigsPath, "utf8")).slice(15)

@@ -1,5 +1,6 @@
 // @ts-check
 import fs from "fs";
+import { posix as path } from "path";
 import { fsCachePath } from "../../utils/runtimeChecks.js";
 
 const copied = [];
@@ -30,9 +31,9 @@ export async function saveAndCopyAsset(
 ) {
   const src = fsCachePath + hash;
 
-  const dest = outDir + (isSsrBuild ? "/client" : "") + assetPath;
+  const dest = path.join(outDir, isSsrBuild ? "/client" : "", assetPath);
 
-  assetsDir = outDir + (isSsrBuild ? "/client" : "/") + assetsDir;
+  assetsDir = path.join(outDir, isSsrBuild ? "/client" : "/", assetsDir);
 
   if (copied.includes(assetPath)) return;
 
