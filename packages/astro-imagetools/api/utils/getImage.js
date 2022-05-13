@@ -1,5 +1,5 @@
 // @ts-check
-import crypto from "crypto";
+import crypto from "node:crypto";
 import objectHash from "object-hash";
 import getImageSources from "./getImageSources.js";
 import getProcessedImage from "./getProcessedImage.js";

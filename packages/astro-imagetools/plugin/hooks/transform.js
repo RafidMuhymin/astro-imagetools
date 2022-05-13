@@ -1,6 +1,6 @@
 // @ts-check
-import path from "path";
-import crypto from "crypto";
+import path from "node:path";
+import crypto from "node:crypto";
 import MagicString from "magic-string";
 import { cwd } from "../../utils/runtimeChecks.js";
 

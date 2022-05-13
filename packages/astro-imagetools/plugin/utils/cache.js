@@ -1,6 +1,6 @@
 // @ts-check
-import fs from "fs";
-import { posix as path } from "path";
+import fs from "node:fs";
+import { posix as path } from "node:path";
 import { fsCachePath } from "../../utils/runtimeChecks.js";
 
 const copied = [];
