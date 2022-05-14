@@ -2,7 +2,7 @@
 import fs from "fs";
 import stream from "stream";
 import { fileURLToPath } from "url";
-import { posix as path } from "path";
+import { posix as path, resolve } from "path";
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
@@ -16,7 +16,7 @@ export const store = globalThis.astroImageToolsStore;
 
 const filename = fileURLToPath(import.meta.url);
 
-const astroViteConfigsPath = path.resolve(
+const astroViteConfigsPath = resolve(
   filename,
   "../../astroViteConfigs.js"
 );
