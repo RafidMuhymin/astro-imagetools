@@ -1,6 +1,6 @@
 // @ts-check
 
-import util from "util";
+import util from "node:util";
 import potrace from "potrace";
 import getSrcset from "./getSrcset.js";
 import { sharp } from "../../utils/runtimeChecks.js";

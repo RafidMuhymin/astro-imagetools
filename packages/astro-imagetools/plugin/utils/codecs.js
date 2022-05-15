@@ -1,5 +1,5 @@
 // @ts-check
-import fs from "fs";
+import fs from "node:fs";
 import * as codecs from "@astropub/codecs";
 
 const resizedImages = new Map();

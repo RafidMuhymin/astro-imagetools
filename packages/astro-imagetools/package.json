@@ -54,5 +54,8 @@
   },
   "devDependencies": {
     "vitest": "^0.12.4"
+  },
+  "engines": {
+    "node": ">=12.20.0 <13 || >=14.13.1"
   }
 }

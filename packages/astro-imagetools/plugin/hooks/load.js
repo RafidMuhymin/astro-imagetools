@@ -1,5 +1,5 @@
 // @ts-check
-import path from "path";
+import path from "node:path";
 import objectHash from "object-hash";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";

@@ -1,8 +1,8 @@
 // @ts-check
-import fs from "fs";
-import stream from "stream";
-import { fileURLToPath } from "url";
-import { posix as path, resolve } from "path";
+import fs from "node:fs";
+import stream from "node:stream";
+import { fileURLToPath } from "node:url";
+import { posix as path, resolve } from "node:path";
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
