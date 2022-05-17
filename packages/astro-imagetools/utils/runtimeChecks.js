@@ -1,6 +1,7 @@
 // @ts-check
 import fs from "node:fs";
 import path from "node:path";
+import { findUp } from 'find-up';
 import findCacheDir from "find-cache-dir";
 import filterConfigs from "./filterConfigs.js";
 
@@ -35,19 +36,13 @@ export const supportedConfigs = [
   "cacheDir"
 ];
 
-const importMeta = import.meta;
+const configFile = await findUp(['astro-imagetools.config.js', 'astro-imagetools.config.mjs']);
 
-// @ts-ignore
-const configFunction = importMeta.glob
-  ? Object.values(
-      // @ts-ignore
-      importMeta.glob("/astro-imagetools.config.(mjs|js)")
-    )[0]
+const configFunction = configFile
+  ? (await import(configFile))
   : null;
 
-const rawGlobalConfigOptions = configFunction
-  ? (await configFunction()).default
-  : {};
+const rawGlobalConfigOptions = configFunction.default ?? {}
 
 const NonGlobalConfigOptions = ["src", "alt", "content"];
 
