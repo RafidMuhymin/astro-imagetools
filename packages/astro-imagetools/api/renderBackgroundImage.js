@@ -52,7 +52,7 @@ export default async function renderBackgroundImage(props) {
 
   const className = `astro-imagetools-background-image-${uuid}`;
 
-  const { imagesizes } = images.at(-1);
+  const { imagesizes } = images[images.length - 1];
 
   const link = getLinkElement({ images, preload, imagesizes, linkAttributes });
 

@@ -58,7 +58,7 @@ export default async function getArtDirectedImages(
 
         imagesizes = calculatedConfigs.imagesizes;
 
-        const maxWidth = requiredBreakpoints.at(-1);
+        const maxWidth = requiredBreakpoints[requiredBreakpoints.length - 1];
 
         const sources = await Promise.all(
           formats.map(async (format) => {
