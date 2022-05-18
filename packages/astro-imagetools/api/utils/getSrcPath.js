@@ -12,7 +12,9 @@ const paramPattern = /\?.*/;
  * Finally, if it still can't be found, the original input will be returned.
  */
 export async function getSrcPath(src) {
-  const { default: astroViteConfigs } = await import("../../astroViteConfigs.js");
+  const { default: astroViteConfigs } = await import(
+    "../../astroViteConfigs.js"
+  );
 
   // If this is already resolved to a file, return it.
   if (fs.existsSync(src.replace(paramPattern, ""))) return src;
