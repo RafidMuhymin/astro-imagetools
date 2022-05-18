@@ -49,17 +49,25 @@ The `placeholder` property tells the image what to show while loading.
 
 ## Internal Image
 
-The following is an example of a reference to an internal image.
+The following is an example of a reference to an internal image in the `src` directory (`../images/elva-800w.jpg`).
 
-![A father holding his beloved daughter in his arms](../images//elva-800w.jpg)
+![A father holding his beloved daughter in his arms](../images/elva-800w.jpg)
 
 <hr />
 
 ## External Image
 
-The following is an example of a reference to an external image.
+The following is an example of a reference to an external image (`https://picsum.photos/1024/768`).
 
 ![A random image](https://picsum.photos/1024/768)
+
+<hr />
+
+## Image in /public
+
+This image is in the public directory (`/images/public.jpeg`).
+
+![A random image](/images/public.jpeg)
 
 <hr />
 

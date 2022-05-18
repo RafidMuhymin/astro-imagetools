@@ -1,6 +1,7 @@
 // @ts-check
 import path from "node:path";
 import objectHash from "object-hash";
+import { getSrcPath } from "../../api/utils/getSrcPath.js";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
 import { cwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
@@ -31,7 +32,7 @@ export default async function load(id) {
 
     const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
-    const src = id.startsWith(cwd) ? id : cwd + id;
+    const src = getSrcPath(id);
 
     const config = Object.fromEntries(searchParams);
 

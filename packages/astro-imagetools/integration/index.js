@@ -31,6 +31,8 @@ export default {
         environment,
         isSsrBuild,
         projectBase,
+        publicDir: fileURLToPath(config.publicDir.href),
+        rootDir: fileURLToPath(config.root.href),
       };
 
       await fs.promises.writeFile(

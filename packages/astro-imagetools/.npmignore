@@ -1,0 +1,4 @@
+*.test.ts
+test-fixtures
+astroViteConfigs.js
+vitest.config.ts
