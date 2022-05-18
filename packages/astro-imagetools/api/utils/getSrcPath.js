@@ -4,8 +4,6 @@ import path from "path";
 // To strip off params when checking for file on disk.
 const paramPattern = /\?.*/;
 
-const { default: astroViteConfigs } = await import("../../astroViteConfigs.js");
-
 /**
  * getSrcPath allows the use of `src` attributes relative to either the public folder or project root.
  *
@@ -13,7 +11,9 @@ const { default: astroViteConfigs } = await import("../../astroViteConfigs.js");
  * If the file isn't found, it will look in the public folder.
  * Finally, if it still can't be found, the original input will be returned.
  */
-export function getSrcPath(src) {
+export async function getSrcPath(src) {
+  const { default: astroViteConfigs } = await import("../../astroViteConfigs.js");
+
   // If this is already resolved to a file, return it.
   if (fs.existsSync(src.replace(paramPattern, ""))) return src;
 

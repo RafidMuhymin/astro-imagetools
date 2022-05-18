@@ -23,7 +23,7 @@ export default async function getSrcset(src, breakpoints, format, options) {
   const id = `${src}?${params.slice(1)}`;
 
   if (process.env.npm_lifecycle_event !== "dev") {
-    const fullPath = getSrcPath(id);
+    const fullPath = await getSrcPath(id);
 
     const { default: load } = await import("../../plugin/hooks/load.js");
 

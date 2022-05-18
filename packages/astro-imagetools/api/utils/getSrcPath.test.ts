@@ -24,33 +24,33 @@ describe("getLinkElement", () => {
     vi.unmock("../../astroViteConfigs.js");
   });
 
-  it("finds a file in the root of the project", () => {
-    const result = getSrcPath("root.jpeg");
+  it("finds a file in the root of the project", async () => {
+    const result = await getSrcPath("root.jpeg");
     expect(result).toBe(buildPath("root.jpeg"));
   });
 
-  it("finds a file in the public folder", () => {
-    const result = getSrcPath("out.jpeg");
+  it("finds a file in the public folder", async () => {
+    const result = await getSrcPath("out.jpeg");
     expect(result).toBe(buildPath("out/out.jpeg"));
   });
 
-  it("returns an absolute path unchanged, if it exists", () => {
-    const result = getSrcPath(buildPath("out/out.jpeg"));
+  it("returns an absolute path unchanged, if it exists", async () => {
+    const result = await getSrcPath(buildPath("out/out.jpeg"));
     expect(result).toBe(buildPath("out/out.jpeg"));
   });
 
-  it("handles query parameters", () => {
-    const result = getSrcPath("root.jpeg?w=200");
+  it("handles query parameters", async () => {
+    const result = await getSrcPath("root.jpeg?w=200");
     expect(result).toBe(buildPath("root.jpeg?w=200"));
   });
 
-  it("handles query parameters for public-resolved files", () => {
-    const result = getSrcPath("out.jpeg?w=200");
+  it("handles query parameters for public-resolved files", async () => {
+    const result = await getSrcPath("out.jpeg?w=200");
     expect(result).toBe(buildPath("out/out.jpeg?w=200"));
   });
 
-  it("returns the original input if the file is not found", () => {
-    const result = getSrcPath(
+  it("returns the original input if the file is not found", async () => {
+    const result = await getSrcPath(
       "https://cdn.nedis.com/images/products_high_res/TVRC2080BK_P30.JPG"
     );
     expect(result).toBe(
@@ -58,9 +58,9 @@ describe("getLinkElement", () => {
     );
   });
 
-  it("finds relative paths correctly", () => {
-    const outResult = getSrcPath("./out/out.jpeg");
-    const rootResult = getSrcPath("./root.jpeg");
+  it("finds relative paths correctly", async () => {
+    const outResult = await getSrcPath("./out/out.jpeg");
+    const rootResult = await getSrcPath("./root.jpeg");
     expect(outResult).toBe(buildPath("out/out.jpeg"));
     expect(rootResult).toBe(buildPath("root.jpeg"));
   });
