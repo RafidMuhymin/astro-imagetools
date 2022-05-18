@@ -9,7 +9,7 @@ export default function getLinkElement({
 }) {
   const imagesrcset =
     preload &&
-    images.at(-1)?.sources.find(({ format: fmt }) => fmt === preload)?.srcset;
+    images[images.length - 1]?.sources.find(({ format: fmt }) => fmt === preload)?.srcset;
 
   const attributesString = getAttributesString({
     element: "link",

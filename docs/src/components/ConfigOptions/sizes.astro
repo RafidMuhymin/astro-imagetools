@@ -4,7 +4,7 @@
 
   **Type:** `string` or `(breakpoints: number[]) => string`
 
-  **Default:** `` (breakpoints) => `(min-width: ${breakpoints.at(-1)}px) ${breakpoints.at(-1)}px, 100vw ``
+  **Default:** `` (breakpoints) => `(min-width: ${breakpoints[breakpopints.length - 1]}px) ${breakpoints[breakpopints.length - 1]}px, 100vw ``
 
   A string or function that returns a string suitable for the value of the `sizes`
   attribute of the generated `<img />` element. The final calculated breakpoints
@@ -28,7 +28,7 @@
       src: "https://picsum.photos/1024/768",
       alt: "A random image",
       sizes: (breakpoints) => {
-        const maxWidth = breakpoints.at(-1);
+        const maxWidth = breakpoints[breakpoints.length - 1];
         return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
       },
     },

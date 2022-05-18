@@ -96,7 +96,7 @@ export default function getFilteredProps(type, props) {
     tag = "section",
     content = "",
     sizes = function (breakpoints) {
-      const maxWidth = breakpoints.at(-1);
+      const maxWidth = breakpoints[breakpoints.length - 1];
       return `(min-width: ${maxWidth}px) ${maxWidth}px, 100vw`;
     },
     preload,

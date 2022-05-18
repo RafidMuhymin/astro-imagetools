@@ -4,5 +4,6 @@
     "packages/*",
     "docs",
     "demo"
-  ]
+  ],
+  "packageManager": "pnpm@6.32.12"
 }
