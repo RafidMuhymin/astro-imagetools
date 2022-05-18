@@ -43,7 +43,7 @@ const configFile = await findUp([
 
 const configFunction = configFile ? await import(configFile) : null;
 
-const rawGlobalConfigOptions = configFunction.default ?? {};
+const rawGlobalConfigOptions = configFunction?.default ?? {};
 
 const NonGlobalConfigOptions = ["src", "alt", "content"];
 
