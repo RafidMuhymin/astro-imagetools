@@ -25,8 +25,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Lint
+      - name: Prettier
         run: pnpm run format:check
+
+      - name: ESLint
+        run: pnpm run lint
 
   test:
     name: "Test: ${{ matrix.os }} (node@${{ matrix.node_version }})"
