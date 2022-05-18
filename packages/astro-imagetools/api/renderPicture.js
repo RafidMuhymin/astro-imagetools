@@ -37,7 +37,6 @@ export default async function renderPicture(props) {
     img: imgAttributes = {},
     link: linkAttributes = {},
     style: styleAttributes = {},
-    picture: pictureAttributes = {},
   } = attributes;
 
   const { uuid, images } = await getImage({

@@ -1,5 +1,5 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 // To strip off params when checking for file on disk.
 const paramPattern = /\?.*/;

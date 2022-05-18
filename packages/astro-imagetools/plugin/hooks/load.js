@@ -4,7 +4,7 @@ import objectHash from "object-hash";
 import { getSrcPath } from "../../api/utils/getSrcPath.js";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
-import { cwd, sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
+import { sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
 import { store } from "../index.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp

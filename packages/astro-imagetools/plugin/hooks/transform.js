@@ -17,7 +17,7 @@ export default async function transform(code, id) {
       "../../astroViteConfigs.js"
     );
 
-    const { isSsrBuild, sourcemap } = astroViteConfigs;
+    const { sourcemap } = astroViteConfigs;
 
     let matches;
 

@@ -14,7 +14,7 @@ export default async function getFallbackImage(
   rest
 ) {
   switch (placeholder) {
-    case "blurred":
+    case "blurred": {
       const dataUri = await getSrcset(src, [20], format, {
         inline: true,
         ...rest,
@@ -22,7 +22,8 @@ export default async function getFallbackImage(
       });
 
       return dataUri;
-    case "tracedSVG":
+    }
+    case "tracedSVG": {
       const { function: fn, options } = formatOptions.tracedSVG;
 
       const traceSVG = util.promisify(potrace[fn]);
@@ -37,16 +38,18 @@ export default async function getFallbackImage(
       const tracedSVG = await traceSVG(imageBuffer, options);
 
       return `data:image/svg+xml;utf8,${tracedSVG}`;
-    case "dominantColor":
+    }
+    case "dominantColor": {
       if (sharp) {
         var { r, g, b } = (await image.stats()).dominant;
       } else {
-        var [r, g, b] = image.color;
+        [r, g, b] = image.color;
       }
 
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" style="background: rgb(${r},${g},${b})"></svg>`;
 
       return `data:image/svg+xml;utf8,${svg}`;
+    }
     default:
       return null;
   }
