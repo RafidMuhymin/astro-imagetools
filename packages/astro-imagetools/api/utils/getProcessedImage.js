@@ -1,14 +1,14 @@
 // @ts-check
-import fs from "fs";
-import crypto from "crypto";
-import { join, basename, extname, relative, resolve } from "path";
+import fs from "node:fs";
+import crypto from "node:crypto";
+import { join, basename, extname, relative, resolve } from "node:path";
 import {
   cwd,
   sharp,
   fsCachePath,
   supportedImageTypes,
 } from "../../utils/runtimeChecks.js";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")

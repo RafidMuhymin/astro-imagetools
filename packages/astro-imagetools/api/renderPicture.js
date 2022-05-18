@@ -56,7 +56,7 @@ export default async function renderPicture(props) {
 
   const className = `astro-imagetools-picture-${uuid}`;
 
-  const { imagesizes } = images.at(-1);
+  const { imagesizes } = images[images.length - 1];
 
   const backgroundStyles = getBackgroundStyles(
     images,

@@ -1,6 +1,6 @@
 // @ts-check
-import fs from "fs";
-import { extname } from "path";
+import fs from "node:fs";
+import { extname } from "node:path";
 import * as codecs from "@astropub/codecs";
 
 export async function getImageDetails(path, width, height, aspect) {

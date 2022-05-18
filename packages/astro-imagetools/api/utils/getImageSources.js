@@ -31,7 +31,7 @@ export default async function getImageSources(
 
   imagesizes = calculatedConfigs.imagesizes;
 
-  const maxWidth = requiredBreakpoints.at(-1);
+  const maxWidth = requiredBreakpoints[requiredBreakpoints.length - 1];
   const sliceLength = -(maxWidth.toString().length + 2);
 
   const sources = await Promise.all(
@@ -41,9 +41,10 @@ export default async function getImageSources(
         ...formatOptions[format],
       });
 
+      const srcsets = srcset.split(", ");
       const srcObject =
         format === fallbackFormat
-          ? { src: srcset.split(", ").at(-1).slice(0, sliceLength) }
+          ? { src: srcsets[srcsets.length - 1].slice(0, sliceLength) }
           : {};
 
       return {
