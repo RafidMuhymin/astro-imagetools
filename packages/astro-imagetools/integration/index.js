@@ -1,15 +1,12 @@
 // @ts-check
 import fs from "node:fs";
-import path from "node:path";
+import { posix as path, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import vitePluginAstroImageTools from "../plugin/index.js";
 
 const filename = fileURLToPath(import.meta.url);
 
-const astroViteConfigsPath = path.resolve(
-  filename,
-  "../../astroViteConfigs.js"
-);
+const astroViteConfigsPath = resolve(filename, "../../astroViteConfigs.js");
 
 export default {
   name: "astro-imagetools",
