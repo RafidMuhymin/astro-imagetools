@@ -53,4 +53,11 @@ describe('getLinkElement', () => {
     const result = getSrcPath('https://cdn.nedis.com/images/products_high_res/TVRC2080BK_P30.JPG');
     expect(result).toBe('https://cdn.nedis.com/images/products_high_res/TVRC2080BK_P30.JPG');
   })
+
+  it('finds relative paths correctly', () => {
+    const outResult = getSrcPath('./out/out.jpeg');
+    const rootResult = getSrcPath('./root.jpeg');
+    expect(outResult).toBe(buildPath('out/out.jpeg'));
+    expect(rootResult).toBe(buildPath('root.jpeg'));
+  })
 })
