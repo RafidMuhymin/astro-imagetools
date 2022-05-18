@@ -32,7 +32,7 @@ export default async function load(id) {
 
     const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
-    const src = getSrcPath(id);
+    const src = await getSrcPath(id);
 
     const config = Object.fromEntries(searchParams);
 

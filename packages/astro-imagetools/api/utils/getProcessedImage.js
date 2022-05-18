@@ -94,7 +94,7 @@ export default async (src, transformConfigs) => {
   const path = src.replace(/\\/g, `/`);
 
   const { image, imageWidth, imageHeight, imageFormat } = await getImageDetails(
-    getSrcPath(src),
+    await getSrcPath(src),
     width,
     height,
     aspect
