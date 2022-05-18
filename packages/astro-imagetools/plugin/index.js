@@ -16,10 +16,7 @@ export const store = globalThis.astroImageToolsStore;
 
 const filename = fileURLToPath(import.meta.url);
 
-const astroViteConfigsPath = resolve(
-  filename,
-  "../../astroViteConfigs.js"
-);
+const astroViteConfigsPath = resolve(filename, "../../astroViteConfigs.js");
 
 const vitePluginAstroImageTools = {
   name: "vite-plugin-astro-imagetools",

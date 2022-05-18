@@ -1,9 +1,16 @@
 {
   "private": "true",
+  "scripts": {
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
+  },
   "workspaces": [
     "packages/*",
     "docs",
     "demo"
   ],
+  "devDependencies": {
+    "prettier": "^2.6.2"
+  },
   "packageManager": "pnpm@6.32.12"
 }

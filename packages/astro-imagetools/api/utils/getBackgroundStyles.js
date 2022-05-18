@@ -90,6 +90,6 @@ export default function getBackgroundStyles(
     .reverse();
 
   const backgroundStyles = [staticStyles, ...dynamicStyles].join("");
-  
+
   return backgroundStyles;
 }
