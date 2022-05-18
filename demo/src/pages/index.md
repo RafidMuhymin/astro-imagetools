@@ -71,7 +71,6 @@ This image is in the public directory (`/images/public.jpeg`).
 
 <hr />
 
-
 ## Learn More
 
 You can optionally configure many more things!

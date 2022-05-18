@@ -9,7 +9,7 @@ import {
   supportedImageTypes,
 } from "../../utils/runtimeChecks.js";
 import { fileURLToPath } from "node:url";
-import { getSrcPath } from './getSrcPath.js';
+import { getSrcPath } from "./getSrcPath.js";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
