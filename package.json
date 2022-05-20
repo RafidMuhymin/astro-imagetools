@@ -1,6 +1,7 @@
 {
   "private": "true",
   "scripts": {
+    "lint": "eslint .",
     "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
@@ -10,6 +11,8 @@
     "demo"
   ],
   "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-plugin-unicorn": "^42.0.0",
     "prettier": "^2.6.2"
   },
   "packageManager": "pnpm@6.32.12"
