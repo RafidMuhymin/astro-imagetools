@@ -1,3 +1,20 @@
-node_modules
-astroViteConfigs.js
-demo/dist
+# dependencies
+node_modules/
+
+# build output
+dist/
+
+# logs
+*.log
+
+# npm
+package-lock.json
+
+# macOS-specific files
+.DS_Store
+
+# env
+*.env
+
+# astro-imagetools
+packages/astro-imagetools/astroViteConfigs.js
