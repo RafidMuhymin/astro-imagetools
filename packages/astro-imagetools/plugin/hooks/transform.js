@@ -6,9 +6,8 @@ import { cwd } from "../../utils/runtimeChecks.js";
 
 const regexTestPattern =
   /<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>/;
-
-const regexExecPattern =
-  /(?<=(?:\$\$render`.*))<img\s+src\s*=(?:"|')([^("|')]*)(?:"|')\s*alt\s*=\s*(?:"|')([^("|')]*)(?:"|')[^>]*>(?=.*`)/gs;
+const regexExecPattern = new RegExp(regexTestPattern, "gs");
+const regexRenderPattern = /\$\$render`(.*)`/gs;
 
 export default async function transform(code, id) {
   if (id.endsWith(".md") && regexTestPattern.test(code)) {
@@ -17,11 +16,15 @@ export default async function transform(code, id) {
       "../../astroViteConfigs.js"
     );
 
-    const { isSsrBuild, sourcemap } = astroViteConfigs;
+    const { sourcemap } = astroViteConfigs;
 
-    let matches;
+    // Extract the "$$render`" part of the markdown string
+    const [result] = [...code.matchAll(regexRenderPattern)];
+    const [, renderString] = result;
+    const renderIndex = result.index + "$$render`".length;
 
-    if ((matches = code.matchAll(regexExecPattern)) !== null) {
+    const matches = renderString.matchAll(regexExecPattern);
+    if (matches !== null) {
       const s = new MagicString(code);
 
       const uuid = crypto.randomBytes(4).toString("hex");
@@ -44,8 +47,8 @@ export default async function transform(code, id) {
           : path.resolve(path.dirname(id), rawSrc).replace(cwd, "");
 
         s.overwrite(
-          match.index,
-          match.index + matchedText.length,
+          renderIndex + match.index,
+          renderIndex + match.index + matchedText.length,
           `\${${renderComponent}($$result, "${Picture}", ${Picture}, { "src": "${src}", "alt": "${alt}" })}`
         );
       }

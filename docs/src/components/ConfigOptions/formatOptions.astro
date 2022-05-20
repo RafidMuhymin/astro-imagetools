@@ -1,9 +1,58 @@
 ---
 const { api, component } = Astro.props;
 
+const isImg = api === "renderImg" || component === "Img";
+
 const dynamicText = component
   ? `${"`"}<${component} />${"`"} component`
   : `${"`"}render${api}${"`"} API`;
+
+declare interface ConfigOptions {
+  src: string;
+  alt: string;
+  placeholder: string;
+  format: string | string[];
+  fallbackFormat?: string;
+  includeSourceFormat?: boolean;
+  formatOptions: string;
+}
+
+const configOptions = {
+  src: "https://picsum.photos/1024/768",
+  alt: "A random image",
+  placeholder: "tracedSVG",
+} as ConfigOptions;
+
+configOptions.format = isImg ? "webp" : [`["webp", "jpg"]`];
+isImg || (configOptions.fallbackFormat = "png");
+isImg || (configOptions.includeSourceFormat = false);
+configOptions.formatOptions = isImg
+  ? `{
+    webp: quality: 50,
+  }`
+  : `{
+    jpg: {
+      quality: 80,
+    },
+    png: {
+      quality: 80,
+    },
+    webp: {
+      quality: 50,
+    },
+    tracedSVG: {
+      options: {
+        background: "#fff",
+        color: "#000",
+        turnPolicy: "black",
+        turdSize: 1,
+        alphaMax: 1,
+        optCurve: true,
+        threshold: 100,
+        blackOnWhite: false,
+      },
+    },
+  }`;
 ---
 
 <!-- prettier-ignore -->
@@ -30,37 +79,7 @@ const dynamicText = component
 <CodeExample
   {...Astro.props}
   values={[
-    {
-      src: "https://picsum.photos/1024/768",
-      alt: "A random image",
-      placeholder: "tracedSVG",
-      format: [`["webp", "jpg"]`],
-      fallbackFormat: "png",
-      includeSourceFormat: false,
-      formatOptions: `{
-    jpg: {
-      quality: 80,
-    },
-    png: {
-      quality: 80,
-    },
-    webp: {
-      quality: 50,
-    },
-    tracedSVG: {
-      options: {
-        background: "#fff",
-        color: "#000",
-        turnPolicy: "black",
-        turdSize: 1,
-        alphaMax: 1,
-        optCurve: true,
-        threshold: 100,
-        blackOnWhite: false,
-      },
-    },
-  }`,
-    },
+    configOptions,
   ]}
 />
 

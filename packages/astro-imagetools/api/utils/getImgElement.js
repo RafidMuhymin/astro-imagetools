@@ -43,7 +43,7 @@ export default function getImgElement({
     .trim();
 
   const styleAttribute = [
-    "display: inline-block; overflow: hidden;",
+    "display: inline-block; overflow: hidden; vertical-align: middle;",
     customInlineStyles ? `${customInlineStyles};` : "",
     layoutStyles,
   ]
