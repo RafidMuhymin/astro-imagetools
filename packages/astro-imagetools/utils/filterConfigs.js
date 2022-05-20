@@ -16,7 +16,7 @@ export default function filterConfigs(
   ["Img", "Picture"].includes(type) && requiredConfigs.push("alt");
 
   requiredConfigs.forEach((key) => {
-    if (!clonedConfigs[key]) {
+    if (typeof clonedConfigs[key] === "undefined") {
       throw new Error(`The "${key}" property is required by ${type}`);
     }
   });
