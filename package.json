@@ -1,8 +1,8 @@
 {
   "private": "true",
   "scripts": {
-    "format": "prettier . --write",
     "lint": "eslint .",
+    "format": "prettier . --write",
     "format:check": "prettier . --check"
   },
   "workspaces": [
