@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 importers:
 
@@ -28,7 +28,7 @@ importers:
     devDependencies:
       '@astrojs/lit': 0.1.2
       '@astrojs/preact': 0.1.2
-      '@astrojs/react': 0.1.1_react-dom@18.1.0+react@18.1.0
+      '@astrojs/react': 0.1.1_ef5jwxihqo6n7gxfmzogljlgcm
       '@astrojs/solid-js': 0.1.2
       '@astrojs/svelte': 0.1.2
       '@astrojs/vue': 0.1.3
@@ -51,7 +51,7 @@ importers:
     dependencies:
       '@algolia/client-search': 4.13.0
       '@docsearch/css': 3.0.0
-      '@docsearch/react': 3.0.0_38486c1514205e5435449031337983cc
+      '@docsearch/react': 3.0.0_hbegyfiuebpfinkesaytg6mdzq
       '@types/react': 18.0.8
       preact: 10.7.1
       react: 18.1.0
@@ -59,7 +59,7 @@ importers:
       unplugin-auto-import: 0.7.1
     devDependencies:
       '@astrojs/preact': 0.1.2_preact@10.7.1
-      '@astrojs/react': 0.1.1_react-dom@18.1.0+react@18.1.0
+      '@astrojs/react': 0.1.1_ef5jwxihqo6n7gxfmzogljlgcm
       astro: 1.0.0-beta.20
 
   packages/astro-imagetools:
@@ -92,7 +92,7 @@ packages:
       '@algolia/autocomplete-shared': 1.5.2
     dev: false
 
-  /@algolia/autocomplete-preset-algolia/1.5.2_7938c62af9e2e3908b5b052ce2305b13:
+  /@algolia/autocomplete-preset-algolia/1.5.2_pe4mmkxz4lrzbc23auwoemc3cm:
     resolution: {integrity: sha512-3MRYnYQFJyovANzSX2CToS6/5cfVjbLLqFsZTKcvF3abhQzxbqwwaMBlJtt620uBUOeMzhdfasKhCc40+RHiZw==}
     peerDependencies:
       '@algolia/client-search': ^4.9.1
@@ -301,7 +301,7 @@ packages:
     engines: {node: ^14.15.0 || >=16.0.0}
     dev: true
 
-  /@astrojs/react/0.1.1_react-dom@18.1.0+react@18.1.0:
+  /@astrojs/react/0.1.1_ef5jwxihqo6n7gxfmzogljlgcm:
     resolution: {integrity: sha512-vYCqwQ82tz3oOCH0Rru24zOJ7NN49pxa0LWF8rsgSTxUwAB2l/8JiHtR7HIh4TH14/73WNbtTvemYHMzHYKEDg==}
     engines: {node: ^14.15.0 || >=16.0.0}
     peerDependencies:
@@ -330,7 +330,7 @@ packages:
     resolution: {integrity: sha512-rgi3g078uAxdb8jg1A5U8sNWMUQq7UXwHT7qmPiGOeB+h5p+tzUFy/Awq2suv99Tq8efpn3HrAGTuDvxyvbwfg==}
     dependencies:
       svelte: 3.47.0
-      svelte2tsx: 0.5.9_svelte@3.47.0+typescript@4.6.4
+      svelte2tsx: 0.5.9_xnf64rhacgemelcurd3uaqi2ei
     transitivePeerDependencies:
       - typescript
     dev: true
@@ -549,6 +549,8 @@ packages:
     resolution: {integrity: sha512-n2Q6i+fnJqzOaq2VkdXxy2TCPCWQZHiCo0XqmrCvDWcZQKRyZzYi4Z0yxlBuN0w+r2ZHmre+Q087DSrw3pbJDQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.17.10
     dev: true
 
   /@babel/plugin-syntax-jsx/7.16.7:
@@ -619,7 +621,7 @@ packages:
     resolution: {integrity: sha512-1kkV7tkAsiuEd0shunYRByKJe3xQDG2q7wYg24SOw1nV9/2lwEd4WrUYRJC/ukGTl2/kHeFxsaUvtiOy0y6fFA==}
     dev: false
 
-  /@docsearch/react/3.0.0_38486c1514205e5435449031337983cc:
+  /@docsearch/react/3.0.0_hbegyfiuebpfinkesaytg6mdzq:
     resolution: {integrity: sha512-yhMacqS6TVQYoBh/o603zszIb5Bl8MIXuOc6Vy617I74pirisDzzcNh0NEaYQt50fVVR3khUbeEhUEWEWipESg==}
     peerDependencies:
       '@types/react': '>= 16.8.0 < 18.0.0'
@@ -627,7 +629,7 @@ packages:
       react-dom: '>= 16.8.0 < 18.0.0'
     dependencies:
       '@algolia/autocomplete-core': 1.5.2
-      '@algolia/autocomplete-preset-algolia': 1.5.2_7938c62af9e2e3908b5b052ce2305b13
+      '@algolia/autocomplete-preset-algolia': 1.5.2_pe4mmkxz4lrzbc23auwoemc3cm
       '@docsearch/css': 3.0.0
       '@types/react': 18.0.8
       algoliasearch: 4.13.0
@@ -751,7 +753,7 @@ packages:
       tinycolor2: 1.4.2
     dev: false
 
-  /@jimp/plugin-contain/0.14.0_04f2eb7c5fcee3779cc9de0411145f1d:
+  /@jimp/plugin-contain/0.14.0_atzow7c7z3rxphgj3ycbcfc7du:
     resolution: {integrity: sha512-RX2q233lGyaxiMY6kAgnm9ScmEkNSof0hdlaJAVDS1OgXphGAYAeSIAwzESZN4x3ORaWvkFefeVH9O9/698Evg==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -763,11 +765,11 @@ packages:
       '@jimp/custom': 0.14.0
       '@jimp/plugin-blit': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-resize': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-scale': 0.14.0_1b5204e571b7e69f994f3f739149c190
+      '@jimp/plugin-scale': 0.14.0_dnjajzlrw7tj7gkph5zzcsobsa
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-cover/0.14.0_132cab346e98a8a22cf9ce3f0298c53c:
+  /@jimp/plugin-cover/0.14.0_cmwkwndotcukelhzzy7qfggfhq:
     resolution: {integrity: sha512-0P/5XhzWES4uMdvbi3beUgfvhn4YuQ/ny8ijs5kkYIw6K8mHcl820HahuGpwWMx56DJLHRl1hFhJwo9CeTRJtQ==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -779,7 +781,7 @@ packages:
       '@jimp/custom': 0.14.0
       '@jimp/plugin-crop': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-resize': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-scale': 0.14.0_1b5204e571b7e69f994f3f739149c190
+      '@jimp/plugin-scale': 0.14.0_dnjajzlrw7tj7gkph5zzcsobsa
       '@jimp/utils': 0.14.0
     dev: false
 
@@ -823,7 +825,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-flip/0.14.0_21b3d863db80a865c28da82979224ca7:
+  /@jimp/plugin-flip/0.14.0_egz5qy63qcuglqunvauxsismu4:
     resolution: {integrity: sha512-WtL1hj6ryqHhApih+9qZQYA6Ye8a4HAmdTzLbYdTMrrrSUgIzFdiZsD0WeDHpgS/+QMsWwF+NFmTZmxNWqKfXw==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -831,7 +833,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.17.9
       '@jimp/custom': 0.14.0
-      '@jimp/plugin-rotate': 0.14.0_6a26553348442491f47014d5048cf1c5
+      '@jimp/plugin-rotate': 0.14.0_nitfkm2iiqsjd5dqctkqjdhryu
       '@jimp/utils': 0.14.0
     dev: false
 
@@ -875,7 +877,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-print/0.14.0_59cf2c48948cca49b82b3ff5e6e0e538:
+  /@jimp/plugin-print/0.14.0_lhhsyseurtfetoblh726nyhfha:
     resolution: {integrity: sha512-MwP3sH+VS5AhhSTXk7pui+tEJFsxnTKFY3TraFJb8WFbA2Vo2qsRCZseEGwpTLhENB7p/JSsLvWoSSbpmxhFAQ==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -898,7 +900,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-rotate/0.14.0_6a26553348442491f47014d5048cf1c5:
+  /@jimp/plugin-rotate/0.14.0_nitfkm2iiqsjd5dqctkqjdhryu:
     resolution: {integrity: sha512-aGaicts44bvpTcq5Dtf93/8TZFu5pMo/61lWWnYmwJJU1RqtQlxbCLEQpMyRhKDNSfPbuP8nyGmaqXlM/82J0Q==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -914,7 +916,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-scale/0.14.0_1b5204e571b7e69f994f3f739149c190:
+  /@jimp/plugin-scale/0.14.0_dnjajzlrw7tj7gkph5zzcsobsa:
     resolution: {integrity: sha512-ZcJk0hxY5ZKZDDwflqQNHEGRblgaR+piePZm7dPwPUOSeYEH31P0AwZ1ziceR74zd8N80M0TMft+e3Td6KGBHw==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -926,7 +928,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-shadow/0.14.0_49f3f5687a96d0ff4a4adf2a40083cb6:
+  /@jimp/plugin-shadow/0.14.0_jhz7k2d2s3ip6ssk34veacb4wy:
     resolution: {integrity: sha512-p2igcEr/iGrLiTu0YePNHyby0WYAXM14c5cECZIVnq/UTOOIQ7xIcWZJ1lRbAEPxVVXPN1UibhZAbr3HAb5BjQ==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -940,7 +942,7 @@ packages:
       '@jimp/utils': 0.14.0
     dev: false
 
-  /@jimp/plugin-threshold/0.14.0_c55f475b14d9d0f52e32180be908a3e5:
+  /@jimp/plugin-threshold/0.14.0_yvpuowyu3hipklrsdaf6scfd4u:
     resolution: {integrity: sha512-N4BlDgm/FoOMV/DQM2rSpzsgqAzkP0DXkWZoqaQrlRxQBo4zizQLzhEL00T/YCCMKnddzgEhnByaocgaaa0fKw==}
     peerDependencies:
       '@jimp/custom': '>=0.3.5'
@@ -965,23 +967,23 @@ packages:
       '@jimp/plugin-blur': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-circle': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-color': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-contain': 0.14.0_04f2eb7c5fcee3779cc9de0411145f1d
-      '@jimp/plugin-cover': 0.14.0_132cab346e98a8a22cf9ce3f0298c53c
+      '@jimp/plugin-contain': 0.14.0_atzow7c7z3rxphgj3ycbcfc7du
+      '@jimp/plugin-cover': 0.14.0_cmwkwndotcukelhzzy7qfggfhq
       '@jimp/plugin-crop': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-displace': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-dither': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-fisheye': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-flip': 0.14.0_21b3d863db80a865c28da82979224ca7
+      '@jimp/plugin-flip': 0.14.0_egz5qy63qcuglqunvauxsismu4
       '@jimp/plugin-gaussian': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-invert': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-mask': 0.14.0_@jimp+custom@0.14.0
       '@jimp/plugin-normalize': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-print': 0.14.0_59cf2c48948cca49b82b3ff5e6e0e538
+      '@jimp/plugin-print': 0.14.0_lhhsyseurtfetoblh726nyhfha
       '@jimp/plugin-resize': 0.14.0_@jimp+custom@0.14.0
-      '@jimp/plugin-rotate': 0.14.0_6a26553348442491f47014d5048cf1c5
-      '@jimp/plugin-scale': 0.14.0_1b5204e571b7e69f994f3f739149c190
-      '@jimp/plugin-shadow': 0.14.0_49f3f5687a96d0ff4a4adf2a40083cb6
-      '@jimp/plugin-threshold': 0.14.0_c55f475b14d9d0f52e32180be908a3e5
+      '@jimp/plugin-rotate': 0.14.0_nitfkm2iiqsjd5dqctkqjdhryu
+      '@jimp/plugin-scale': 0.14.0_dnjajzlrw7tj7gkph5zzcsobsa
+      '@jimp/plugin-shadow': 0.14.0_jhz7k2d2s3ip6ssk34veacb4wy
+      '@jimp/plugin-threshold': 0.14.0_yvpuowyu3hipklrsdaf6scfd4u
       timm: 1.7.1
     dev: false
 
@@ -4825,7 +4827,7 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /svelte2tsx/0.5.9_svelte@3.47.0+typescript@4.6.4:
+  /svelte2tsx/0.5.9_xnf64rhacgemelcurd3uaqi2ei:
     resolution: {integrity: sha512-xTDASjlh+rKo4QRhTRYSH87sS7fRoyX67xhGIMPKa3FYqftRHRmMes6nVgEskiuhBovslNHYYpMMg5YM5n/STg==}
     peerDependencies:
       svelte: ^3.24
