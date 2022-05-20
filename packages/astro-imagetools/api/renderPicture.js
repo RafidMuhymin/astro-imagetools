@@ -5,6 +5,7 @@ import getLinkElement from "./utils/getLinkElement.js";
 import getStyleElement from "./utils/getStyleElement.js";
 import getLayoutStyles from "./utils/getLayoutStyles.js";
 import getFilteredProps from "./utils/getFilteredProps.js";
+import getPictureElement from "./utils/getPictureElement.js";
 import getBackgroundStyles from "./utils/getBackgroundStyles.js";
 
 export default async function renderPicture(props) {
@@ -99,11 +100,12 @@ export default async function renderPicture(props) {
     )
   );
 
-  const picture = `<picture
-    class="astro-imagetools-picture ${style ? className : ""}"
-    style="position: relative; display: inline-block;${layoutStyles}"
-    >${sources.join("\n")}
-  </picture>`;
+  const picture = getPictureElement({
+    sources,
+    className,
+    layoutStyles,
+    pictureAttributes,
+  });
 
   return { link, style, picture };
 }
