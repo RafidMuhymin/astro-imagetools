@@ -39,6 +39,7 @@ export default async function renderBackgroundPicture(props) {
     img: imgAttributes = {},
     link: linkAttributes = {},
     style: styleAttributes = {},
+    picture: pictureAttributes = {},
     container: containerAttributes = {},
   } = attributes;
 
