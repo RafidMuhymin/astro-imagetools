@@ -23,7 +23,7 @@ const throwErrorIfUnsupported = (src, ext) => {
     throw new Error(`Failed to load ${src}; Invalid image format`);
   }
 
-  if (ext && !supportedImageTypes.includes(ext)) {
+  if (ext && !supportedImageTypes.includes(ext.toLowerCase())) {
     throw new Error(
       `Failed to load ${src}; Invalid image format ${ext} or the format is not supported by astro-imagetools`
     );
