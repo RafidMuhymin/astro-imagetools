@@ -30,7 +30,7 @@ export default function getContainerElement({
 
   const styleAttribute = [
     isBackgroundPicture ? "position: relative;" : "",
-    customInlineStyles,
+    customInlineStyles + (customInlineStyles.endsWith(";") ? "" : ";"),
   ]
     .join(" ")
     .trim();
