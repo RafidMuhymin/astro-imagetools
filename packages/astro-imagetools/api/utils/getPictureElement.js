@@ -26,7 +26,7 @@ export default function getPictureElement({
     isBackgroundPicture
       ? `position: absolute; z-index: 0; width: 100%; height: 100%; display: inline-block;`
       : `position: relative; display: inline-block;`,
-    customInlineStyles ? `${customInlineStyles};` : "",
+    customInlineStyles + (customInlineStyles.endsWith(";") ? "" : ";"),
     layoutStyles,
   ]
     .join(" ")
