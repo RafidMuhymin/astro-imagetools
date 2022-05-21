@@ -86,8 +86,8 @@ export default function getFilteredProps(type, props) {
   );
 
   const resolvedProps = {
-    ...filteredLocalProps,
     ...filteredGlobalConfigs,
+    ...filteredLocalProps,
   };
 
   const {
