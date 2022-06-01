@@ -22,7 +22,7 @@ Register the _Astro Integration_ provided by **Astro ImageTools** in your `astro
 import { astroImageTools } from "astro-imagetools";
 
 export default {
-  integration: [astroImageTools],
+  integrations: [astroImageTools],
 };
 ```
 
