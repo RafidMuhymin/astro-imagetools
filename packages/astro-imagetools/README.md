@@ -6,7 +6,7 @@
 
 Below is a short list of features that **Astro ImageTools** offers. For more information, please see component-specific or API-specific documentation.
 
-- ✅ **Regular Image Optimization** (`<img>` and `<picture`)
+- ✅ **Regular Image Optimization** (`<img>` and `<picture>`)
 - ✅ **Background Image Optimization**
 - ✅ **Responsive Images**
 - ✅ **Simple and intuitive Art Direction API**
