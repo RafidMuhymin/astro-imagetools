@@ -62,7 +62,7 @@ export default function getImgElement({
   const imgElement = `<img
     ${attributesString}
     src="${src}"
-    ${alt ? `alt="${alt}"` : ""}
+    ${typeof alt === "string" ? `alt="${alt}"` : ""}
     srcset="${srcset}"
     sizes="${imagesizes}"
     width="${sizes.width}"
