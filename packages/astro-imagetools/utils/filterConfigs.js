@@ -23,11 +23,27 @@ export default function filterConfigs(
 
   Object.keys(clonedConfigs).forEach((key) => {
     if (!supportedConfigs.includes(key)) {
-      warn && printWarning({ key, type });
+      if (warn) {
+        if (key !== "class") {
+          printWarning({ key, type });
+        } else if (!onlyAstroClass(clonedConfigs[key])) {
+          printWarning({
+            message: `Do not provide a "class" directly to ${type}.  Instead, use attributes: https://astro-imagetools-docs.vercel.app/en/components/${type}#attributes`,
+          });
+        }
+      }
 
       delete clonedConfigs[key];
     }
   });
 
   return clonedConfigs;
+}
+
+/**
+ * Checks if the `class` attribute string is only an astro-generated scoped style class.
+ */
+function onlyAstroClass(classAttr) {
+  const astroClassPattern = /^astro-[0-9A-Z]{8}$/;
+  return astroClassPattern.test(classAttr);
 }
