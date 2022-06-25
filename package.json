@@ -11,9 +11,9 @@
     "demo"
   ],
   "devDependencies": {
-    "eslint": "^8.15.0",
+    "eslint": "^8.18.0",
     "eslint-plugin-unicorn": "^42.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "prettier-plugin-astro": "^0.1.1"
   },
   "packageManager": "pnpm@6.32.12"
