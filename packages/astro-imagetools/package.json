@@ -48,7 +48,7 @@
     "potrace": "2.1.8"
   },
   "optionalDependencies": {
-    "imagetools-core": "3.0.2"
+    "imagetools-core": "~3.0.2"
   },
   "peerDependencies": {
     "astro": ">=0.26 || >=1.0.0-beta"
