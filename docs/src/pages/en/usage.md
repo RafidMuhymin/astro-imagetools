@@ -8,7 +8,7 @@ Here is a brief overview on the usage of the Vite plugin, components and APIs pr
 
 ## Plugin Usage
 
-**Astro ImageTools** comes with a Vite plugin and it gets registered automatically once you add the integration. The Vite plugin is used by the components and APIs interally to perform all kinds of image transformations and optimizations. After it's been registered, it starts looking for and handling image imports.
+**Astro ImageTools** comes with a Vite plugin and it gets registered automatically once you add the integration. The Vite plugin is used by the components and APIs internally to perform all kinds of image transformations and optimizations. After it's been registered, it starts looking for and handling image imports.
 
 So, you can leverage the power of the plugin using ESM imports to perform simple image transformations and optimizations on your own. It may come in handy in the scenarios where using the provided components and APIs is not possible. Imports inside framework components too will be handled!
 
