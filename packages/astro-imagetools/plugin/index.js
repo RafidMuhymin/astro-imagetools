@@ -6,7 +6,6 @@ import { posix as path, resolve } from "node:path";
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
-import closeBundle from "./hooks/closeBundle.js";
 import { middleware } from "../ssr/index.js";
 
 if (!globalThis.astroImageToolsStore)
@@ -71,8 +70,6 @@ const vitePluginAstroImageTools = {
       next();
     });
   },
-
-  closeBundle,
 };
 
 export default vitePluginAstroImageTools;

@@ -1,11 +1,11 @@
 // @ts-check
 import path from "node:path";
 import objectHash from "object-hash";
-import { getSrcPath } from "../../api/utils/getSrcPath.js";
+import { store } from "../index.js";
 import { getCachedBuffer } from "../utils/cache.js";
+import { getSrcPath } from "../../api/utils/getSrcPath.js";
 import { getAssetPath, getConfigOptions } from "../utils/shared.js";
 import { sharp, supportedImageTypes } from "../../utils/runtimeChecks.js";
-import { store } from "../index.js";
 
 const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")

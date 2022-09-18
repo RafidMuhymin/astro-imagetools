@@ -1,8 +1,9 @@
 // @ts-check
 import fs from "node:fs";
-import { posix as path, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import vitePluginAstroImageTools from "../plugin/index.js";
+import { posix as path, resolve } from "node:path";
+import { saveAndCopyAsset } from "./utils/saveAndCopyAsset.js";
+import vitePluginAstroImageTools, { store } from "../plugin/index.js";
 
 const filename = fileURLToPath(import.meta.url);
 
@@ -43,6 +44,37 @@ export default {
         },
       });
     },
-    "astro:build:done": vitePluginAstroImageTools.closeBundle,
+
+    "astro:build:done": async function closeBundle() {
+      const { default: astroViteConfigs } = await import(
+        // @ts-ignore
+        "../astroViteConfigs.js"
+      );
+
+      const { mode, outDir, assetsDir, isSsrBuild } = astroViteConfigs;
+
+      if (mode === "production") {
+        const allEntries = [...store.entries()];
+
+        const assetPaths = allEntries.filter(
+          ([, { hash = null } = {}]) => hash
+        );
+
+        await Promise.all(
+          assetPaths.map(
+            async ([assetPath, { hash, image, buffer }]) =>
+              await saveAndCopyAsset(
+                hash,
+                image,
+                buffer,
+                outDir,
+                assetsDir,
+                assetPath,
+                isSsrBuild
+              )
+          )
+        );
+      }
+    },
   },
 };
