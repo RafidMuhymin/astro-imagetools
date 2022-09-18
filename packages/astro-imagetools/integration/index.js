@@ -43,5 +43,6 @@ export default {
         },
       });
     },
+    "astro:build:done": vitePluginAstroImageTools.closeBundle,
   },
 };
