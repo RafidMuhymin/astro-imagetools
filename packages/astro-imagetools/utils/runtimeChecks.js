@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "node:fs";
 import path from "node:path";
-import { findUp } from "find-up";
+import findUp from 'find-up'
 import findCacheDir from "find-cache-dir";
 import filterConfigs from "./filterConfigs.js";
 
