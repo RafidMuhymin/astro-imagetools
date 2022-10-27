@@ -19,7 +19,7 @@ The body of the `<BackgroundPicture />` component will be used as the content of
 ```astro
 ---
 import {
-  BackgroundImage,
+  BackgroundPicture,
   ImageSupportDetection,
 } from "astro-imagetools/components";
 
@@ -32,7 +32,7 @@ const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
   </head>
 
   <body>
-    <BackgroundImage
+    <BackgroundPicture
       src="/src/images/landscape.jpg"
       artDirectives={[
         {
@@ -42,7 +42,7 @@ const content = await fetch(import.meta.env.CONTENT_URL).then((r) => r.text());
       ]}
     >
       <Fragment set:html={content} />
-    </BackgroundImage>
+    </BackgroundPicture>
   </body>
 </html>
 ```
