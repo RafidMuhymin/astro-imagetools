@@ -41,7 +41,9 @@ const configFile = await findUp([
   "astro-imagetools.config.mjs",
 ]);
 
-const configFunction = configFile ? await import(configFile) : null;
+const configFunction = configFile
+  ? await import(configFile).catch(async () => await import("/" + configFile))
+  : null;
 
 const rawGlobalConfigOptions = configFunction?.default ?? {};
 
