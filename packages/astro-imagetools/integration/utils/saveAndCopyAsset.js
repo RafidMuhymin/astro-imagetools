@@ -1,3 +1,4 @@
+import fs from "node:fs/promises";
 import { posix as path } from "node:path";
 import { fsCachePath } from "../../utils/runtimeChecks.js";
 
@@ -22,20 +23,20 @@ export async function saveAndCopyAsset(
   if (copied.includes(assetPath)) return;
 
   if (!assetsDirExists) {
-    await fs.promises.mkdir(assetsDir, {
+    await fs.mkdir(assetsDir, {
       recursive: true,
     });
 
     assetsDirExists = true;
   }
 
-  await fs.promises.copyFile(src, dest).catch(async (error) => {
+  await fs.copyFile(src, dest).catch(async (error) => {
     if (error.code === "ENOENT") {
       const imageBuffer = buffer || (await image.toBuffer());
 
       await Promise.all(
         [src, dest].map(async (dir) => {
-          await fs.promises.writeFile(dir, imageBuffer);
+          await fs.writeFile(dir, imageBuffer);
         })
       );
     } else throw error;
