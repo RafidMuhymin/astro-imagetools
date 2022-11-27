@@ -75,7 +75,7 @@ export default function getBackgroundStyles(
           className + (fadeInTransition ? "::after" : "");
 
       const style = `
-        .${elementSelector} {
+        .${elementSelector} img {
           object-fit: ${object?.fit || objectFit};
           object-position: ${object?.position || objectPosition};
         }
