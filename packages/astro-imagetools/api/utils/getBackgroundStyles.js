@@ -6,7 +6,7 @@ export default function getBackgroundStyles(
   objectFit,
   objectPosition,
   fadeInTransition,
-  { isImg = false, isBackgroundPicture = false } = {}
+  { isImg = false, isBackgroundPicture = false, containerClassName = "" } = {}
 ) {
   const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
@@ -18,7 +18,7 @@ export default function getBackgroundStyles(
     ${
       isBackgroundPicture
         ? `
-            .astro-imagetools-background-picture * {
+            .${containerClassName} * {
               z-index: 1;
               position: relative;
             }

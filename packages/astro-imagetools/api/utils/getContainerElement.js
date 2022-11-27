@@ -7,6 +7,7 @@ export default function getContainerElement({
   className = "",
   containerAttributes,
   isBackgroundPicture = false,
+  containerClassName = "",
 }) {
   const {
     class: customClasses = "",
@@ -22,7 +23,7 @@ export default function getContainerElement({
     isBackgroundPicture
       ? "astro-imagetools-background-picture"
       : "astro-imagetools-background-image",
-    isBackgroundPicture ? "" : className,
+    isBackgroundPicture ? containerClassName : className,
     customClasses,
   ]
     .join(" ")

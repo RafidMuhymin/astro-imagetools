@@ -57,7 +57,8 @@ export default async function renderBackgroundPicture(props) {
     transformConfigs,
   });
 
-  const className = `astro-imagetools-picture-${uuid}`;
+  const className = `astro-imagetools-picture-${uuid}`,
+    containerClassName = `astro-imagetools-background-picture-${uuid}`;
 
   const { imagesizes } = images[images.length - 1];
 
@@ -67,7 +68,7 @@ export default async function renderBackgroundPicture(props) {
     objectFit,
     objectPosition,
     fadeInTransition,
-    { isBackgroundPicture: true }
+    { isBackgroundPicture: true, containerClassName }
   );
 
   const style = getStyleElement({ styleAttributes, backgroundStyles });
@@ -119,6 +120,7 @@ export default async function renderBackgroundPicture(props) {
     content: picture + content,
     containerAttributes,
     isBackgroundPicture: true,
+    containerClassName,
   });
 
   return { link, style, htmlElement };
