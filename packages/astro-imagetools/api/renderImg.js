@@ -63,7 +63,8 @@ export default async function renderImg(props) {
     className,
     objectFit,
     objectPosition,
-    fadeInTransition
+    fadeInTransition,
+    { isImg: true }
   );
 
   const style = getStyleElement({ styleAttributes, backgroundStyles });

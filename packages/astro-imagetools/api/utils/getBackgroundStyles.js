@@ -6,7 +6,7 @@ export default function getBackgroundStyles(
   objectFit,
   objectPosition,
   fadeInTransition,
-  { isBackgroundPicture = false } = {}
+  { isImg = false, isBackgroundPicture = false } = {}
 ) {
   const sourcesWithFallback = images.filter(({ fallback }) => fallback);
 
@@ -70,12 +70,12 @@ export default function getBackgroundStyles(
 
   const dynamicStyles = images
     .map(({ media, fallback, object }) => {
-      const elementSelector = className + (fadeInTransition ? " img" : ""),
+      const elementSelector = className + (!isImg ? " img" : ""),
         backgroundElementSelector =
           className + (fadeInTransition ? "::after" : "");
 
       const style = `
-        .${elementSelector} img {
+        .${elementSelector} {
           object-fit: ${object?.fit || objectFit};
           object-position: ${object?.position || objectPosition};
         }
