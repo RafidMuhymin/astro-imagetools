@@ -51,8 +51,10 @@ export default function getImgElement({
     .trim();
 
   const onloadAttribute = [
-    !imgClassName && style && fadeInTransition
-      ? `parentElement.style.setProperty('--z-index', 1);parentElement.style.setProperty('--opacity', 0);`
+    !imgClassName && style
+      ? fadeInTransition
+        ? `parentElement.style.setProperty('--z-index', 1); parentElement.style.setProperty('--opacity', 0);`
+        : `parentElement.style.backgroundImage = 'unset';`
       : "",
     customOnload,
   ]
