@@ -120,10 +120,10 @@ export default async function renderBackgroundImage(props) {
       fallbackUrlCustomVariable,
       styles: media
         ? `
-              @media ${media} {
-                ${styles}
-              }
-            `
+            @media ${media} {
+              ${styles}
+            }
+          `
         : styles,
     };
   });
