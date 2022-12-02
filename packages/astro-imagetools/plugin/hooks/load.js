@@ -34,6 +34,17 @@ export default async function load(id) {
 
     const src = await getSrcPath(id);
 
+    const rootRelativePosixSrc = path.posix.normalize(
+      path.relative("", src).split(path.sep).join(path.posix.sep)
+    );
+
+    const getHash = (width) =>
+      objectHash({
+        width,
+        options,
+        rootRelativePosixSrc,
+      });
+
     const config = Object.fromEntries(searchParams);
 
     const base = path.basename(src, path.extname(src));
@@ -70,7 +81,7 @@ export default async function load(id) {
 
       const [width] = widths;
 
-      const hash = objectHash([src, width, options]);
+      const hash = getHash(width);
 
       if (store.has(hash)) {
         return `export default "${store.get(hash)}"`;
@@ -100,7 +111,7 @@ export default async function load(id) {
     } else {
       const sources = await Promise.all(
         widths.map(async (width) => {
-          const hash = objectHash([src, width, options]);
+          const hash = getHash(width);
 
           const assetPath = getAssetPath(
             base,
