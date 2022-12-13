@@ -1,9 +1,11 @@
 // @ts-check
 import fs from "node:fs";
 import path from "node:path";
-import { findUp } from "find-up";
 import findCacheDir from "find-cache-dir";
 import filterConfigs from "./filterConfigs.js";
+
+const FindUpModule = await import("find-up"),
+  findUp = FindUpModule.findUp || FindUpModule.default;
 
 // Sharp related checks
 export const sharp = await (async () => {
