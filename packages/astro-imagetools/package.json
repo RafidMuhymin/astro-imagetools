@@ -41,20 +41,20 @@
   "homepage": "https://github.com/RafidMuhymin/astro-imagetools#readme",
   "dependencies": {
     "@astropub/codecs": "0.4.4",
-    "file-type": "17.1.1",
+    "file-type": "18.0.0",
     "find-cache-dir": "3.3.2",
     "find-up": "^6.3.0",
     "object-hash": "3.0.0",
     "potrace": "2.1.8"
   },
   "optionalDependencies": {
-    "imagetools-core": "3.0.2"
+    "imagetools-core": "3.2.3"
   },
   "peerDependencies": {
     "astro": ">=0.26 || >=1.0.0-beta"
   },
   "devDependencies": {
-    "vitest": "^0.12.4"
+    "vitest": "^0.12.10"
   },
   "engines": {
     "node": "^14.15.0 || >=16.0.0"

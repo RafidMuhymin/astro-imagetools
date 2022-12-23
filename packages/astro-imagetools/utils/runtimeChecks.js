@@ -24,7 +24,7 @@ export const supportedImageTypes = [
   "jpg",
   "png",
   "webp",
-  ...(sharp ? ["heic", "heif", "tiff", "gif"] : ["jxl", "wp2"]),
+  ...(sharp ? ["heic", "heif", "tiff", "gif", "xml"] : ["jxl", "wp2"]),
 ];
 
 // prettier-ignore
