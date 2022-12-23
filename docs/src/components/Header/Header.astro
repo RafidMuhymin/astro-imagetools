@@ -57,7 +57,7 @@ const lang = currentPage && getLanguageFromURL(currentPage);
     display: flex;
     overflow: hidden;
     width: 30px;
-    font-size: 2rem;
+    font-size: clamp(.8rem, 2.75vw, 2rem);
     flex-shrink: 0;
     font-weight: 600;
     line-height: 1;
@@ -129,13 +129,17 @@ const lang = currentPage && getLanguageFromURL(currentPage);
     flex-grow: 1;
     padding-right: 0.7rem;
     display: flex;
-    max-width: 200px;
+    max-width: 120px;
   }
 
   :global(.search-item > *) {
     flex-grow: 1;
   }
-
+  @media (min-width: 25em) {
+    .search-item {
+      max-width: 200px;
+    }
+  }
   @media (min-width: 50em) {
     .search-item {
       max-width: 400px;
