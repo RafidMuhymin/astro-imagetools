@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "node:fs";
 import crypto from "node:crypto";
-import { join, basename, extname, relative, resolve } from "node:path";
+import { join, parse, extname, relative, resolve } from "node:path";
 import {
   cwd,
   sharp,
@@ -34,7 +34,7 @@ export default async (src, transformConfigs) => {
   throwErrorIfUnsupported(src, extname(src).slice(1));
 
   if (src.match("(http://|https://|data:image/).*")) {
-    const filename = src.startsWith("data:") ? "" : basename(src);
+    const filename = !src.startsWith("data:") && parse(src).name;
 
     const hash = crypto.createHash("md5").update(src).digest("hex");
 
