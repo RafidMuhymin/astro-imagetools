@@ -38,7 +38,7 @@ export default async (src, transformConfigs) => {
 
     const hash = crypto.createHash("md5").update(src).digest("hex");
 
-    let filepath = `${fsCachePath}${filename}.${hash}`;
+    let filepath = `${fsCachePath}${filename ? filename + "." : ""}${hash}`;
 
     const fileExists = (() => {
       for (const type of supportedImageTypes) {
