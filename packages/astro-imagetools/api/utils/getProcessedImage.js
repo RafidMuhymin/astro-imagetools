@@ -1,7 +1,6 @@
 // @ts-check
 import fs from "node:fs";
-import crypto from "node:crypto";
-import { join, parse, extname, relative, resolve } from "node:path";
+import { join, extname, relative, resolve } from "node:path";
 import {
   cwd,
   sharp,
@@ -34,11 +33,9 @@ export default async (src, transformConfigs) => {
   throwErrorIfUnsupported(src, extname(src).slice(1));
 
   if (src.match("(http://|https://|data:image/).*")) {
-    const filename = !src.startsWith("data:") && parse(src).name;
+    const token = "ai_" + Buffer.from(src).toString("base64");
 
-    const hash = crypto.createHash("md5").update(src).digest("hex");
-
-    let filepath = `${fsCachePath}${filename ? filename + "." : ""}${hash}`;
+    let filepath = fsCachePath + token;
 
     const fileExists = (() => {
       for (const type of supportedImageTypes) {
