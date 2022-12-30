@@ -63,11 +63,9 @@ export default async (src, transformConfigs) => {
 
     src = join("/", relative(cwd, filepath));
   } else {
-    const { default: astroViteConfigs } = await import(
-      "../../astroViteConfigs.js"
-    );
-
-    const { isSsrBuild } = astroViteConfigs;
+    const {
+      default: { isSsrBuild },
+    } = await import("../../astroViteConfigs.js");
 
     if (isSsrBuild) {
       const filename = fileURLToPath(import.meta.url);
