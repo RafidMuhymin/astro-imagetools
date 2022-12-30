@@ -1,67 +1,21 @@
 // @ts-check
-import fs from "node:fs";
-import { join, extname, relative, resolve } from "node:path";
-import {
-  cwd,
-  sharp,
-  fsCachePath,
-  supportedImageTypes,
-} from "../../utils/runtimeChecks.js";
 import { fileURLToPath } from "node:url";
+import { extname, relative, resolve } from "node:path";
+
 import { getSrcPath } from "./getSrcPath.js";
+import getResolvedSrc from "./getResolvedSrc.js";
+import { cwd, sharp } from "../../utils/runtimeChecks.js";
+import throwErrorIfUnsupported from "./throwErrorIfUnsupported.js";
 
 const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
   : import("./codecs.js"));
 
-// @ts-ignore
-const { fileTypeFromBuffer } = await import("file-type");
-
-const throwErrorIfUnsupported = (src, ext) => {
-  if (!ext && typeof ext !== "string") {
-    throw new Error(`Failed to load ${src}; Invalid image format`);
-  }
-
-  if (ext && !supportedImageTypes.includes(ext.toLowerCase())) {
-    throw new Error(
-      `Failed to load ${src}; Invalid image format ${ext} or the format is not supported by astro-imagetools`
-    );
-  }
-};
-
 export default async (src, transformConfigs) => {
   throwErrorIfUnsupported(src, extname(src).slice(1));
 
   if (src.match("(http://|https://|data:image/).*")) {
-    const token = "ai_" + Buffer.from(src).toString("base64");
-
-    let filepath = fsCachePath + token;
-
-    const fileExists = (() => {
-      for (const type of supportedImageTypes) {
-        const fileExists = fs.existsSync(filepath + `.${type}`);
-
-        if (fileExists) {
-          filepath += `.${type}`;
-
-          return true;
-        }
-      }
-    })();
-
-    if (!fileExists) {
-      const buffer = Buffer.from(await (await fetch(src)).arrayBuffer());
-
-      const { ext } = (await fileTypeFromBuffer(buffer)) || {};
-
-      throwErrorIfUnsupported(src, ext);
-
-      filepath += `.${ext}`;
-
-      fs.writeFileSync(filepath, buffer);
-    }
-
-    src = join("/", relative(cwd, filepath));
+    src = await getResolvedSrc(src);
   } else {
     const {
       default: { isSsrBuild },
