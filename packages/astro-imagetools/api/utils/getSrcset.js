@@ -27,7 +27,7 @@ export default async function getSrcset(src, breakpoints, format, options) {
 
     const { default: load } = await import("../../plugin/hooks/load.js");
 
-    const srcset = (await load(fullPath)).slice(16).slice(0, -1);
+    const srcset = (await load(fullPath)).slice(16, -1);
 
     return srcset;
   }
