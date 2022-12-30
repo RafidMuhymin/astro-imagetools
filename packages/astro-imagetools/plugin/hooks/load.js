@@ -1,6 +1,7 @@
 // @ts-check
 import path from "node:path";
 import objectHash from "object-hash";
+
 import { store } from "../index.js";
 import { getCachedBuffer } from "../utils/cache.js";
 import { getSrcPath } from "../../api/utils/getSrcPath.js";
@@ -24,150 +25,150 @@ export default async function load(id) {
 
   const ext = path.extname(id).slice(1);
 
-  if (supportedImageTypes.includes(ext)) {
-    const { default: astroViteConfigs } = await import(
-      // @ts-ignore
-      "../../astroViteConfigs.js"
-    );
+  if (!supportedImageTypes.includes(ext)) return null;
 
-    const { environment, projectBase, assetFileNames } = astroViteConfigs;
+  const { default: astroViteConfigs } = await import(
+    // @ts-ignore
+    "../../astroViteConfigs.js"
+  );
 
-    const src = await getSrcPath(id);
+  const { environment, projectBase, assetFileNames } = astroViteConfigs;
 
-    const rootRelativePosixSrc = path.posix.normalize(
-      path.relative("", src).split(path.sep).join(path.posix.sep)
-    );
+  const src = await getSrcPath(id);
 
-    const getHash = (width) =>
-      objectHash({
-        width,
-        options,
-        rootRelativePosixSrc,
-      });
+  const rootRelativePosixSrc = path.posix.normalize(
+    path.relative("", src).split(path.sep).join(path.posix.sep)
+  );
 
-    const config = Object.fromEntries(searchParams);
+  const getHash = (width) =>
+    objectHash({
+      width,
+      options,
+      rootRelativePosixSrc,
+    });
 
-    let base = path.basename(src, path.extname(src));
+  const config = Object.fromEntries(searchParams);
 
-    const { image: loadedImage, width: imageWidth } =
-      store.get(src) || store.set(src, await getLoadedImage(src, ext)).get(src);
+  let base = path.basename(src, path.extname(src));
 
-    const { type, widths, options, extension, raw, inline } = getConfigOptions(
-      config,
-      ext,
-      imageWidth
-    );
+  const { image: loadedImage, width: imageWidth } =
+    store.get(src) || store.set(src, await getLoadedImage(src, ext)).get(src);
 
-    if (raw) {
-      const testConfig = { ...config };
+  const { type, widths, options, extension, raw, inline } = getConfigOptions(
+    config,
+    ext,
+    imageWidth
+  );
 
-      delete testConfig.raw;
-      delete testConfig.inline;
-      delete testConfig.base64;
+  if (raw) {
+    const testConfig = { ...config };
 
-      if (Object.keys(testConfig).length > 0) {
-        throw new Error(
-          "If raw is set, no other options can be set except inline and base64"
-        );
-      }
+    delete testConfig.raw;
+    delete testConfig.inline;
+    delete testConfig.base64;
+
+    if (Object.keys(testConfig).length > 0) {
+      throw new Error(
+        "If raw is set, no other options can be set except inline and base64"
+      );
+    }
+  }
+
+  if (inline) {
+    if (widths.length > 1) {
+      throw new Error(
+        `The base64 or inline parameter can't be used with multiple widths`
+      );
     }
 
-    if (inline) {
-      if (widths.length > 1) {
-        throw new Error(
-          `The base64 or inline parameter can't be used with multiple widths`
-        );
-      }
+    const [width] = widths;
 
-      const [width] = widths;
+    const hash = getHash(width);
 
-      const hash = getHash(width);
-
-      if (store.has(hash)) {
-        return `export default "${store.get(hash)}"`;
-      } else {
-        const config = { width, ...options };
-
-        const { image, buffer } = raw
-          ? {
-              image: sharp ? loadedImage : null,
-              buffer: !sharp ? loadedImage.data : null,
-            }
-          : await getTransformedImage({
-              src,
-              image: loadedImage,
-              config,
-              type,
-            });
-
-        const dataUri = `data:${type};base64,${(
-          buffer || (await getCachedBuffer(hash, image))
-        ).toString("base64")}`;
-
-        store.set(hash, dataUri);
-
-        return `export default "${dataUri}"`;
-      }
+    if (store.has(hash)) {
+      return `export default "${store.get(hash)}"`;
     } else {
-      const sources = await Promise.all(
-        widths.map(async (width) => {
-          const EncodedFilenameRegex =
-              /^ai_([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/,
-            isComingFromApis = EncodedFilenameRegex.test(base);
+      const config = { width, ...options };
 
-          if (isComingFromApis) {
-            const filename = Buffer.from(base.slice(3), "base64").toString(
-              "ascii"
-            );
-
-            base = path.parse(filename).name;
+      const { image, buffer } = raw
+        ? {
+            image: sharp ? loadedImage : null,
+            buffer: !sharp ? loadedImage.data : null,
           }
+        : await getTransformedImage({
+            src,
+            image: loadedImage,
+            config,
+            type,
+          });
 
-          const hash = getHash(width);
+      const dataUri = `data:${type};base64,${(
+        buffer || (await getCachedBuffer(hash, image))
+      ).toString("base64")}`;
 
-          const assetPath = getAssetPath(
-            base,
-            assetFileNames,
-            extension,
-            width,
-            hash
+      store.set(hash, dataUri);
+
+      return `export default "${dataUri}"`;
+    }
+  } else {
+    const sources = await Promise.all(
+      widths.map(async (width) => {
+        const EncodedFilenameRegex =
+            /^ai_([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/,
+          isComingFromApis = EncodedFilenameRegex.test(base);
+
+        if (isComingFromApis) {
+          const filename = Buffer.from(base.slice(3), "base64").toString(
+            "ascii"
           );
 
-          if (!store.has(assetPath)) {
-            const config = { width, ...options };
+          base = path.parse(filename).name;
+        }
 
-            const { image, buffer } = raw
-              ? {
-                  image: sharp && loadedImage,
-                  buffer: !sharp && loadedImage.data,
-                }
-              : await getTransformedImage({
-                  src,
-                  image: loadedImage,
-                  config,
-                  type,
-                });
+        const hash = getHash(width);
 
-            const imageObject = { hash, type, image, buffer };
+        const assetPath = getAssetPath(
+          base,
+          assetFileNames,
+          extension,
+          width,
+          hash
+        );
 
-            store.set(assetPath, imageObject);
-          }
+        if (!store.has(assetPath)) {
+          const config = { width, ...options };
 
-          const modulePath =
-            environment === "dev" ? assetPath : projectBase + assetPath;
+          const { image, buffer } = raw
+            ? {
+                image: sharp && loadedImage,
+                buffer: !sharp && loadedImage.data,
+              }
+            : await getTransformedImage({
+                src,
+                image: loadedImage,
+                config,
+                type,
+              });
 
-          return { width, modulePath };
-        })
-      );
+          const imageObject = { hash, type, image, buffer };
 
-      const srcset =
-        sources.length > 1
-          ? sources
-              .map(({ width, modulePath }) => `${modulePath} ${width}w`)
-              .join(", ")
-          : sources[0].modulePath;
+          store.set(assetPath, imageObject);
+        }
 
-      return `export default "${srcset}"`;
-    }
+        const modulePath =
+          environment === "dev" ? assetPath : projectBase + assetPath;
+
+        return { width, modulePath };
+      })
+    );
+
+    const srcset =
+      sources.length > 1
+        ? sources
+            .map(({ width, modulePath }) => `${modulePath} ${width}w`)
+            .join(", ")
+        : sources[0].modulePath;
+
+    return `export default "${srcset}"`;
   }
 }
