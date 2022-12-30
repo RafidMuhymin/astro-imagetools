@@ -22,11 +22,13 @@ export default async function getSrcset(src, breakpoints, format, options) {
 
   const id = `${src}?${params.slice(1)}`;
 
+  // @ts-ignore
   if (import.meta.env?.PROD || process.env.npm_lifecycle_event !== "dev") {
     const fullPath = await getSrcPath(id);
 
     const { default: load } = await import("../../plugin/hooks/load.js");
 
+    // @ts-ignore
     const srcset = (await load(fullPath)).slice(16, -1);
 
     return srcset;
