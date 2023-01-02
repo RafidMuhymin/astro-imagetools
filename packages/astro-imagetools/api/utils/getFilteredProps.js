@@ -5,6 +5,12 @@ import {
   GlobalConfigOptions,
 } from "../../utils/runtimeChecks.js";
 
+const GlobalOnlyProperties = ["cacheDir", "globalImportRemoteImage"];
+
+const NonGlobalSupportedConfigs = supportedConfigs.filter(
+  (key) => !GlobalOnlyProperties.includes(key)
+);
+
 const NonProperties = {
   Img: [
     "tag",
@@ -15,7 +21,7 @@ const NonProperties = {
     "includeSourceFormat",
     "fadeInTransition",
     "artDirectives",
-    "cacheDir",
+    ...GlobalOnlyProperties,
   ],
   Picture: [
     "tag",
@@ -23,6 +29,7 @@ const NonProperties = {
     "backgroundSize",
     "backgroundPosition",
     "cacheDir",
+    "globalImportRemoteImage",
   ],
   BackgroundImage: [
     "alt",
@@ -33,25 +40,27 @@ const NonProperties = {
     "objectPosition",
     "fadeInTransition",
     "cacheDir",
+    "globalImportRemoteImage",
   ],
   BackgroundPicture: [
     "alt",
     "backgroundSize",
     "backgroundPosition",
     "cacheDir",
+    "globalImportRemoteImage",
   ],
 };
 
-const ImgProperties = supportedConfigs.filter(
+const ImgProperties = NonGlobalSupportedConfigs.filter(
     (key) => !NonProperties.Img.includes(key)
   ),
-  PictureProperties = supportedConfigs.filter(
+  PictureProperties = NonGlobalSupportedConfigs.filter(
     (key) => !NonProperties.Picture.includes(key)
   ),
-  BackgroundImageProperties = supportedConfigs.filter(
+  BackgroundImageProperties = NonGlobalSupportedConfigs.filter(
     (key) => !NonProperties.BackgroundImage.includes(key)
   ),
-  BackgroundPictureProperties = supportedConfigs.filter(
+  BackgroundPictureProperties = NonGlobalSupportedConfigs.filter(
     (key) => !NonProperties.BackgroundPicture.includes(key)
   );
 
