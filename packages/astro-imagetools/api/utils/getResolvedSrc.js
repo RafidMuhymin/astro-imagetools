@@ -11,7 +11,7 @@ import {
 const { fileTypeFromBuffer } = await import("file-type");
 
 export default async function getResolvedSrc(src) {
-  const token = "ai_" + Buffer.from(src).toString("base64");
+  const token = "ai_" + Buffer.from(src).toString("base64url");
 
   let filepath = fsCachePath + token;
 

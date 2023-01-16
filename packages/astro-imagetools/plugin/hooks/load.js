@@ -114,11 +114,11 @@ export default async function load(id) {
     const sources = await Promise.all(
       widths.map(async (width) => {
         const EncodedFilenameRegex =
-            /^ai_([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$/,
+            /^ai_([A-Za-z0-9-_]{4})*([A-Za-z0-9-_]{3}=|[A-Za-z0-9-_]{2}==)?$/,
           isComingFromApis = EncodedFilenameRegex.test(base);
 
         if (isComingFromApis) {
-          const filename = Buffer.from(base.slice(3), "base64").toString(
+          const filename = Buffer.from(base.slice(3), "base64url").toString(
             "ascii"
           );
 
