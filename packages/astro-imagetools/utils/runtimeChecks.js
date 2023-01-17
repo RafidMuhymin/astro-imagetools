@@ -72,7 +72,7 @@ if (GlobalConfigOptions.globalImportRemoteImage) {
     );
   } else {
     fs.writeFileSync(
-      "./import-remote-image.d.ts",
+      "./importRemoteImage.d.ts",
       DisclaimerComment + "\nexport {};\n\n" + GlobalFunctionType + "\n"
     );
   }
