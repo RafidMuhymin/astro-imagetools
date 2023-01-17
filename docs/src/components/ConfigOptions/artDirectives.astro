@@ -1,7 +1,4 @@
 ---
-import { Markdown } from "astro/components";
-import CodeExample from "../CodeExample.astro";
-
 const { api, component } = Astro.props;
 
 const dynamicText = component
@@ -17,7 +14,7 @@ const isBackgroundImage =
 ---
 
 <!-- prettier-ignore -->
-<Markdown>
+<Markdown is:raw>
   ### `artDirectives`
 
   **Type:** `ArtDirective[]`
@@ -25,20 +22,31 @@ const isBackgroundImage =
 
 <!-- prettier-ignore -->
 {isPicture ? (
-  <Markdown>
-    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `alt`, `preload`, `loading`, `decoding`, `attributes`, `layout`, and `fadeInTransition`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  <Markdown is:raw>
+    *An `ArtDirective` object can take all the props supported by the{" "}
+    {<Fragment set:html={dynamicText} />} except `alt`, `preload`, `loading`,
+    `decoding`, `attributes`, `layout`, and `fadeInTransition`. The only
+    addition is `media`. Only the [`src`](#src) and [`media`](#media) properties
+    are required.*
   </Markdown>
 ) : isBackgroundImage ? (
-  <Markdown>
-    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `attributes`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  <Markdown is:raw>
+    *An `ArtDirective` object can take all the props supported by the{" "}
+    {<Fragment set:html={dynamicText} />} except `attributes`. The only addition
+    is `media`. Only the [`src`](#src) and [`media`](#media) properties are
+    required.*
   </Markdown>
 ) : (
-  <Markdown>
-    *An `ArtDirective` object can take all the props supported by the {<Fragment set:html={dynamicText} />} except `preload`, `loading`, `decoding`, `attributes`, and `fadeInTransition`. The only addition is `media`. Only the [`src`](#src) and [`media`](#media) properties are required.*
+  <Markdown is:raw>
+    *An `ArtDirective` object can take all the props supported by the{" "}
+    {<Fragment set:html={dynamicText} />} except `preload`, `loading`,
+    `decoding`, `attributes`, and `fadeInTransition`. The only addition is
+    `media`. Only the [`src`](#src) and [`media`](#media) properties are
+    required.*
   </Markdown>
 )}
 
-<Markdown>
+<Markdown is:raw>
   **Default:** `undefined`
 
   The list of art directions to be applied to the generated picture.
@@ -69,10 +77,10 @@ const isBackgroundImage =
 />
 
 <!-- prettier-ignore -->
-<Markdown>
+<Markdown is:raw>
   #### `media`
 
- **Type:** `string`
+  **Type:** `string`
 
   **Default:** `undefined`
 

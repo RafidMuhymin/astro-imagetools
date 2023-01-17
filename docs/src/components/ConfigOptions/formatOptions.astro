@@ -56,35 +56,30 @@ configOptions.formatOptions = isImg
 ---
 
 <!-- prettier-ignore -->
-<Markdown>
+<Markdown is:raw>
   ### `formatOptions`
 
   <p><strong style="font-size: large;">Type</strong></p>
 
-  *`formatOptions` is an object that takes config options for all the supported formats: `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif`, and `tracedSVG`.*
+  _`formatOptions` is an object that takes config options for all the supported formats: `heic`, `heif`, `avif`, `jpg`, `jpeg`, `png`, `tiff`, `webp`, `gif`, and `tracedSVG`._
 
-  *The supported config options of all the formats except `tracedSVG` are: [`flip`](#flop), [`flop`](#flip), [`invert`](#invert), [`flatten`](#flatten), [`normalize`](#normalize), [`grayscale`](#grayscale), [`hue`](#hue), [`saturation`](#saturation), [`brightness`](#brightness), [`width`](#width), [`height`](#height), [`aspect`](#aspect), [`background`](#background), [`tint`](#tint), [`blur`](#blur), [`median`](#median), [`rotate`](#rotate), [`quality`](#quality), [`fit`](#fit), [`kernel`](#kernel), [`position`](#position).*
+  _The supported config options of all the formats except `tracedSVG` are: [`flip`](#flop), [`flop`](#flip), [`invert`](#invert), [`flatten`](#flatten), [`normalize`](#normalize), [`grayscale`](#grayscale), [`hue`](#hue), [`saturation`](#saturation), [`brightness`](#brightness), [`width`](#width), [`height`](#height), [`aspect`](#aspect), [`background`](#background), [`tint`](#tint), [`blur`](#blur), [`median`](#median), [`rotate`](#rotate), [`quality`](#quality), [`fit`](#fit), [`kernel`](#kernel), [`position`](#position)._
 
-  *The config options supported by the [`tracedSVG`](#tracedSVG) format are listed below.*
+  _The config options supported by the [`tracedSVG`](#tracedSVG) format are listed below._
 
   **Default:** _The default values for the all the formats except `tracedSVG` are inherited from the direct configs of the {<Fragment set:html={dynamicText} />}. And for more information on the `tracedSVG` property, see the [`PotraceOptions`](#potraceoptions) interface._
 
   The configuration options for the different formats. These configuration options will be respected when generating image sets for different formats.
-  
+
   The `tracedSVG` config object is used only when the `placeholder` prop is set to `"tracedSVG"`.
 
   **Code example:**
 </Markdown>
 
-<CodeExample
-  {...Astro.props}
-  values={[
-    configOptions,
-  ]}
-/>
+<CodeExample {...Astro.props} values={[configOptions]} />
 
 <!-- prettier-ignore -->
-<Markdown>
+<Markdown is:raw>
   #### `tracedSVG`
 
   All the properties of the `tracedSVG` property are the configuration options supported by the [`node-potrace`](https://npmjs.com/package/node-potrace) library. These options are used to generate traced SVGs when the `placeholder` prop is set to `"tracedSVG"`. All the properties defined below are optional.

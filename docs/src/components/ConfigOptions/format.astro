@@ -1,42 +1,34 @@
 ---
-import { Markdown } from "astro/components";
-import CodeExample from "../CodeExample.astro";
-
 const isImg =
   Astro.props.component === "Img" || Astro.props.api === "renderImg";
 ---
 
-<Markdown>
+<Markdown is:raw>
   ### `format`
 </Markdown>
 
 <!-- prettier-ignore -->
-{
-  isImg ? (
-    <Markdown>
-      **Type:** `"heic" | "heif" | "avif" | "jpg" | "jpeg" | "png" | "tiff" | "webp" | "gif"`
+{isImg ? (
+  <Markdown is:raw>
+    **Type:** `"heic" | "heif" | "avif" | "jpg" | "jpeg" | "png" | "tiff" |
+    "webp" | "gif"` **Default:** _The format of the source image_ The format to
+    generate image sets for.
+  </Markdown>
+) : (
+  <Markdown is:raw>
+    **Type:** `format | format[] | [] | null` **`format`:** `"heic" | "heif" |
+    "avif" | "jpg" | "jpeg" | "png" | "tiff" | "webp" | "gif"` **Default:**
+    `["avif", "webp"]` The image format or formats to generate image sets for.
+    If `format` is set to `null` or `[]`, no _additional_ image set will be
+    generated. > **Note:** Passing `[]` or `null` does not necessarily mean that
+    no image sets will be generated. Image sets will still be generated for the
+    source format if `includeSourceFormat` is set to `true` (which is the
+    default value) and for the format specified in the `fallbackFormat` prop
+    (the default value is the source format).
+  </Markdown>
+)}
 
-      **Default:** _The format of the source image_
-
-      The format to generate image sets for.
-    </Markdown>
-  ) : (
-    <Markdown>
-      **Type:** `format | format[] | [] | null`
-
-      **`format`:** `"heic" | "heif" | "avif" | "jpg" | "jpeg" | "png" | "tiff" | "webp" | "gif"`
-
-      **Default:** `["avif", "webp"]`
-
-      The image format or formats to generate image sets for. If `format` is set to `null`
-      or `[]`, no _additional_ image set will be generated.
-
-      > **Note:** Passing `[]` or `null` does not necessarily mean that no image sets will be generated. Image sets will still be generated for the source format if `includeSourceFormat` is set to `true` (which is the default value) and for the format specified in the `fallbackFormat` prop (the default value is the source format).
-    </Markdown>
-  )
-}
-
-<Markdown>
+<Markdown is:raw>
   **Code Example:**
 </Markdown>
 

@@ -1,7 +1,4 @@
 ---
-import { Markdown } from "astro/components";
-import CodeExample from "../CodeExample.astro";
-
 const isImg =
   Astro.props.component === "Img" || Astro.props.api === "renderImg";
 
@@ -13,7 +10,7 @@ const isBackgroundImage =
   Astro.props.api === "renderBackgroundImage";
 ---
 
-<Markdown>
+<Markdown is:raw>
   ### `attributes`
 
   **Type:**
@@ -21,7 +18,7 @@ const isBackgroundImage =
 
 <!-- prettier-ignore -->
 {isImg ? (
-<Markdown>
+<Markdown is:raw>
   ```ts
   declare interface Attributes {
     style?: Record<any, any>;
@@ -41,7 +38,7 @@ const isBackgroundImage =
   ```
 </Markdown>
 ) : isPicture ? (
-<Markdown>
+<Markdown is:raw>
   ```ts
   declare interface Attributes {
     picture?: Record<any, any>;
@@ -62,7 +59,7 @@ const isBackgroundImage =
   ```
 </Markdown>
 ) : isBackgroundImage ? (
-<Markdown>
+<Markdown is:raw>
   ```ts
   declare interface Attributes {
     container?: Record<any, any>;
@@ -72,7 +69,7 @@ const isBackgroundImage =
   ```
 </Markdown>
 ) : (
-<Markdown>
+<Markdown is:raw>
   ```ts  
   declare interface Attributes {
     container?: Record<any, any>;
@@ -95,7 +92,7 @@ const isBackgroundImage =
 </Markdown>
 )}
 
-<Markdown>
+<Markdown is:raw>
   **Default:** `{}`
 
   The HTML attributes to add to the generate elements. If the `class`, `style`, and `onload` attributes are present, the values passed via this config will be merged.
