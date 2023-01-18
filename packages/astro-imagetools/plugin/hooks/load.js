@@ -113,8 +113,7 @@ export default async function load(id) {
   } else {
     const sources = await Promise.all(
       widths.map(async (width) => {
-        const EncodedFilenameRegex =
-            /^ai_([A-Za-z0-9-_]{4})*([A-Za-z0-9-_]{3}=|[A-Za-z0-9-_]{2}==)?$/,
+        const EncodedFilenameRegex = /^ai_[A-Za-z0-9-_]*?$/,
           isComingFromApis = EncodedFilenameRegex.test(base);
 
         if (isComingFromApis) {
