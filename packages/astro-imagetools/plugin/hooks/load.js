@@ -19,7 +19,9 @@ export default async function load(id) {
     return null;
   }
 
-  const { search, searchParams } = fileURL;
+  const { search } = fileURL;
+
+  let { searchParams } = fileURL;
 
   id = id.replace(search, "");
 
@@ -47,9 +49,28 @@ export default async function load(id) {
       rootRelativePosixSrc,
     });
 
-  const config = Object.fromEntries(searchParams);
-
   let base = path.basename(src, path.extname(src));
+
+  const EncodedFilenameRegex = /^ai_[A-Za-z0-9-_]*?$/,
+    isComingFromApis = EncodedFilenameRegex.test(base);
+
+  if (isComingFromApis) {
+    const inputSrc = Buffer.from(base.slice(3), "base64url").toString("ascii");
+
+    base = path.parse(inputSrc).name;
+
+    const queryParamPosition = base.indexOf("?");
+
+    if (queryParamPosition !== -1) {
+      const search = base.slice(queryParamPosition);
+
+      searchParams = new URLSearchParams(search);
+
+      base = base.slice(0, queryParamPosition);
+    }
+  }
+
+  const config = Object.fromEntries(searchParams);
 
   const { image: loadedImage, width: imageWidth } =
     store.get(src) || store.set(src, await getLoadedImage(src, ext)).get(src);
@@ -113,17 +134,6 @@ export default async function load(id) {
   } else {
     const sources = await Promise.all(
       widths.map(async (width) => {
-        const EncodedFilenameRegex = /^ai_[A-Za-z0-9-_]*?$/,
-          isComingFromApis = EncodedFilenameRegex.test(base);
-
-        if (isComingFromApis) {
-          const filename = Buffer.from(base.slice(3), "base64url").toString(
-            "ascii"
-          );
-
-          base = path.parse(filename).name;
-        }
-
         const hash = getHash(width);
 
         const assetPath = getAssetPath(
