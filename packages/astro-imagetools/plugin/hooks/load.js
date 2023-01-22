@@ -55,18 +55,20 @@ export default async function load(id) {
     isComingFromApis = EncodedFilenameRegex.test(base);
 
   if (isComingFromApis) {
-    const inputSrc = Buffer.from(base.slice(3), "base64url").toString("ascii");
+    const inputSrc = Buffer.from(base.slice(3), "base64url").toString("ascii"),
+      parsedPath = path.parse(inputSrc),
+      { ext } = parsedPath;
 
-    base = path.parse(inputSrc).name;
+    ({ name: base } = parsedPath);
 
-    const queryParamPosition = base.indexOf("?");
+    const queryParamPosition = (ext || base).indexOf("?");
 
     if (queryParamPosition !== -1) {
-      const search = base.slice(queryParamPosition);
+      const search = (ext || base).slice(queryParamPosition);
 
       searchParams = new URLSearchParams(search);
 
-      base = base.slice(0, queryParamPosition);
+      ext || (base = base.slice(0, queryParamPosition));
     }
   }
 
