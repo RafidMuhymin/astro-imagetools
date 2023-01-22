@@ -19,9 +19,7 @@ export default async function load(id) {
     return null;
   }
 
-  const { search } = fileURL;
-
-  let { searchParams } = fileURL;
+  const { search, searchParams } = fileURL;
 
   id = id.replace(search, "");
 
@@ -56,20 +54,11 @@ export default async function load(id) {
 
   if (isComingFromApis) {
     const inputSrc = Buffer.from(base.slice(3), "base64url").toString("ascii"),
-      parsedPath = path.parse(inputSrc),
-      { ext } = parsedPath;
+      inputURLPath = (/^https?:/.test(inputSrc) ? "" : "file:") + inputSrc,
+      inputURL = new URL(inputURLPath),
+      { pathname } = inputURL;
 
-    ({ name: base } = parsedPath);
-
-    const queryParamPosition = (ext || base).indexOf("?");
-
-    if (queryParamPosition !== -1) {
-      const search = (ext || base).slice(queryParamPosition);
-
-      searchParams = new URLSearchParams(search);
-
-      ext || (base = base.slice(0, queryParamPosition));
-    }
+    base = path.parse(pathname).name;
   }
 
   const config = Object.fromEntries(searchParams);
