@@ -1,5 +1,6 @@
 // @ts-check
 import fs from "node:fs";
+import crypto from "node:crypto";
 import { join, relative } from "node:path";
 import throwErrorIfUnsupported from "./throwErrorIfUnsupported.js";
 import {
@@ -11,7 +12,9 @@ import {
 const { fileTypeFromBuffer } = await import("file-type");
 
 export default async function getResolvedSrc(src) {
-  const token = "ai_" + Buffer.from(src).toString("base64url");
+  const token = src.startsWith("data:")
+    ? crypto.createHash("sha256").update(src).digest("hex")
+    : "ai_" + Buffer.from(src).toString("base64url");
 
   let filepath = fsCachePath + token;
 
