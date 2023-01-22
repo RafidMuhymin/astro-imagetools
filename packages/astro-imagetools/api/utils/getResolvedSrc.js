@@ -13,7 +13,7 @@ const { fileTypeFromBuffer } = await import("file-type");
 
 export default async function getResolvedSrc(src) {
   const token = src.startsWith("data:")
-    ? crypto.createHash("sha256").update(src).digest("hex")
+    ? crypto.createHash("md5").update(src).digest("hex")
     : "ai_" + Buffer.from(src).toString("base64url");
 
   let filepath = fsCachePath + token;
