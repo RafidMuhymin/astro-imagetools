@@ -1,7 +1,7 @@
 // @ts-check
 import fs from "node:fs";
 import crypto from "node:crypto";
-import { join, relative } from "node:path";
+import { join, parse, relative } from "node:path";
 import throwErrorIfUnsupported from "./throwErrorIfUnsupported.js";
 import {
   cwd,
@@ -12,9 +12,7 @@ import {
 const { fileTypeFromBuffer } = await import("file-type");
 
 export default async function getResolvedSrc(src) {
-  const token = src.startsWith("data:")
-    ? crypto.createHash("md5").update(src).digest("hex")
-    : "ai_" + Buffer.from(src).toString("base64url");
+  const token = crypto.createHash("md5").update(src).digest("hex");
 
   let filepath = fsCachePath + token;
 
@@ -42,7 +40,11 @@ export default async function getResolvedSrc(src) {
     fs.writeFileSync(filepath, buffer);
   }
 
+  const base = /^https?:/.test(src)
+    ? parse(new URL(src).pathname).name
+    : undefined;
+
   src = join("/", relative(cwd, filepath));
 
-  return src;
+  return { src, base };
 }

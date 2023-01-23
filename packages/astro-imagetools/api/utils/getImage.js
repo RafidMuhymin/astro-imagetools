@@ -30,7 +30,7 @@ export default async function ({
 
   const start = performance.now();
 
-  const { path, rest, image, imageWidth, imageHeight, imageFormat } =
+  const { path, base, rest, image, imageWidth, imageHeight, imageFormat } =
     await getProcessedImage(src, transformConfigs);
 
   src = path;
@@ -44,6 +44,7 @@ export default async function ({
   const [mainImage, artDirectedImages] = await Promise.all([
     getImageSources(
       src,
+      base,
       image,
       format,
       imageWidth,

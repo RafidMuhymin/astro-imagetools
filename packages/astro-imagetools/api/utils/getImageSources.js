@@ -5,6 +5,7 @@ import getFallbackImage from "./getFallbackImage.js";
 
 export default async function getImageSources(
   src,
+  base,
   image,
   format,
   imageWidth,
@@ -36,7 +37,7 @@ export default async function getImageSources(
 
   const sources = await Promise.all(
     formats.map(async (format) => {
-      const srcset = await getSrcset(src, requiredBreakpoints, format, {
+      const srcset = await getSrcset(src, base, requiredBreakpoints, format, {
         ...rest,
         ...formatOptions[format],
       });

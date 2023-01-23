@@ -11,11 +11,13 @@ const { getImageDetails } = await (sharp
   ? import("./imagetools.js")
   : import("./codecs.js"));
 
-export default async (src, transformConfigs) => {
+export default async function getProcessedImage(src, transformConfigs) {
   throwErrorIfUnsupported(src, extname(src).slice(1));
 
+  let base;
+
   if (src.match("(http://|https://|data:image/).*")) {
-    src = await getResolvedSrc(src);
+    ({ src, base } = await getResolvedSrc(src));
   } else {
     const {
       default: { isSsrBuild },
@@ -51,10 +53,11 @@ export default async (src, transformConfigs) => {
 
   return {
     path,
+    base,
     rest,
     image,
     imageWidth,
     imageHeight,
     imageFormat,
   };
-};
+}

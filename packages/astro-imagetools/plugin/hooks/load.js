@@ -12,7 +12,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
   : import("../utils/codecs.js"));
 
-export default async function load(id) {
+export default async function load(id, base) {
   try {
     var fileURL = new URL(`file://${id}`);
   } catch (error) {
@@ -47,19 +47,7 @@ export default async function load(id) {
       rootRelativePosixSrc,
     });
 
-  let base = path.basename(src, path.extname(src));
-
-  const EncodedFilenameRegex = /^ai_[A-Za-z0-9-_]*?$/,
-    isComingFromApis = EncodedFilenameRegex.test(base);
-
-  if (isComingFromApis) {
-    const inputSrc = Buffer.from(base.slice(3), "base64url").toString("ascii"),
-      inputURLPath = (/^https?:/.test(inputSrc) ? "" : "file:") + inputSrc,
-      inputURL = new URL(inputURLPath),
-      { pathname } = inputURL;
-
-    base = path.parse(pathname).name;
-  }
+  base ||= path.basename(src, path.extname(src));
 
   const config = Object.fromEntries(searchParams);
 

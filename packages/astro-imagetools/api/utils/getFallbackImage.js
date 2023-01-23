@@ -13,9 +13,11 @@ export default async function getFallbackImage(
   formatOptions,
   rest
 ) {
+  const base = null;
+
   switch (placeholder) {
     case "blurred": {
-      const dataUri = await getSrcset(src, [20], format, {
+      const dataUri = await getSrcset(src, base, [20], format, {
         inline: true,
         ...rest,
         ...formatOptions[format],

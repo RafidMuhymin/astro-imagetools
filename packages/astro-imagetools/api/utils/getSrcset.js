@@ -1,7 +1,13 @@
 // @ts-check
 import { getSrcPath } from "./getSrcPath";
 
-export default async function getSrcset(src, breakpoints, format, options) {
+export default async function getSrcset(
+  src,
+  base,
+  breakpoints,
+  format,
+  options
+) {
   options = {
     format,
     w: breakpoints,
@@ -22,19 +28,12 @@ export default async function getSrcset(src, breakpoints, format, options) {
 
   const id = `${src}?${params.slice(1)}`;
 
+  const fullPath = await getSrcPath(id);
+
+  const { default: load } = await import("../../plugin/hooks/load.js");
+
   // @ts-ignore
-  if (import.meta.env?.PROD || process.env.npm_lifecycle_event !== "dev") {
-    const fullPath = await getSrcPath(id);
-
-    const { default: load } = await import("../../plugin/hooks/load.js");
-
-    // @ts-ignore
-    const srcset = (await load(fullPath)).slice(16, -1);
-
-    return srcset;
-  }
-
-  const srcset = (await import(id)).default;
+  const srcset = (await load(fullPath, base)).slice(16, -1);
 
   return srcset;
 }
