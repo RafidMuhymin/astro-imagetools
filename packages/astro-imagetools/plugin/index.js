@@ -29,7 +29,6 @@ const vitePluginAstroImageTools = {
     const { outDir, assetsDir, sourcemap } = config.build;
 
     let assetFileNames = path.normalize(
-      config.build.rollupOptions.output?.assetFileNames ||
         `/${assetsDir}/[name].[hash][extname]`
     );
 

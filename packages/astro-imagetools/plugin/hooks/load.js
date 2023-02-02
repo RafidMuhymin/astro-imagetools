@@ -12,7 +12,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
   : import("../utils/codecs.js"));
 
-export default async function load(id, base) {
+export default async function load(id) {
   try {
     var fileURL = new URL(`file://${id}`);
   } catch (error) {
@@ -47,7 +47,7 @@ export default async function load(id, base) {
       rootRelativePosixSrc,
     });
 
-  base ||= path.basename(src, path.extname(src));
+  const base = path.basename(src, path.extname(src));
 
   const config = Object.fromEntries(searchParams);
 
