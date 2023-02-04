@@ -240,6 +240,9 @@ export interface GlobalConfigOptions
       Exclude<keyof PictureConfigOptions, "src" | "alt" | "artDirectives">
     > {
   tag?: string;
+  cacheDir?: string;
+  assetFileNames?: string;
+  globalImportRemoteImage?: boolean;
 }
 
 declare interface HTMLData {
