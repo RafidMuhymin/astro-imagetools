@@ -28,15 +28,18 @@ export function getConfigOptions(config, ext, imageWidth) {
 }
 
 export function getAssetPath(base, assetFileNames, ext, width, hash) {
-  const name = base,
-    extname = `.${ext}`;
+  const regexExecArray = /(?<=\[hash:)\d+(?=\])/g.exec(assetFileNames),
+    hashLength = regexExecArray ? regexExecArray[0] : 8,
+    extname = `.${ext}`,
+    name = base;
 
   width = width + "w";
+  hash = hash.slice(0, hashLength);
 
   const assetPath = assetFileNames
     .replace("[name]", name)
     .replace("[width]", width)
-    .replace("[hash]", hash)
+    .replace(regexExecArray ? `[hash:${hashLength}]` : "[hash]", hash)
     .replace("[ext]", ext)
     .replace("[extname]", extname);
 
