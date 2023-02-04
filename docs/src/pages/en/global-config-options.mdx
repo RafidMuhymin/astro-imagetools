@@ -8,7 +8,7 @@ import ConfigOptions from "../../components/ConfigOptions.astro";
 
 It's possible to set config options globally to provide the default values for the config options across the entire application. If for a config, no value is passed via `formatOptions`, components props or config properties, query parameters, **Astro ImageTools** will resort to global config options.
 
-All the global configs are optional. Any configs supported by any components or APIs can be defined globally except `src`, `alt`, `content`, and `artDirectives`. The only two additions are the [`cacheDir`](#cacheDir) and [`globalImportRemoteImage`](#globalImportRemoteImage) config.
+All the global configs are optional. Any configs supported by any components or APIs can be defined globally except `src`, `alt`, `content`, and `artDirectives`. The only three additions are the [`cacheDir`](#cacheDir), [`assetFileNames`](#assetFileNames) and [`globalImportRemoteImage`](#globalImportRemoteImage) configs.
 
 To set global config options, create a `astro-imagetools.config.mjs` file inside the project directory and export an object with all the config options defined inside it.
 
