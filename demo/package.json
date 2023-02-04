@@ -11,13 +11,13 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@astrojs/lit": "^0.3.2",
-    "@astrojs/preact": "^0.2.0",
-    "@astrojs/react": "^0.2.1",
-    "@astrojs/solid-js": "^0.2.1",
-    "@astrojs/svelte": "^0.2.1",
-    "@astrojs/vue": "^0.2.1",
-    "astro": "^1.8.0",
-    "astro-imagetools": "workspace:^0.6.17"
+    "@astrojs/lit": "^1.1.2",
+    "@astrojs/preact": "^2.0.2",
+    "@astrojs/react": "^2.0.2",
+    "@astrojs/solid-js": "^2.0.2",
+    "@astrojs/svelte": "^2.0.1",
+    "@astrojs/vue": "^2.0.1",
+    "astro": "^2.0.6",
+    "astro-imagetools": "workspace:^0.7.6"
   }
 }
