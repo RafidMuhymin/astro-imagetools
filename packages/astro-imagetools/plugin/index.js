@@ -30,14 +30,17 @@ const vitePluginAstroImageTools = {
 
     const { outDir, assetsDir, sourcemap } = config.build;
 
+    let inheritedPattern =
+      config.build.rollupOptions.output?.assetFileNames?.replace(
+        "[name]",
+        "[name]@[width]"
+      );
+
     let assetFileNames = path.normalize(
       GlobalConfigOptions.assetFileNames ||
-        config.build.rollupOptions.output?.assetFileNames ||
+        inheritedPattern ||
         `/_astro/[name]@[width].[hash][extname]`
     );
-
-    if (!assetFileNames.includes("[width]"))
-      assetFileNames = assetFileNames.replace("[name]", "[name]@[width]");
 
     if (!assetFileNames.startsWith("/"))
       assetFileNames = path.join("/", assetFileNames);
