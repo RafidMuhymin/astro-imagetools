@@ -45,7 +45,7 @@ export default async function load(id, base) {
       width,
       options,
       rootRelativePosixSrc,
-    });
+    }).slice(0, 8);
 
   base ||= path.basename(src, path.extname(src));
 
