@@ -5,7 +5,11 @@ import {
   GlobalConfigOptions,
 } from "../../utils/runtimeChecks.js";
 
-const GlobalOnlyProperties = ["cacheDir", "globalImportRemoteImage"];
+const GlobalOnlyProperties = [
+  "cacheDir",
+  "assetFileNames",
+  "globalImportRemoteImage",
+];
 
 const NonGlobalSupportedConfigs = supportedConfigs.filter(
   (key) => !GlobalOnlyProperties.includes(key)

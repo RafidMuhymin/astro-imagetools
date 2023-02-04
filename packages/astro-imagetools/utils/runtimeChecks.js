@@ -35,7 +35,7 @@ export const supportedConfigs = [
   "fadeInTransition", "artDirectives", "flip", "flop", "invert", "flatten", "normalize",
   "grayscale", "hue", "saturation", "brightness", "w", "h", "ar", "width", "height", "aspect",
   "background", "tint", "blur", "median", "rotate", "quality", "fit", "kernel", "position",
-  "cacheDir", "globalImportRemoteImage"
+  "cacheDir", "assetFileNames", "globalImportRemoteImage",
 ];
 
 const configFile = await findUp([
