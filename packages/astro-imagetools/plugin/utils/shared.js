@@ -28,7 +28,7 @@ export function getConfigOptions(config, ext, imageWidth) {
 }
 
 export function getAssetPath(base, assetFileNames, ext, width, hash) {
-  const name = `${base}-${width}w`;
+  const name = `${base}@${width}w`;
 
   const extname = `.${ext}`;
 
