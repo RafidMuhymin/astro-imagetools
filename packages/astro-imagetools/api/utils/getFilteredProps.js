@@ -21,16 +21,8 @@ const NonProperties = {
     "includeSourceFormat",
     "fadeInTransition",
     "artDirectives",
-    ...GlobalOnlyProperties,
   ],
-  Picture: [
-    "tag",
-    "content",
-    "backgroundSize",
-    "backgroundPosition",
-    "cacheDir",
-    "globalImportRemoteImage",
-  ],
+  Picture: ["tag", "content", "backgroundSize", "backgroundPosition"],
   BackgroundImage: [
     "alt",
     "loading",
@@ -39,16 +31,8 @@ const NonProperties = {
     "objectFit",
     "objectPosition",
     "fadeInTransition",
-    "cacheDir",
-    "globalImportRemoteImage",
   ],
-  BackgroundPicture: [
-    "alt",
-    "backgroundSize",
-    "backgroundPosition",
-    "cacheDir",
-    "globalImportRemoteImage",
-  ],
+  BackgroundPicture: ["alt", "backgroundSize", "backgroundPosition"],
 };
 
 const ImgProperties = NonGlobalSupportedConfigs.filter(
