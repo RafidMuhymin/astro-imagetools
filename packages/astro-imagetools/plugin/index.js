@@ -28,7 +28,7 @@ const vitePluginAstroImageTools = {
   async configResolved(config) {
     const { mode } = config;
 
-    const { outDir, assetsDir, sourcemap } = config.build;
+    const { outDir, sourcemap } = config.build;
 
     let inheritedPattern =
       config.build.rollupOptions.output?.assetFileNames?.replace(
@@ -40,6 +40,10 @@ const vitePluginAstroImageTools = {
       GlobalConfigOptions.assetFileNames ||
         inheritedPattern ||
         `/_astro/[name]@[width].[hash][extname]`
+    );
+
+    const { dir: assetsDir } = path.posix.parse(
+      assetFileNames.replaceAll(path.sep, path.posix.sep)
     );
 
     if (!assetFileNames.startsWith("/"))
