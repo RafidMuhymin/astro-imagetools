@@ -47,7 +47,10 @@ export default async function load(id) {
       { algorithm: "sha256" }
     );
 
-  const base = path.basename(src, path.extname(src));
+  const base =
+    typeof arguments[1] === "string"
+      ? arguments[1]
+      : path.basename(src, path.extname(src));
 
   const config = Object.fromEntries(searchParams);
 
