@@ -12,7 +12,7 @@ const { getLoadedImage, getTransformedImage } = await (sharp
   ? import("../utils/imagetools.js")
   : import("../utils/codecs.js"));
 
-export default async function load(id, base) {
+export default async function load(id) {
   try {
     var fileURL = new URL(`file://${id}`);
   } catch (error) {
@@ -47,7 +47,10 @@ export default async function load(id, base) {
       { algorithm: "sha256" }
     );
 
-  base ||= path.basename(src, path.extname(src));
+  const base =
+    typeof arguments[1] === "string"
+      ? arguments[1]
+      : path.basename(src, path.extname(src));
 
   const config = Object.fromEntries(searchParams);
 
