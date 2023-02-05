@@ -3,10 +3,12 @@ import fs from "node:fs";
 import stream from "node:stream";
 import { fileURLToPath } from "node:url";
 import { posix as path, resolve } from "node:path";
+
 import load from "./hooks/load.js";
 import config from "./hooks/config.js";
 import transform from "./hooks/transform.js";
 import { middleware } from "../ssr/index.js";
+import { GlobalConfigOptions } from "../utils/runtimeChecks.js";
 
 if (!globalThis.astroImageToolsStore)
   globalThis.astroImageToolsStore = new Map();
@@ -26,10 +28,22 @@ const vitePluginAstroImageTools = {
   async configResolved(config) {
     const { mode } = config;
 
-    const { outDir, assetsDir, sourcemap } = config.build;
+    const { outDir, sourcemap } = config.build;
+
+    let inheritedPattern =
+      config.build.rollupOptions.output?.assetFileNames?.replace(
+        "[name]",
+        "[name]@[width]"
+      );
 
     let assetFileNames = path.normalize(
-        `/${assetsDir}/[name].[hash][extname]`
+      GlobalConfigOptions.assetFileNames ||
+        inheritedPattern ||
+        `/_astro/[name]@[width].[hash][extname]`
+    );
+
+    const { dir: assetsDir } = path.posix.parse(
+      assetFileNames.replaceAll(path.sep, path.posix.sep)
     );
 
     if (!assetFileNames.startsWith("/"))

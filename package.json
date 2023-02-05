@@ -11,7 +11,7 @@
     "demo"
   ],
   "devDependencies": {
-    "eslint": "^8.32.0",
+    "eslint": "^8.33.0",
     "eslint-plugin-unicorn": "^42.0.0",
     "prettier": "^2.8.3",
     "prettier-plugin-astro": "^0.1.3"

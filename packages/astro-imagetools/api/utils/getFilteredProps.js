@@ -5,7 +5,11 @@ import {
   GlobalConfigOptions,
 } from "../../utils/runtimeChecks.js";
 
-const GlobalOnlyProperties = ["cacheDir", "globalImportRemoteImage"];
+const GlobalOnlyProperties = [
+  "cacheDir",
+  "assetFileNames",
+  "globalImportRemoteImage",
+];
 
 const NonGlobalSupportedConfigs = supportedConfigs.filter(
   (key) => !GlobalOnlyProperties.includes(key)
@@ -21,16 +25,8 @@ const NonProperties = {
     "includeSourceFormat",
     "fadeInTransition",
     "artDirectives",
-    ...GlobalOnlyProperties,
   ],
-  Picture: [
-    "tag",
-    "content",
-    "backgroundSize",
-    "backgroundPosition",
-    "cacheDir",
-    "globalImportRemoteImage",
-  ],
+  Picture: ["tag", "content", "backgroundSize", "backgroundPosition"],
   BackgroundImage: [
     "alt",
     "loading",
@@ -39,16 +35,8 @@ const NonProperties = {
     "objectFit",
     "objectPosition",
     "fadeInTransition",
-    "cacheDir",
-    "globalImportRemoteImage",
   ],
-  BackgroundPicture: [
-    "alt",
-    "backgroundSize",
-    "backgroundPosition",
-    "cacheDir",
-    "globalImportRemoteImage",
-  ],
+  BackgroundPicture: ["alt", "backgroundSize", "backgroundPosition"],
 };
 
 const ImgProperties = NonGlobalSupportedConfigs.filter(

@@ -41,11 +41,11 @@ export default async function load(id) {
   );
 
   const getHash = (width) =>
-    objectHash({
-      width,
-      options,
-      rootRelativePosixSrc,
-    });
+    objectHash(
+      { width, options, rootRelativePosixSrc },
+      // @ts-ignore
+      { algorithm: "sha256" }
+    );
 
   const base = path.basename(src, path.extname(src));
 
