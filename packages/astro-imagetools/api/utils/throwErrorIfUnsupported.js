@@ -1,5 +1,5 @@
 // @ts-check
-import { supportedImageTypes } from "../../utils/runtimeChecks";
+import { supportedImageTypes } from "../../utils/runtimeChecks.js";
 
 export default function throwErrorIfUnsupported(src, ext) {
   if (!ext && typeof ext !== "string") {

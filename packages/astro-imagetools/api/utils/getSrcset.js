@@ -1,5 +1,5 @@
 // @ts-check
-import { getSrcPath } from "./getSrcPath";
+import { getSrcPath } from "./getSrcPath.js";
 
 export default async function getSrcset(
   src,
