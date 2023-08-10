@@ -1,0 +1,61 @@
+---
+title: importImage
+description: The importImage API Documentation
+layout: ../../../layouts/MainLayout.astro
+---
+
+The `importImage` API is a function which acts similar to the ESM `import()` function but for `astro-imagetools`. It returns a `Promise` which resolves to the `src/srcset` of the generated _asset_/_assets_. The provided path should follow the same format as the [`src`](/en/api/renderPicture/#src) attribute.
+
+## Why?
+
+- It supports dynamic paths
+- It supports remote URLs (data URIs are also supported)
+
+## Code Example
+
+```js
+import React from "react";
+import { importImage } from "astro-imagetools/api";
+
+const src = await importImage("https://picsum.photos/1024/768");
+
+export default function ReactImage() {
+  return <img src={src} />;
+}
+```
+
+You can pass configuration options via query parameters just like regular ESM imports.
+
+```js
+import { importImage } from "astro-imagetools/api";
+
+const src = await importImage(
+  "https://picsum.photos/1024/768?w=200&h=200&format=avif&q=80"
+);
+```
+
+If you want the function to return a `srcset` instead of a `src`, pass multiple values to the `w` or `width` query parameter.
+
+```js
+import { importImage } from "astro-imagetools/api";
+
+const srcset = await importImage(
+  "https://picsum.photos/1024/768?w=200;400;800"
+);
+```
+
+Dynamic paths are also supported.
+
+```astro
+---
+import { importImage } from "astro-imagetools/api";
+
+const { imagePath } = Astro.props; // imagePath = "/public/images/image.jpeg"
+
+const src = await importImage(imagePath);
+---
+```
+
+## Return Value
+
+**Type:** `Promise<string>`

@@ -51,9 +51,9 @@ export const SIDEBAR = {
     { text: "API", header: true },
     { text: "renderImg", link: "en/api/renderImg" },
     { text: "renderPicture", link: "en/api/renderPicture" },
-    { text: "importRemoteImage", link: "en/api/importRemoteImage" },
     { text: "renderBackgroundImage", link: "en/api/renderBackgroundImage" },
     { text: "renderBackgroundPicture", link: "en/api/renderBackgroundPicture" },
+    { text: "importImage", link: "en/api/importImage" },
 
     { text: "MISCELLANEOUS", header: true },
     { text: "Deprecations", link: "en/deprecations" },

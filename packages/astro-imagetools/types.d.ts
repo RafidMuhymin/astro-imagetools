@@ -242,7 +242,6 @@ export interface GlobalConfigOptions
   tag?: string;
   cacheDir?: string;
   assetFileNames?: string;
-  globalImportRemoteImage?: boolean;
 }
 
 declare interface HTMLData {

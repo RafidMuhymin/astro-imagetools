@@ -23,7 +23,6 @@ import FadeInTransition from "@config/fadeInTransition.astro";
 import ArtDirectives from "@config/artDirectives.astro";
 import CacheDir from "@config/cacheDir.astro";
 import AssetFileNames from "@config/assetFileNames.astro";
-import GlobalImportRemoteImage from "@config/globalImportRemoteImage.astro";
 import Flip from "@config/flip.astro";
 import Flop from "@config/flop.astro";
 import Invert from "@config/invert.astro";
@@ -85,7 +84,6 @@ const isNotImg = component !== "Img" && api !== "renderImg";
 {!isGlobal && isNotImg && <ArtDirectives {...props} />}
 {isGlobal && <CacheDir {...props} />}
 {isGlobal && <AssetFileNames {...props} />}
-{isGlobal && <GlobalImportRemoteImage {...props} />}
 <Flip {...props} />
 <Flop {...props} />
 <Invert {...props} />
