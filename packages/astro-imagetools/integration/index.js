@@ -15,7 +15,8 @@ export default {
     "astro:config:setup": async function ({ config, command, updateConfig }) {
       const environment = command;
 
-      const isSsrBuild = command === "build" && !!config.adapter && config.output === 'server';
+      const isSsrBuild =
+        command === "build" && !!config.adapter && config.output === "server";
 
       let projectBase = path.normalize(config.base);
 
