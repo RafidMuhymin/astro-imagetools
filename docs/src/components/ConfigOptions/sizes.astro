@@ -4,7 +4,7 @@
 
   **Type:** `string` or `(breakpoints: number[]) => string`
 
-  **Default:** `` (breakpoints) => `(min-width: ${breakpoints[breakpopints.length - 1]}px) ${breakpoints[breakpopints.length - 1]}px, 100vw ``
+  **Default:** `` (breakpoints) => `(breakpoints: number[]) => `(min-width: ${breakpoints[breakpoints.length - 1]}px) ${breakpoints[breakpoints.length - 1]}px, 100vw```
 
   A string or function that returns a string suitable for the value of the `sizes`
   attribute of the generated `<img />` element. The final calculated breakpoints
